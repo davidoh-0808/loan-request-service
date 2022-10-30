@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="description" />
+	<meta name="keywords" content="keywords" />
+	<meta name="author" content="author" />
+	<title>현대차미소금융재단</title>
+	<link type="text/css" rel="stylesheet" href="../common/css/jquery-ui.min.css" />
+	<link type="text/css" rel="stylesheet" href="../common/css/admin.css" />
+	<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+</head>
+
+<body>
+	<!--wrap -->
+	<div class="admin_wrap">
+		<!-- 관리자 상단 -->
+		<div class="admin_top">
+			<div class="top_area">
+				<!-- 로고 -->
+				<div class="logo">
+					<h1><span><img src="../img/h_logo.gif" alt="서민금융진흥원 사업수행기관 현대차미소금융재단"></span></h1>
+				</div>
+				<!-- // 로고 -->
+				<!-- 사용자 -->
+				<div class="user user_wrap">
+					<div class="user_login">
+						<div class="user_id">
+							<p>홍길동(abcd1234)</p>
+						</div>
+						<div class="user_info">
+							<p>심사팀</p>
+							<!-- <p>숙소 출장소</p> -->
+						</div>
+					</div>
+					<button type="button" class="r_box">Log-Out</button>
+				</div>
+				<!-- //사용자 -->
+			</div>
+		</div>
+		<!-- // 관리자 상단 -->
+		<!-- 관리자 히단 -->
+		<div class="admin_bottom">
+			<!-- lnb_지점/심사팀 -->
+			<div class="lnb_wrap">
+				<div class="lnb">
+					<ul class="dep1">
+						<li>
+							<p><a href="#none" class="tit">상담신청내역</a></p>
+							<ul class="dep2">
+								<li class="on"><a href="#none">- 신청내역조회 / 수정</a></li>
+							</ul>
+						</li>
+						<li>
+							<p><a href="#none" class="tit">마이페이지</a></p>
+							<ul class="dep2">
+								<li><a href="#none">- 프로필 설정</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- // lnb -->
+			<!--content-->
+			<div class="content">
+				<h2 class="con_tit">신청내역 조회</h2>
+				<h3 class="s_tit">상담 정보</h3>
+				<div class="tb_style tb_htype sp10">
+					<table>
+						<caption>상담 정보</caption>
+						<colgroup>
+							<col style="width: 138px;">
+							<col style="width: auto;">
+							<col style="width: 138px;">
+							<col style="width: auto;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">상품명</th>
+								<td>운영자금</td>
+								<th scope="row">접수일</th>
+								<td>2022-08-15</td>
+							</tr>
+							<tr>
+								<th scope="row">지점</th>
+								<td>인천지점</td>
+								<th scope="row">게시자</th>
+								<td>김미소</td>
+							</tr>
+							<tr>
+								<th scope="row">상담자</th></th>
+								<td>김심사</td>
+								<th scope="row">상담일</th>
+								<td>2022-08-15</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="info sp40 cellbox">
+					<div class="left cell auto">
+						<h3 class="s_tit">신청고객 정보</h3>
+					</div>
+					<div class="right cell">
+						<button type="button" class="btn btn_white btn_m">고객정보 조회</button>
+					</div>
+				</div>
+				<div class="tb_style tb_htype sp10">
+					<table>
+						<caption>신청고객 정보</caption>
+						<colgroup>
+							<col style="width: 138px;">
+							<col style="width: auto;">
+							<col style="width: 138px;">
+							<col style="width: auto;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">고객명</th>
+								<td colspan="3">이길동</td>
+							</tr>
+							<tr>
+								<th scope="row">연락처</th>
+								<td>010-1234-5678</td>
+								<th scope="row">주민등록번호</th>
+								<td>921119-2******</td>
+							</tr>
+							<tr>
+								<th scope="row">유입경로(1)</th>
+								<td>지점이관</td>
+								<th scope="row">유입경로(2)</th>
+								<td>홈페이지</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<h3 class="s_tit sp40">사업자 등록여부</h3>
+				<div class="tb_style tb_htype sp10 registration_table">
+					<table>
+						<caption>사업자 등록여부 테이블</caption>
+						<colgroup>
+							<col style="width: 138px;">
+							<col style="width: auto;">
+							<col style="width: 138px;">
+							<col style="width: auto;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">사업자 등록</th>
+								<td>개인사업자</td>
+								<!-- <th scope="row" class="optionBox">취약계층 여부</th>
+								<td class="optionBox">북한이탈주민</td> -->
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<!-- 사업자정보(개인사업자) -->
+				<div class="business_info">
+					<div class="info sp40 cellbox">
+						<div class="left cell auto">
+							<h3 class="s_tit">사업자 정보</h3>
+						</div>
+					</div>
+					<div class="tb_style tb_htype sp10">
+						<table>
+							<caption>사업자 정보</caption>
+							<colgroup>
+								<col style="width: 138px;">
+								<col style="width: auto;">
+								<col style="width: 138px;">
+								<col style="width: auto;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th scope="row">사업자 번호</th>
+									<td colspan="3">213-5434-35431-15</td>
+								</tr>
+								<tr>
+									<th scope="row">사업자 등록일</th>
+									<td>2021-04-26</td>
+									<th scope="row">업력</th>
+									<td>1년 6개월</td>
+								</tr>
+								<tr>
+									<th scope="row">업종</th>
+									<td colspan="3">운수업(지입)</td>
+								</tr>
+								<tr>
+									<th>자택주소</th>
+									<td colspan="3">서울특별시 서초구 강남대로 351 청남빌딩 11층</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- //사업자정보 -->
+
+				<!-- 직장정보 -->
+				<!-- <div class="company_info">
+					<div class="info sp40 cellbox">
+						<div class="left cell auto">
+							<h3 class="s_tit">직장 정보</h3>
+						</div>
+					</div>
+					<div class="tb_style tb_htype sp10">
+						<table>
+							<caption>직장 정보 테이블</caption>
+							<colgroup>
+								<col style="width: 138px;">
+								<col style="width: auto;">
+								<col style="width: 138px;">
+								<col style="width: auto;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th scope="row">직장명</th>
+									<td colspan="3">현대차미소금융재단</td>
+								</tr>
+								<tr>
+									<th scope="row">입사일</th>
+									<td colspan="3">2022-12-12</td>
+								</tr>
+								<tr>
+									<th scope="row">직업</th>
+									<td colspan="3">무등록사업자</td>
+								</tr>
+								<tr>
+									<th class="address">자택주소</th>
+									<td colspan="3">서울특별시 서초구 강남대로 351 청남빌딩 11층</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div> -->
+				<!-- //직장정보 -->
+
+				<h3 class="s_tit sp40">추가 정보 입력</h3>
+				<div class="tb_style tb_htype sp10">
+					<table>
+						<caption>최종 결과 정보</caption>
+						<colgroup>
+							<col style="width: 138px;">
+							<col style="width: auto;">
+							<col style="width: 138px;">
+							<col style="width: auto;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">조회동의</th>
+								<td>동의</td>
+								<th scope="row">녹취시간</th>
+								<td>00:32:15</td>
+							</tr>
+							<tr>
+								<th scope="row">채무조정</th>
+								<td colspan="3">연체이자 감면</td>
+							</tr>
+							<tr>
+								<th scope="row">상담결과</th>
+								<td>거절</td>
+								<th scope="row">거절사유</th>
+								<td>채무과다</td>
+							</tr>
+							<tr>
+								<th scope="row">처리현황</th>
+								<td>완료</td>
+								<th scope="row">완료일</th>
+								<td>2022-08-26</td>
+							</tr>
+							<tr>
+								<th scope="row">비고</th>
+								<td  colspan="3">
+									<div class="view_area">
+										<pre>
+채무조정(연체이자 감면)이 있었으나,
+채무과다로 인한 거절
+										</pre>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="btn_area sp50">
+					<div class="right_a">
+						<button type="button" class="btn btn_blue btn_l">수정</button>
+						<button type="button" class="btn btn_white btn_l">목록</button>
+					</div>
+				</div>
+			</div>
+			<!--//content-->
+
+		</div>
+		<!-- //관리자 하단 -->
+	</div>
+	<!-- //Wrap-->
+
+	<div id="pop_info" class="pop_wrap" title="고객정보 조회">
+        <div class="pop_contents">
+            <div class="tb_style tb_vtype">
+				<table>
+					<caption>고객정보 조회</caption>
+					<colgroup>
+						<col style="width: 10%;">
+						<col style="width: 14%;">
+						<col style="width: 10%;">
+						<col style="width: 14%;">
+						<col style="width: 18%;">
+						<col style="width: 14%;">
+						<col style="width: 21%;">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>성명</th>
+							<th>주민등록번호</th>
+							<th>성별</th>
+							<th>내/외국인</th>
+							<th>사업자번호</th>
+							<th>인증수단</th>
+							<th>약관 및 이용동의 여부</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>김가나</td>
+							<td>921119</td>
+							<td>여자</td>
+							<td>내국인</td>
+							<td>110-406-806257</td>
+							<td>휴대폰인증</td>
+							<td><span class="c_red">동의</span> </td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+        </div>
+    </div>
+
+	<script>
+		$(function(){
+			$('#pop_info').dialog({
+				dialogClass: 'pop_modal info',
+				width:723,
+			});
+		})
+	</script>
+</body>
+
+</html>

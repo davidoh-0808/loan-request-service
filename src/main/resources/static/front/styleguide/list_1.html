@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>마크업가이드 - LIST</title>
+<!-- 가이드 css -->
+<link rel="stylesheet" href="../common/css/common.css">
+<link rel="stylesheet" href="../common/css/shCoreDefault.css">
+<link rel="stylesheet" href="../css/common.css">
+
+<link rel="stylesheet" href="../css/vendor/jquery-ui.min.css">
+<script src="../js/vendor/jquery-3.4.1.min.js"></script>
+<script src="../js/vendor/jquery-ui.min.js"></script>
+<script src="../js/common.js"></script>
+
+<script type="text/javascript" src=" ../common/js/shCore.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushXml.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushCss.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushJScript.js"></script>
+<script type="text/javascript" src=" ../common/js/guide.js"></script>
+<script type="text/javascript">
+	SyntaxHighlighter.all();
+	$(document).ready(function(){
+		$('.g-nav-snb').append(webSnb);
+		$('.g-nav-snb ul li').eq(4).addClass("active");
+	});
+</script>
+</head>
+<body>
+<div id="g-wrap" class="open-aside">
+	<!-- aside -->
+	<div id="g-aside">
+		<!-- # 좌측컨텐츠 # -->
+		<div class="wrap-aside">
+			<!-- 사용자정보영역 -->
+			<div class="box-info">
+			</div>
+			<!-- 네비게이션 : SNB -->
+			<div class="g-nav-snb guide"></div>
+		</div>
+		<!-- # 컨트롤 # -->
+		<div class="g-area-control">
+			<a href="#none">좌측영역 펼침/닫기</a>
+		</div>
+	</div>
+	<!-- //aside -->
+
+	<div class="g-content">
+		<div class="g-box-basic">
+			<h2 class="g-tit-basic">LIST</h2>
+
+			<!-- 탭그룹 -->
+			<div class="row">
+				<!-- <h3 class="g-tit-basic">List</h3> -->
+				<div class="tab-wrap g-tab-sample ui-tab">
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<!-- view -->
+							<h3 class="g-tit-basic">lst data</h3>
+							<ul class="lst_data">
+								<li>
+									<a href="javascript:void(0);">
+										<span class="txt_sm">병원을 새로 등록하려면</span>
+										<strong class="color_essential">병원 선택하기</strong>
+									</a>
+								</li>
+								<li>
+									<a href="javascript:void(0);">
+										<strong>세상에서 제일 긴 이름을 가진 병원명이 있다면 어느정도일까요 <span>(12345678)</span></strong>
+										<span>시흥시 정왕동 / 박기호 원장님</span>
+										<div class="btn_area">
+											<span class="checked">기본병원</span>
+										</div>
+									</a>
+								</li>
+								<li class='disabled'>
+									<a href="javascript:void(0);">
+										<strong>마음속내과<span>(12345678)</span></strong>
+										<span>시흥시 정왕동 / 박기호 원장님</span>
+									</a>
+								</li>
+								<li class="active">
+									<a href="javascript:void(0);">
+										<span class="profile"></span>
+										<span class="profile_msg">이메일이 인증되지 않았습니다. 보안을위해 이메일을 인증해주세요</span>
+									</a>
+								</li>
+								<li>
+									<a href="javascript:void(0);">
+										<span class="profile"></span>
+										<div class="profile_msg">
+											<strong class="color_essential">데이터 내려받기 신청</strong>
+											<span class="txt_sm txt_gray">(환자정보/진료기록)</span>
+										</div>
+									</a>
+								</li>
+							</ul>
+
+							<h3 class="g-tit-basic mt50">lst data - cards</h3>
+							<ul class="lst_data cards">
+								<li class="active">
+									<div class="cards_inner">
+										<div class="item">
+											<div class="card_preview"><img src="" alt=""></div>
+											<p class="name">X2 Edition2</p>
+											<p class="num">1234 1234 1234 1234</p>
+											<p class="date">2020.03.02 등록</p>
+										</div>
+
+										<div class="btn_area ar">
+											<span class="checked">결제수단</span>
+											<button class="btn_sm btn_darkblue btn_outline">삭제</button>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="cards_inner">
+										<div class="item">
+											<div class="card_preview"><img src="" alt=""></div>
+											<p class="name">X2 Edition2</p>
+											<p class="num">1234 1234 1234 1234</p>
+											<p class="date">2020.03.02 등록</p>
+										</div>
+
+										<div class="btn_area ar">
+											<span class="checked">결제수단</span>
+											<button class="btn_sm btn_darkblue btn_outline">삭제</button>
+										</div>
+									</div>
+								</li>
+								<li>
+									<a href="javascript:void(0);">
+										<span class="add_item">카드 등록하기</span>
+									</a>
+								</li>
+							</ul>
+
+							<h3 class="g-tit-basic mt50">lst data - device</h3>
+							<ul class="lst_data device">
+								<li class="active">
+									<div class="inner">
+										<div class="device_name win">
+											<span>Win#A1B1C3D</span>
+											<button class="ico_pen"></button>
+										</div>
+
+										<p class="title">로그인 상태</p>
+										<p class="txt_lg color_essential">로그인</p>
+										<p class="title">기기 등록일</p>
+										<p class="txt_lg">2020.08.22</p>
+										<p class="title">최근 로그인</p>
+										<p class="txt_lg">2020.11.02 (101.259.321.331)</p>
+
+										<div class="btn_area ar">
+											<button class="btn_sm btn_darkblue btn_outline">기기해제</button>
+											<button class="btn_sm btn_darkblue">로그아웃</button>
+										</div>
+									</div>
+								</li>
+
+								<li class="">
+									<div class="inner">
+										<div class="device_name win">
+											<span>Win#A1B1C3D</span>
+											<button class="ico_pen"></button>
+										</div>
+
+										<p class="title">로그인 상태</p>
+										<p class="txt_lg color_essential">로그오프</p>
+										<p class="title">기기 등록일</p>
+										<p class="txt_lg">2020.08.22</p>
+										<p class="title">최근 로그인</p>
+										<p class="txt_lg">2020.11.02 (101.259.321.331)</p>
+
+										<div class="btn_area ar">
+											<button class="btn_sm btn_darkblue btn_outline">기기해제</button>
+											<button class="btn_sm btn_darkblue opacity">로그아웃</button>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<!-- //view -->
+						</div>
+					</div>
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<p class="on">HTML</p>
+							<pre class="syntax brush:html">
+							<!-- lst data -->
+							<ul class="lst_data">
+								<li>
+									<a href="javascript:void(0);">
+										<span class="txt_sm">병원을 새로 등록하려면</span>
+										<strong class="color_essential">병원 선택하기</strong>
+									</a>
+								</li>
+								<li>
+									<a href="javascript:void(0);">
+										<strong>세상에서 제일 긴 이름을 가진 병원명이 있다면 어느정도일까요 <span>(12345678)</span></strong>
+										<span>시흥시 정왕동 / 박기호 원장님</span>
+										<div class="btn_area">
+											<span class="checked">기본병원</span>
+										</div>
+									</a>
+								</li>
+								<li class='disabled'>
+									<a href="javascript:void(0);">
+										<strong>마음속내과<span>(12345678)</span></strong>
+										<span>시흥시 정왕동 / 박기호 원장님</span>
+									</a>
+								</li>
+								<li class="active">
+									<a href="javascript:void(0);">
+										<span class="profile"></span>
+										<span class="profile_msg">이메일이 인증되지 않았습니다. 보안을위해 이메일을 인증해주세요</span>
+									</a>
+								</li>
+							</ul>
+
+							<!-- lst data - cards -->
+							<ul class="lst_data cards">
+								<li class="active">
+									<a href="javascript:void(0);">
+										<div class="item">
+											<div class="card_preview"><img src="" alt=""></div>
+											<p class="name">X2 Edition2</p>
+											<p class="num">1234 1234 1234 1234</p>
+											<p class="date">2020.03.02 등록</p>
+										</div>
+
+										<div class="btn_area ar">
+											<span class="checked">결제수단</span>
+											<button class="btn_sm btn_darkblue btn_outline">삭제</button>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="javascript:void(0);">
+										<div class="item">
+											<div class="card_preview"><img src="" alt=""></div>
+											<p class="name">X2 Edition2</p>
+											<p class="num">1234 1234 1234 1234</p>
+											<p class="date">2020.03.02 등록</p>
+										</div>
+
+										<div class="btn_area ar">
+											<span class="checked">결제수단</span>
+											<button class="btn_sm btn_darkblue btn_outline">삭제</button>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="javascript:void(0);">
+										<span class="add_item">카드 등록하기</span>
+									</a>
+								</li>
+							</ul>
+
+							<!-- lst data - device -->
+							<ul class="lst_data device">
+								<li class="active">
+									<div class="inner">
+										<div class="device_name win">
+											<span>Win#A1B1C3D</span>
+											<button class="ico_pen"></button>
+										</div>
+
+										<p class="title">로그인 상태</p>
+										<p class="txt_lg color_essential">로그인</p>
+										<p class="title">기기 등록일</p>
+										<p class="txt_lg">2020.08.22</p>
+										<p class="title">최근 로그인</p>
+										<p class="txt_lg">2020.11.02 (101.259.321.331)</p>
+
+										<div class="btn_area ar">
+											<button class="btn_sm btn_darkblue btn_outline">기기해제</button>
+											<button class="btn_sm btn_darkblue">로그아웃</button>
+										</div>
+									</div>
+								</li>
+
+								<li class="">
+									<div class="inner">
+										<div class="device_name win">
+											<span>Win#A1B1C3D</span>
+											<button class="ico_pen"></button>
+										</div>
+
+										<p class="title">로그인 상태</p>
+										<p class="txt_lg color_essential">로그오프</p>
+										<p class="title">기기 등록일</p>
+										<p class="txt_lg">2020.08.22</p>
+										<p class="title">최근 로그인</p>
+										<p class="txt_lg">2020.11.02 (101.259.321.331)</p>
+
+										<div class="btn_area ar">
+											<button class="btn_sm btn_darkblue btn_outline">기기해제</button>
+											<button class="btn_sm btn_darkblue opacity">로그아웃</button>
+										</div>
+									</div>
+								</li>
+							</ul>
+							</pre>
+							<p>CSS</p>
+							<pre class="syntax brush:css">
+
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //탭그룹 -->
+
+			<!-- 탭그룹 -->
+			<div class="row">
+				<!-- <h3 class="g-tit-basic">List</h3> -->
+				<div class="tab-wrap g-tab-sample ui-tab">
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<!-- view -->
+							<h3 class="g-tit-basic">group radio</h3>
+							<dl class="group_radio">
+								<dt>
+									<ul>
+										<li>메뉴</li>
+										<li>Access</li>
+										<li>Read</li>
+										<li>Write</li>
+									</ul>
+								</dt>
+								<dd>
+									<ul>
+										<li class="case1">
+											<p>오늘의현황</p>
+											<p>
+												<label class="input_radio radio_radius pop_notext">
+													<input type="radio" id="" name="radio_case4" checked>
+													<span class="label_text"></span>
+												</label>
+											</p>
+											<p>
+												<label class="input_radio radio_radius pop_notext">
+													<input type="radio" id="" name="radio_case4">
+													<span class="label_text"></span>
+												</label>
+											</p>
+											<p>
+												<label class="input_radio radio_radius pop_notext">
+													<input type="radio" id="" name="radio_case4">
+													<span class="label_text"></span>
+												</label>
+											</p>
+										</li>
+
+										<li class="case2">
+											<p>진료실</p>
+											<p>
+												<label class="input_radio radio_radius pop_notext">
+													<input type="radio" id="" name="radio_case5">
+													<span class="label_text"></span>
+												</label>
+											</p>
+											<p>
+												<label class="input_radio radio_radius pop_notext">
+													<input type="radio" id="" name="radio_case5" checked>
+													<span class="label_text"></span>
+												</label>
+											</p>
+											<p>
+												<label class="input_radio radio_radius pop_notext">
+													<input type="radio" id="" name="radio_case5">
+													<span class="label_text"></span>
+												</label>
+											</p>
+										</li>
+
+										<li class="case3">
+											<p>접수, 예약</p>
+											<p>
+												<label class="input_radio radio_radius pop_notext">
+													<input type="radio" id="" name="radio_case6">
+													<span class="label_text"></span>
+												</label>
+											</p>
+											<p>
+												<label class="input_radio radio_radius pop_notext">
+													<input type="radio" id="" name="radio_case6">
+													<span class="label_text"></span>
+												</label>
+											</p>
+											<p>
+												<label class="input_radio radio_radius pop_notext">
+													<input type="radio" id="" name="radio_case6" checked>
+													<span class="label_text"></span>
+												</label>
+											</p>
+										</li>
+									</ul>
+								</dd>
+							</dl>
+
+							<!-- //view -->
+						</div>
+					</div>
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<p class="on">HTML</p>
+							<pre class="syntax brush:html">
+								<dl class="group_radio">
+									<dt>
+										<ul>
+											<li>메뉴</li>
+											<li>Access</li>
+											<li>Read</li>
+											<li>Write</li>
+										</ul>
+									</dt>
+									<dd>
+										<ul>
+											<li class="case1">
+												<p>오늘의현황</p>
+												<p>
+													<label class="input_radio radio_radius pop_notext">
+														<input type="radio" id="" name="radio_case" checked>
+														<span class="label_text"></span>
+													</label>
+												</p>
+												<p>
+													<label class="input_radio radio_radius pop_notext">
+														<input type="radio" id="" name="radio_case">
+														<span class="label_text"></span>
+													</label>
+												</p>
+												<p>
+													<label class="input_radio radio_radius pop_notext">
+														<input type="radio" id="" name="radio_case">
+														<span class="label_text"></span>
+													</label>
+												</p>
+											</li>
+
+											<li class="case2">
+												<p>진료실</p>
+												<p>
+													<label class="input_radio radio_radius pop_notext">
+														<input type="radio" id="" name="radio_case2">
+														<span class="label_text"></span>
+													</label>
+												</p>
+												<p>
+													<label class="input_radio radio_radius pop_notext">
+														<input type="radio" id="" name="radio_case2" checked>
+														<span class="label_text"></span>
+													</label>
+												</p>
+												<p>
+													<label class="input_radio radio_radius pop_notext">
+														<input type="radio" id="" name="radio_case2">
+														<span class="label_text"></span>
+													</label>
+												</p>
+											</li>
+
+											<li class="case3">
+												<p>접수, 예약</p>
+												<p>
+													<label class="input_radio radio_radius pop_notext">
+														<input type="radio" id="" name="radio_case3">
+														<span class="label_text"></span>
+													</label>
+												</p>
+												<p>
+													<label class="input_radio radio_radius pop_notext">
+														<input type="radio" id="" name="radio_case3">
+														<span class="label_text"></span>
+													</label>
+												</p>
+												<p>
+													<label class="input_radio radio_radius pop_notext">
+														<input type="radio" id="" name="radio_case3" checked>
+														<span class="label_text"></span>
+													</label>
+												</p>
+											</li>
+										</ul>
+									</dd>
+								</dl>
+							</pre>
+							<p>CSS</p>
+							<pre class="syntax brush:css">
+
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //탭그룹 -->
+
+			<!-- 탭그룹 -->
+			<div class="row">
+				<!-- <h3 class="g-tit-basic">List</h3> -->
+				<div class="tab-wrap g-tab-sample ui-tab">
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<!-- view -->
+							<h3 class="g-tit-basic">lst accordion</h3>
+							<div class="lst_accordion">
+								<dl class="">
+									<dt class="on">
+										<span class="title ico_new">321. 공지사항 제목이 들어갑니다.</span>
+										<span class="date">2020.11.12 15:46</span>
+									</dt>
+									<dd>
+										안녕하세요. 세나클소프트입니다. SK텔레콤은 20대 청춘들을 위해 인기 가수와 함께 그들의 이야기를 노래로 만들어 선물하는 캠페인 널 위한 응원가의 음원과 영상을 공개한다고 20일 밝혔다. 널 위한 응원가는 사랑, 학업, 진로 등 다양한 고민을 안고 치열한 도전을 이어가는 청춘들에게 그들의 눈높이에 맞춘 응원과 위로의 메시지를 전달하기 위해 SK텔레콤이 시행한 널 위한 응원가는 사랑, 학업, 진로 등 다양한 고민을 안고 치열한 도전을 이어가는 청춘들에게 그들의 눈높이에 맞춘 응원과 위로의 메시지를 전달합니다.
+										<ul class="lst_file">
+											<li><a href="javascript:void(0);">11월 세나클 보고서.jpg</a></li>
+											<li><a href="javascript:void(0);">오류 확인.jpg</a></li>
+											<li><a href="javascript:void(0);">KakaoTalk_Photo_2020-03-10-14-41-34.jpg</a></li>
+										</ul>
+									</dd>
+									<dt>
+										<span class="title">321. 공지사항 제목이 들어갑니다.</span>
+										<span class="date">2020.11.12 15:46</span>
+									</dt>
+									<dd>
+										내용입니다.
+									</dd>
+									<dt>
+										<span class="title">321. 공지사항 제목이 들어갑니다.</span>
+										<span class="date">2020.11.12 15:46</span>
+									</dt>
+									<dd>
+										내용입니다.
+									</dd>
+									<dt>
+										<span class="title">321. 공지사항 제목이 들어갑니다. 제목이 여러줄이 되면 이렇게 들어가게 됩니다.</span>
+										<span class="date">2020.11.12 15:46</span>
+									</dt>
+									<dd>
+										내용입니다.
+									</dd>
+								</dl>
+							</div>
+							<!-- //view -->
+						</div>
+					</div>
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<p class="on">HTML</p>
+							<pre class="syntax brush:html">
+								<div class="lst_accordion">
+									<dl class="">
+										<dt class="on">
+											<span class="title ico_new">321. 공지사항 제목이 들어갑니다.</span>
+											<span class="date">2020.11.12 15:46</span>
+										</dt>
+										<dd>
+											안녕하세요. 세나클소프트입니다. SK텔레콤은 20대 청춘들을 위해 인기 가수와 함께 그들의 이야기를 노래로 만들어 선물하는 캠페인 널 위한 응원가의 음원과 영상을 공개한다고 20일 밝혔다. 널 위한 응원가는 사랑, 학업, 진로 등 다양한 고민을 안고 치열한 도전을 이어가는 청춘들에게 그들의 눈높이에 맞춘 응원과 위로의 메시지를 전달하기 위해 SK텔레콤이 시행한 널 위한 응원가는 사랑, 학업, 진로 등 다양한 고민을 안고 치열한 도전을 이어가는 청춘들에게 그들의 눈높이에 맞춘 응원과 위로의 메시지를 전달합니다.
+											<ul class="lst_file">
+												<li><a href="javascript:void(0);">11월 세나클 보고서.jpg</a></li>
+												<li><a href="javascript:void(0);">오류 확인.jpg</a></li>
+												<li><a href="javascript:void(0);">KakaoTalk_Photo_2020-03-10-14-41-34.jpg</a></li>
+											</ul>
+										</dd>
+										<dt>
+											<span class="title">321. 공지사항 제목이 들어갑니다.</span>
+											<span class="date">2020.11.12 15:46</span>
+										</dt>
+										<dd>
+											내용입니다.
+										</dd>
+										<dt>
+											<span class="title">321. 공지사항 제목이 들어갑니다.</span>
+											<span class="date">2020.11.12 15:46</span>
+										</dt>
+										<dd>
+											내용입니다.
+										</dd>
+										<dt>
+											<span class="title">321. 공지사항 제목이 들어갑니다. 제목이 여러줄이 되면 이렇게 들어가게 됩니다.</span>
+											<span class="date">2020.11.12 15:46</span>
+										</dt>
+										<dd>
+											내용입니다.
+										</dd>
+									</dl>
+								</div>
+							</pre>
+							<p>CSS</p>
+							<pre class="syntax brush:css">
+
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //탭그룹 -->
+
+			<!-- 탭그룹 -->
+			<div class="row">
+				<!-- <h3 class="g-tit-basic">List</h3> -->
+				<div class="tab-wrap g-tab-sample ui-tab">
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<!-- view -->
+							<h3 class="g-tit-basic">lst terms</h3>
+							<ul class="lst_terms">
+								<li><a href="javascript:void(0);">서비스 이용약관</a></li>
+								<li><a href="javascript:void(0);">개인정보 보호방침</a></li>
+								<li><a href="javascript:void(0);">개인정보 수집·이용</a></li>
+								<li><a href="javascript:void(0);">마케팅 광고 활용</a></li>
+								<li><a href="javascript:void(0);">상품구매</a></li>
+								<li><a href="javascript:void(0);">마이그레이션</a></li>
+							</ul>
+
+							<h3 class="g-tit-basic mt50">lst terms - area</h3>
+							<ul class="lst_terms area">
+								<li>
+									<div class="inner">
+										<span class="title">123,402원 <span class="txt_sm">정기이용요금, 추가이용요금</span></span>
+										<span class="date">2020년 10월</span>
+									</div>
+								</li>
+								<li>
+									<div class="inner">
+										<span class="title">손흥민(Sondaughter) <span class="txt_sm">(EMR)100.123.190.12</span></span>
+										<span class="date">2020.11.12 15:46</span>
+									</div>
+								</li>
+								<li>
+									<div class="inner">
+										<span class="txt_sm">Owner, Admin, Member</span>
+										<span class="title">Owner</span></span>
+									</div>
+								</li>
+							</ul>
+
+							<!-- //view -->
+						</div>
+					</div>
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<p class="on">HTML</p>
+							<pre class="syntax brush:html">
+							<!-- lst terms -->
+							<ul class="lst_terms">
+								<li><a href="javascript:void(0);">서비스 이용약관</a></li>
+								<li><a href="javascript:void(0);">개인정보 보호방침</a></li>
+								<li><a href="javascript:void(0);">개인정보 수집·이용</a></li>
+								<li><a href="javascript:void(0);">마케팅 광고 활용</a></li>
+								<li><a href="javascript:void(0);">상품구매</a></li>
+								<li><a href="javascript:void(0);">마이그레이션</a></li>
+							</ul>
+
+							<!-- lst terms - area -->
+							<ul class="lst_terms area">
+								<li>
+									<div class="inner">
+										<span class="title">123,402원 <span class="txt_sm">정기이용요금, 추가이용요금</span></span>
+										<span class="date">2020년 10월</span>
+									</div>
+								</li>
+								<li>
+									<div class="inner">
+										<span class="title">손흥민(Sondaughter) <span class="txt_sm">(EMR)100.123.190.12</span></span>
+										<span class="date">2020.11.12 15:46</span>
+									</div>
+								</li>
+								<li>
+									<div class="inner">
+										<span class="txt_sm">Owner, Admin, Member</span>
+										<span class="title">Owner</span></span>
+									</div>
+								</li>
+							</ul>
+
+							</pre>
+							<p>CSS</p>
+							<pre class="syntax brush:css">
+
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //탭그룹 -->
+
+			<!-- 탭그룹 -->
+			<div class="row">
+				 <h3 class="g-tit-basic">List 직업및 면허</h3>
+				<div class="tab-wrap g-tab-sample ui-tab">
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<!-- view -->
+							<ul class="job_certify_wrap">
+								<li>
+									<button type="button" class="btn_del"><span class="sr_only">삭제</span></button>
+									<select name="" id="" class="form_control">
+										<option value="">직업선택</option>
+										<option value="">의사</option>
+										<option value="">한의사</option>
+										<option value="">치과의사</option>
+									</select>
+									<input type="text" class="form_control" placeholder="면허번호 입력">
+									<select name="" class="form_control" disabled="">
+										<option value="">전문과목선택</option>
+									</select>
+									<input type="text" class="form_control" placeholder="자격번호 입력" disabled="">
+								</li>
+								<li>
+									<button type="button" class="btn_del"><span class="sr_only">삭제</span></button>
+									<select name="" id="" class="form_control">
+										<option value="">직업선택</option>
+										<option value="">의사</option>
+										<option value="">한의사</option>
+										<option value="">치과의사</option>
+									</select>
+									<input type="text" class="form_control" placeholder="면허번호 입력">
+									<select name="" class="form_control" disabled="">
+										<option value="">전문과목선택</option>
+									</select>
+									<input type="text" class="form_control" placeholder="자격번호 입력" disabled="">
+								</li>
+							</ul>
+
+							<!-- //view -->
+						</div>
+					</div>
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<p class="on">HTML</p>
+							<pre class="syntax brush:html">
+
+
+							</pre>
+							<p>CSS</p>
+							<pre class="syntax brush:css">
+
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //탭그룹 -->
+
+		</div>
+	</div>
+</div>
+</body>
+</html>

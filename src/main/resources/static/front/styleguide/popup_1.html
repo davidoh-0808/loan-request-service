@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>마크업가이드 - POPUP</title>
+<!-- 가이드 css -->
+<link rel="stylesheet" href="../common/css/common.css">
+<link rel="stylesheet" href="../common/css/shCoreDefault.css">
+<link rel="stylesheet" href="../css/vendor/jquery-ui.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<!-- //style -->
+<script src="../js/vendor/jquery-3.4.1.min.js"></script>
+<script src="../js/vendor/jquery-ui.min.js"></script>
+<script src="../js/common.js"></script>
+<script type="text/javascript" src=" ../common/js/shCore.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushXml.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushCss.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushJScript.js"></script>
+<script type="text/javascript" src=" ../common/js/guide.js"></script>
+<script type="text/javascript">
+	SyntaxHighlighter.all();
+	$(document).ready(function(){
+		$('.g-nav-snb').append(webSnb);
+		$('.g-nav-snb ul li').eq(6).addClass("active");
+	});
+</script>
+</head>
+<body>
+<div id="g-wrap" class="open-aside">
+	<!-- aside -->
+	<div id="g-aside">
+		<!-- # 좌측컨텐츠 # -->
+		<div class="wrap-aside">
+			<!-- 사용자정보영역 -->
+			<div class="box-info">
+			</div>
+			<!-- 네비게이션 : SNB -->
+			<div class="g-nav-snb guide"></div>
+		</div>
+		<!-- # 컨트롤 # -->
+		<div class="g-area-control">
+			<a href="#none">좌측영역 펼침/닫기</a>
+		</div>
+	</div>
+	<!-- //aside -->
+
+	<div class="g-content">
+		<div class="g-box-basic">
+			<h2 class="g-tit-basic">POPUP</h2>
+
+			<!-- 탭그룹 -->
+			<div class="row">
+				<h3 class="g-tit-basic">Alert</h3>
+				<div class="tab-wrap g-tab-sample ui-tab">
+					<div class="tab-content">
+						<div class="g-tab-inner">
+
+							<button type="button" id="alert_type1" class="btn btn_sm btn_outline">Alert1</button>
+							<button type="button" id="alert_type2" class="btn btn_sm btn_outline">Alert2</button>
+							<!-- view -->
+							<div id="pop_success" class="pop_wrap">
+								<div class="pop_contents">
+									<p class="msg">전화 상담 신청이 접수 되었습니다.</p>
+								</div>
+							</div>
+
+							<div id="pop_cancel" class="pop_wrap">
+								<div class="pop_contents">
+									<p class="msg">등록을 취소 하시겠습니까?22</p>
+								</div>
+							</div>
+
+							<script>
+								$('#alert_type1').on('click', function() {
+									$('#pop_success').dialog({
+										dialogClass: 'pop_alert',
+										buttons: [
+											{
+												text: "확인",
+												class: "btn btn_xs btn_blue",
+												click: function() {
+													$( this ).dialog( "close" );
+												}
+											},
+										]
+									});
+								});
+
+								$('#alert_type2').on('click', function() {
+									$('#pop_cancel').dialog({
+										dialogClass: 'pop_alert',
+										buttons: [
+											{
+												text: "확인",
+												class: "btn btn_xs btn_blue",
+												click: function() {
+													$( this ).dialog( "close" );
+												}
+											},
+											{
+												text: "취소",
+												class: "btn btn_xs btn_outline",
+												click: function() {
+													$( this ).dialog( "close" );
+												}
+											}
+										]
+									});
+								});
+							</script>
+							<!-- //view -->
+						</div>
+					</div>
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<p class="on">HTML</p>
+							<pre class="syntax brush:html">
+								
+							</pre>
+							<p>CSS</p>
+							<pre class="syntax brush:css">
+
+							</pre>
+						</div>
+					</div>
+				</div>
+				<!-- //탭그룹 -->
+			</div>
+
+			<!-- 탭그룹 -->
+			<div class="row">
+				<h3 class="g-tit-basic">Modal</h3>
+				<div class="tab-wrap g-tab-sample ui-tab">
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<button type="button" id="modal_type1" class="btn btn_sm btn_outline">Modal</button>
+							<!-- view -->
+							<div id="pop_notice" class="pop_wrap" title="공지사항">
+								<div class="pop_contents">
+									Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, assumenda culpa dolorem ea earum, et fugit natus numquam quis, repellendus reprehenderit tempora temporibus unde. Accusamus esse facere necessitatibus neque sint?
+								</div>
+							</div>
+
+							<script>
+								$('#modal_type1').on('click', function() {
+									$('#pop_notice').dialog({
+										dialogClass: 'pop_modal',
+										width: 500,
+										buttons: [
+											{
+												text: "확인",
+												class: "btn btn_sm btn_red",
+												click: function() {
+													$( this ).dialog( "close" );
+												}
+											},
+											/*{
+												text: "취소",
+												class: "btn btn_sm btn_outline",
+												click: function() {
+													$( this ).dialog( "close" );
+												}
+											}*/
+										]
+									});
+								});
+							</script>
+							<!-- //view -->
+						</div>
+					</div>
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<p class="on">HTML</p>
+							<pre class="syntax brush:html">
+								<div id="pop_notice" class="pop_wrap" title="공지사항">
+									<div class="pop_contents">
+										Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, assumenda culpa dolorem ea earum, et fugit natus numquam quis, repellendus reprehenderit tempora temporibus unde. Accusamus esse facere necessitatibus neque sint?
+									</div>
+								</div>
+
+								<script>
+									$('#modal_type1').on('click', function() {
+										$('#pop_notice').dialog({
+											dialogClass: 'pop_modal',
+											width: 500,
+											buttons: [
+												{
+													text: "확인",
+													class: "btn btn_sm btn_red",
+													click: function() {
+														$( this ).dialog( "close" );
+													}
+												},
+											]
+										});
+									});
+								</script>
+							</pre>
+							<p>CSS</p>
+							<pre class="syntax brush:css">
+
+							</pre>
+						</div>
+					</div>
+				</div>
+				<!-- //탭그룹 -->
+			</div>
+
+		</div>
+	</div>
+</div>
+</body>
+</html>

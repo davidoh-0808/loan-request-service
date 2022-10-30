@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="description" />
+	<meta name="keywords" content="keywords" />
+	<meta name="author" content="author" />
+	<title>현대차미소금융재단</title>
+	<link type="text/css" rel="stylesheet" href="../common/css/jquery-ui.min.css" />
+	<link type="text/css" rel="stylesheet" href="../common/css/admin.css" />
+	<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script type="text/javascript">
+		jQuery(function () {
+			//팝업
+
+			$(".btn_cancel").on("click", function () {
+
+				$('.alert_msg').dialog({
+					dialogClass: 'pop_alert',
+					showAlertMessage: '해당 계정 등록을 취소하시겠습니까?',
+					buttons: [
+						{
+							text: "확인",
+							class: "btn btn_m btn_blue",
+							click: function () {
+								$(this).dialog("close");
+							}
+						},
+						{
+							text: "취소",
+							class: "btn btn_m btn_white",
+							click: function () {
+								$(this).dialog("close");
+							}
+						}
+					]
+				});
+
+			});
+
+		});
+	</script>
+</head>
+
+<body>
+	<!--wrap -->
+	<div class="admin_wrap">
+		<!-- 관리자 상단 -->
+		<div class="admin_top">
+			<div class="top_area">
+				<!-- 로고 -->
+				<div class="logo">
+					<h1><span><img src="../img/h_logo.gif" alt="서민금융진흥원 사업수행기관 현대차미소금융재단"></span></h1>
+				</div>
+				<!-- // 로고 -->
+				<!-- 사용자 -->
+				<div class="user">
+					<span class="name">홍길동</span> <button type="button" class="r_box">Log-Out</button>
+				</div>
+				<!-- //사용자 -->
+			</div>
+		</div>
+		<!-- // 관리자 상단 -->
+
+		<!-- 관리자 히단 -->
+		<div class="admin_bottom">
+			<!-- lnb -->
+			<div class="lnb_wrap">
+				<div class="lnb">
+					<ul class="dep1">
+						<li>
+							<p><a href="#none" class="tit">관리자 관리</a></p>
+							<ul class="dep2">
+								<li class="on"><a href="#none">- 계정 및 권한 관리</a></li>
+							</ul>
+						</li>
+						<li>
+							<p><a href="#none" class="tit">게시판 관리</a></p>
+							<ul class="dep2">
+								<li><a href="#none">- NEWS 관리</a></li>
+								<li><a href="#none">- 재정보고 관리</a></li>
+							</ul>
+						</li>
+						<li>
+							<p><a href="#none" class="tit">통계 관리</a></p>
+							<ul class="dep2">
+								<li><a href="#none">- 통계현황 관리</a></li>
+							</ul>
+						</li>
+						<li>
+							<p><a href="#none" class="tit">대출상담관리</a></p>
+							<ul class="dep2">
+								<li><a href="#none">- 상담신청내역 관리</a></li>
+								<li><a href="#none">- 대출상담사 관리</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- // lnb -->
+			<!--content-->
+			<div class="content">
+				<h2 class="con_tit">계정 및 권한 관리</h2>
+				<h3 class="s_tit">계정등록</h3>
+
+				<div class="tb_style tb_htype sp10">
+					<table>
+						<caption>계정 및 권한 관리 검색어(키워드)</caption>
+						<colgroup>
+							<col style="width: 142px;">
+							<col style="width: auto;">
+							<col style="width: 142px;">
+							<col style="width: auto;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">이름 <psan class="point" title="필수항목"></psan>
+								</th>
+								<td colspan="3">
+									<input type="text" class="input_text w_mid" title="제목입력">
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">아이디 <psan class="point" title="필수항목"></psan>
+								</th>
+								<td colspan="3">
+									<div class="btnarea_tb w_mid">
+										<input type="text" class="input_text w_mid" title="제목입력">
+										<button type="button" class="btn btn_s btn_black">중복확인</button>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">비밀번호 <psan class="point" title="필수항목"></psan>
+								</th>
+								<td>
+									<div class="pw_ck_area ck_no">
+										<input type="password" class="input_text w_mid" title="제목입력">
+										<span class="pw_ck_no">사용불가</span>
+									</div>
+								</td>
+								<th scope="row">비밀번호 재입력<psan class="point" title="필수항목"></psan>
+								</th>
+								<td>
+									<div class="pw_ck_area ck_ok">
+										<input type="password" class="input_text w_mid" title="제목입력">
+										<span class="pw_ck_ok">비밀번호일치</span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">상태 <psan class="point" title="필수항목"></psan>
+								</th>
+								<td>
+									<div class="selbox w_mid">
+										<select name="" id="">
+											<option value="" selected>상태선택</option>
+											<option value="">승인</option>
+											<option value="">삭제</option>
+										</select>
+									</div>
+								</td>
+								<th scope="row">권한<psan class="point" title="필수항목"></psan>
+								</th>
+								<td>
+									<div class="selbox w_mid">
+										<select name="" id="">
+											<option value="" selected>권한선택</option>
+											<option value="">일반</option>
+											<option value="">마스터</option>
+										</select>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">전화번호 <psan class="point" title="필수항목"></psan>
+								</th>
+								<td>
+									<input type="text" class="input_text w_mid">
+								</td>
+								<th scope="row">이메일<psan class="point" title="필수항목"></psan>
+								</th>
+								<td>
+									<input type="text" class="input_text w_mid">
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">전화번호 <psan class="point" title="필수항목"></psan>
+								</th>
+								<td colspan="3">
+									<label class="input_check">
+										<input type="checkbox" id="" name="" checked>
+										<span class="label_text">개인정보 수집 &middot; 이용 동의</span>
+									</label>
+									<label class="input_check">
+										<input type="checkbox" id="" name="" checked>
+										<span class="label_text">개인정보 수집 &middot; 이용 동의 </span>
+									</label>
+									<label class="input_check">
+										<input type="checkbox" id="" name="" checked>
+										<span class="label_text">개인정보 수집 &middot; 이용 동의 </span>
+									</label>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row txt_m">메모 <psan class="point" title="필수항목"></psan>
+								</th>
+								<td colspan="3">
+									<div class="memo_area">
+										<textarea name="" id="" style="resize: none;"></textarea>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="btn_area sp30">
+					<div class="center_a">
+						<button type="button" class="btn btn_blue btn_l">완료</button>
+						<button type="button" class="btn btn_white btn_l pop_btn btn_cancel">취소</button>
+					</div>
+				</div>
+			</div>
+			<!--//content-->
+		</div>
+		<!-- //하단 -->
+
+	</div>
+	<!-- //Wrap-->
+</body>
+
+</html>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace= "com.neo.mappers.ReportMapper">
+	<select id="reportListCount" resultType="Integer" parameterType="ReportVO" >
+		/* reportMapper.reportListCount 통계 카운트 */
+		SELECT COUNT(1) totCnt 
+		FROM(
+			<include refid="listQeury" />
+		) TOT
+	</select>
+	
+		<select id="reportDeviceList" parameterType="ReportVO" resultType="ReportVO">
+		/* reportMapper.reportPageList 날짜, 방문수, pc-건수(비율), 모바일-건수(비율) */
+		SELECT 
+			A.*
+		FROM ( <include refid="listQeury" /> ) A
+		LIMIT #{offset}, #{limit}
+	</select>
+
+	<sql id="listQeury">
+		SELECT
+			TOT.IN_DATE
+			, TOT.TOT_CNT
+			, TOT.PC_CNT
+			, (TOT.PC_CNT / TOT.TOT_CNT) * 100 PC_RATE
+			, TOT.MOBILE_CNT
+			, (TOT.MOBILE_CNT / TOT.TOT_CNT) * 100 MOBILE_RATE
+			, FORMAT(@ROWNUM := @ROWNUM + 1, 0) AS ROW_NUM
+		FROM (
+			SELECT
+				GRO.IN_DATE
+				, MAX(GRO.TOT_CNT) TOT_CNT
+				, MAX(GRO.PC_CNT) PC_CNT
+				, MAX(GRO.MOBILE_CNT) MOBILE_CNT
+			FROM (
+				SELECT
+					BASE_DATA.IN_DATE
+					, BASE_DATA.PC_CNT
+					, BASE_DATA.MOBILE_CNT
+					, TOT_DATA.TOT_CNT
+				FROM (
+					SELECT
+						GRI.IN_DATE
+						, GRI.REPO_DEVICE
+						, CASE WHEN GRI.REPO_DEVICE = 'MC0000200001' THEN COUNT(GRI.REPO_DEVICE)
+							ELSE 0
+						  END PC_CNT
+						, CASE WHEN GRI.REPO_DEVICE = 'MC0000200002' THEN COUNT(GRI.REPO_DEVICE)
+							ELSE 0
+						  END MOBILE_CNT
+					FROM(
+						SELECT
+							GR.IN_DATE
+							, GR.REPO_DEVICE
+							, GR.REPO_IP
+						FROM (
+							SELECT
+								TR.REPO_SEQ
+								, TR.REPO_PATH
+								, TR.REPO_DEVICE
+								, TR.REPO_IP
+								, DATE_FORMAT(TR.IN_DTTM, '%Y%m%d') IN_DATE
+							FROM TB_REPORT TR
+							WHERE DATE_FORMAT(TR.IN_DTTM, '%Y.%m.%d') BETWEEN #{searchStartDt} AND #{searchEndDt}
+						) GR
+						GROUP BY GR.IN_DATE, GR.REPO_DEVICE, GR.REPO_IP
+					) GRI
+					GROUP BY GRI.IN_DATE, GRI.REPO_DEVICE
+				) BASE_DATA INNER JOIN (				
+				SELECT
+					GRI.IN_DATE
+					, COUNT(GRI.IN_DATE) TOT_CNT
+				FROM(
+					SELECT
+						GR.IN_DATE
+						, GR.REPO_DEVICE
+						, GR.REPO_IP
+					FROM (
+						SELECT
+							TR.REPO_SEQ
+							, TR.REPO_PATH
+							, TR.REPO_DEVICE
+							, TR.REPO_IP
+							, DATE_FORMAT(TR.IN_DTTM, '%Y%m%d') IN_DATE
+						FROM TB_REPORT TR
+						WHERE DATE_FORMAT(TR.IN_DTTM, '%Y.%m.%d') BETWEEN #{searchStartDt} AND #{searchEndDt}
+					) GR
+					GROUP BY GR.IN_DATE, GR.REPO_DEVICE, GR.REPO_IP
+				) GRI
+				GROUP BY GRI.IN_DATE
+				) TOT_DATA ON TOT_DATA.IN_DATE = BASE_DATA.IN_DATE	
+			) GRO
+			GROUP BY GRO.IN_DATE
+		) TOT
+		, (SELECT @ROWNUM := 0) R
+		ORDER BY TOT.IN_DATE DESC
+	</sql>
+	
+	<insert id="reportInsert" parameterType="ReportVO">
+		/* reportMapper.reportInsert 접속데이터적재 */
+		INSERT INTO TB_REPORT (
+			REPO_PATH
+			, REPO_DEVICE
+			, REPO_IP
+			, IN_DTTM
+		) VALUES (
+			#{REPO_PATH}
+			, #{REPO_DEVICE}
+			, #{REPO_IP}
+			, NOW()
+		)
+	</insert>
+	
+	<select id="reportPageList" parameterType="ReportVO" resultType="ReportVO">
+		/* reportMapper.reportDeviceList 순위, 페이지명, URL, 비율 */
+		SELECT 
+			FORMAT(@ROWNUM := @ROWNUM + 1, 0) AS SUNWI
+			, 
+			A.*
+		FROM (
+			SELECT
+				TOT.REPO_PATH
+				, TOT.CNT
+				, (TOT.CNT / TOT.TOT_CNT) * 100 REPO_RATE
+				, TOT.TOT_CNT
+			FROM (
+				SELECT
+					 COUNT(TR.REPO_SEQ) CNT
+					, TR.REPO_PATH
+					, (SELECT COUNT(REPO_SEQ) FROM TB_REPORT WHERE DATE_FORMAT(IN_DTTM, '%Y.%m.%d') BETWEEN #{searchStartDt} AND #{searchEndDt}) TOT_CNT
+				FROM TB_REPORT TR
+				WHERE DATE_FORMAT(TR.IN_DTTM, '%Y.%m.%d') BETWEEN #{searchStartDt} AND #{searchEndDt}
+				GROUP BY TR.REPO_PATH
+			) TOT
+			, (SELECT @ROWNUM := 0) R
+			ORDER BY TOT.CNT DESC
+		) A
+		ORDER BY A.CNT DESC
+	</select>
+	
+	
+</mapper>

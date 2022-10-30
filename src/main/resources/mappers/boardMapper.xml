@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace= "com.neo.mappers.BoardMapper">
+	
+	<select id="boardListCount" resultType="Integer" parameterType="BoardVO" >
+		/* boardMapper.boardListCount 게시판리스트 카운트 */
+		SELECT COUNT(1) totCnt 
+		FROM(
+			<include refid="listQeury" />
+		) TOT
+	</select>
+	
+	<select id="boardList" parameterType="BoardVO" resultType="BoardVO">
+		/* boardMapper.boardList 게시판리스트*/
+		SELECT 
+			A.*
+		FROM ( <include refid="listQeury" /> ) A
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<sql id="listQeury">
+		/* listQeury 게시판리스트 쿼리 */
+		SELECT 
+			TB.BOARD_CODE
+			, TB.BOARD_GUBUN
+			, TB.TITLE
+			, TB.CONTENT
+			, TB.VIEW_CONTENT
+			, TB.VIEW_CNT
+			, TB.PUBL_DATE
+			, TB.DEL_YN
+			, TB.IN_USER
+			, DATE_FORMAT(TB.IN_DTTM, '%Y-%m-%d') AS IN_DTTM
+			, TB.UP_USER
+			, TB.UP_DTTM
+			, FN_GET_MEMBER_NAME(TB.IN_USER) IN_USER_NAME
+			, FN_GET_MEMBER_NAME(TB.UP_USER) UP_USER_NAME
+			, FORMAT(@ROWNUM := @ROWNUM + 1, 0) AS ROW_NUM
+		FROM TB_BOARD TB
+		, (SELECT @ROWNUM := 0) R
+		<where>
+			AND TB.BOARD_GUBUN = #{BOARD_GUBUN}
+			AND DEL_YN = 'N'
+			<if test="searchValue != null and searchValue != ''">
+				AND (
+					TB.TITLE LIKE CONCAT('%', #{searchValue}, '%')
+					OR TB.CONTENT LIKE CONCAT('%', #{searchValue}, '%')
+				)
+			</if>
+		</where>
+		ORDER BY TB.IN_DTTM DESC
+	</sql>
+	
+	<select id="boardDetail" parameterType="BoardVO" resultType="BoardVO">
+		/* boardMapper.boardDetail 게시판상세 */
+		SELECT 
+			TB.BOARD_CODE
+			, TB.BOARD_GUBUN
+			, TB.TITLE
+			, TB.CONTENT
+			, TB.VIEW_CONTENT
+			, TB.VIEW_CNT
+			, TB.PUBL_DATE
+			, TB.DEL_YN
+			, TB.IN_USER
+			, DATE_FORMAT(TB.IN_DTTM, '%Y-%m-%d') AS IN_DTTM
+			, TB.UP_USER
+			, TB.UP_DTTM
+			, FN_GET_MEMBER_NAME(TB.IN_USER) IN_USER_NAME
+			, FN_GET_MEMBER_NAME(TB.UP_USER) UP_USER_NAME
+		FROM TB_BOARD TB
+		WHERE TB.BOARD_CODE = #{BOARD_CODE}
+		LIMIT 1
+	</select>
+	
+	<select id="boardDetailPre" parameterType="BoardVO" resultType="BoardVO">
+		/* boardMapper.boardDetail 게시판상세 */
+		SELECT 
+			TB.BOARD_CODE
+			, TB.BOARD_GUBUN
+			, TB.TITLE
+			, TB.CONTENT
+			, TB.VIEW_CONTENT
+			, TB.VIEW_CNT
+			, TB.PUBL_DATE
+			, TB.DEL_YN
+			, TB.IN_USER
+			, TB.IN_DTTM
+			, TB.UP_USER
+			, TB.UP_DTTM
+			, FN_GET_MEMBER_NAME(TB.IN_USER) IN_USER_NAME
+			, FN_GET_MEMBER_NAME(TB.UP_USER) UP_USER_NAME
+		FROM TB_BOARD TB
+		 WHERE  TB.BOARD_GUBUN = #{BOARD_GUBUN}
+			AND DEL_YN = 'N'
+			AND TB.BOARD_CODE &gt; #{BOARD_CODE}
+		ORDER BY TB.IN_DTTM
+		LIMIT 1;
+	</select>
+	
+	<select id="boardDetailNext" parameterType="BoardVO" resultType="BoardVO">
+		/* boardMapper.boardDetail 게시판상세 */
+		SELECT 
+			TB.BOARD_CODE
+			, TB.BOARD_GUBUN
+			, TB.TITLE
+			, TB.CONTENT
+			, TB.VIEW_CONTENT
+			, TB.VIEW_CNT
+			, TB.PUBL_DATE
+			, TB.DEL_YN
+			, TB.IN_USER
+			, TB.IN_DTTM
+			, TB.UP_USER
+			, TB.UP_DTTM
+			, FN_GET_MEMBER_NAME(TB.IN_USER) IN_USER_NAME
+			, FN_GET_MEMBER_NAME(TB.UP_USER) UP_USER_NAME
+		FROM TB_BOARD TB
+		 WHERE  TB.BOARD_GUBUN = #{BOARD_GUBUN}
+			AND DEL_YN = 'N'
+			AND TB.BOARD_CODE &lt; #{BOARD_CODE}
+		ORDER BY TB.IN_DTTM DESC
+		LIMIT 1;
+	</select>
+	
+	<insert id="boardInsert" parameterType="BoardVO">
+		/* boardMapper.boardInsert 게시판등록 */
+		INSERT INTO TB_BOARD (
+			BOARD_CODE
+			, BOARD_GUBUN
+			, TITLE
+			, CONTENT
+			, VIEW_CONTENT
+			, PUBL_DATE
+			, DEL_YN
+			, IN_USER
+			, IN_DTTM
+			, UP_USER
+			, UP_DTTM
+		) VALUES (
+			#{BOARD_CODE}
+			, #{BOARD_GUBUN}
+			, TRIM(#{TITLE})
+			, TRIM(#{CONTENT})
+			, TRIM(#{VIEW_CONTENT})
+			, TRIM(#{PUBL_DATE})
+			, IFNULL(#{DEL_YN}, 'N')
+			, #{IN_USER}
+			, NOW()
+			, #{UP_USER}
+			, NOW()
+		)
+	</insert>
+	
+	<update id="boardUpdate" parameterType="BoardVO">
+		/* boardMapper.boardUpdate 게시판수정 */
+		UPDATE TB_BOARD SET
+			TITLE			= #{TITLE}
+			, CONTENT		= #{CONTENT}
+			, VIEW_CONTENT	= #{VIEW_CONTENT}
+			, PUBL_DATE		= #{PUBL_DATE}
+			, UP_USER		= #{UP_USER}
+			, UP_DTTM		= NOW()
+		WHERE BOARD_CODE = #{BOARD_CODE}
+	</update>
+	
+	<update id="boardDelete" parameterType="BoardVO">
+		/* boardMapper.boardDelete 게시판삭제 */
+		UPDATE TB_BOARD SET
+			DEL_YN = #{DEL_YN}
+			, UP_USER = #{UP_USER}
+			, UP_DTTM = NOW()
+		WHERE BOARD_CODE = #{BOARD_CODE}
+	</update>
+	
+	<select id="boardFileList" resultType="BoardFileVO" parameterType="BoardFileVO">
+		/* boardMapper.boardFileList 게시판파일 목록 */
+		SELECT
+			TBF.FILE_SEQ
+			, TBF.BOARD_CODE
+			, TBF.UPLOAD_GROUP
+			, TBF.UPLOAD_PATH
+			, TBF.ORG_FILE_NAME
+			, TBF.SYS_FILE_NAME
+			, TBF.FILE_EXT
+			, TBF.FILE_SIZE
+			, TBF.IN_USER
+			, TBF.IN_DTTM
+		FROM TB_BOARD_FILE TBF
+		WHERE TBF.BOARD_CODE = #{BOARD_CODE}
+	</select>
+	
+	<select id="boardFileDetail" resultType="BoardFileVO" parameterType="BoardFileVO">
+		/* boardMapper.boardFileDetail 게시판파일 상세 */
+		SELECT
+			TBF.FILE_SEQ
+			, TBF.BOARD_CODE
+			, TBF.UPLOAD_GROUP
+			, TBF.UPLOAD_PATH
+			, TBF.ORG_FILE_NAME
+			, TBF.SYS_FILE_NAME
+			, TBF.FILE_EXT
+			, TBF.FILE_SIZE
+			, TBF.IN_USER
+			, TBF.IN_DTTM
+		FROM TB_BOARD_FILE TBF
+		WHERE TBF.FILE_SEQ = #{FILE_SEQ}
+	</select>
+	
+	<insert id="boardFileInsert" parameterType="BoardFileVO">
+		/* boardMapper.boardFileInsert 게시판파일 등록 */
+		INSERT INTO TB_BOARD_FILE (
+			BOARD_CODE
+			, UPLOAD_GROUP
+			, UPLOAD_PATH
+			, ORG_FILE_NAME
+			, SYS_FILE_NAME
+			, FILE_EXT
+			, FILE_SIZE
+			, IN_USER
+			, IN_DTTM
+		) VALUES (
+			 #{BOARD_CODE}
+			, #{UPLOAD_GROUP}
+			, #{UPLOAD_PATH}
+			, #{ORG_FILE_NAME}
+			, #{SYS_FILE_NAME}
+			, #{FILE_EXT}
+			, #{FILE_SIZE}
+			, #{IN_USER}
+			, NOW()
+		)
+	</insert>
+	
+	<update id="boardFileDelete" parameterType="BoardFileVO">
+		/* boardMapper.boardFileDelete 게시판파일 삭제 */
+		DELETE FROM TB_BOARD_FILE
+		WHERE BOARD_CODE = #{BOARD_CODE}
+	</update>
+	
+	<update id="boardUpdateViewCnt" parameterType="BoardVO">
+		/* boardMapper.boardUpdateViewCnt 조회수 증가 */
+		update TB_BOARD set VIEW_CNT = VIEW_CNT + 1
+		WHERE BOARD_CODE = #{BOARD_CODE}
+	</update>
+</mapper>

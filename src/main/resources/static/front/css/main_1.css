@@ -1,0 +1,386 @@
+@charset "UTF-8";
+
+@import url(./sub.css);
+/* ==========================================================================
+   responsive size
+   ========================================================================== */
+/* ==========================================================================
+   메인
+   ========================================================================== */
+.wrap_main {
+	height: 100%;
+}
+
+.wrap_main .inner {
+	position: relative;
+	margin: 0 auto;
+	width: 1280px !important;
+}
+
+.wrap_main #footer .inner {
+	background-color: #f8f8f8;
+}
+
+.wrap_main #footer h4 {
+	background-image: url("../img/logo_footer_main.png");
+}
+
+.wrap_main .swiper_main {
+	overflow: hidden;
+	position: relative;
+	height: 17.5rem;
+}
+
+.wrap_main .swiper_main .swiper-slide {
+	background: url("../img/main_slide1.jpg") no-repeat 50% 50%/cover;
+}
+
+.wrap_main .swiper_main .swiper-slide .inner {
+	padding: 3.125rem 0 0 5.75rem !important;
+	background-color: transparent !important;
+}
+
+.wrap_main .swiper_main .swiper-slide .inner h2 {
+	font-size: 2rem;
+	font-weight: 700;
+	color: #fff;
+}
+
+.wrap_main .swiper_main .swiper-slide .inner .desc {
+	padding-top: 1.125rem;
+	line-height: 1.875rem;
+	font-size: 1.375rem;
+	font-weight: 400;
+	color: #fff;
+	opacity: .8;
+}
+
+.wrap_main .swiper_main .swiper-slide .inner .btn {
+	margin-top: 2.8125rem;
+}
+
+.wrap_main .swiper_main .swiper-pagination-bullets {
+	left: 50%;
+	bottom: 32px;
+	margin-left: -34.375rem;
+	width: auto;
+}
+
+.wrap_main .swiper_main .swiper-pagination-bullets .swiper-pagination-bullet {
+	width: 16px;
+	height: 16px;
+	background-color: transparent;
+	border: 2px solid #fff;
+	opacity: 0.5;
+}
+
+.wrap_main .swiper_main .swiper-pagination-bullets .swiper-pagination-bullet.swiper-pagination-bullet-active {
+	background-color: #ee8aa6;
+	border: 0;
+	opacity: 1;
+}
+
+.wrap_main #container {
+	padding: 0;
+}
+
+.wrap_main #container .inner {
+	background-color: #f8f8f8;
+	min-height: unset;
+}
+
+.wrap_main #container .lst_service {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-moz-box-orient: horizontal;
+	-moz-box-direction: normal;
+	-ms-flex-flow: row wrap;
+	flex-flow: row wrap;
+	-webkit-box-pack: justify;
+	-moz-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+	padding: 1.9375rem 2.5rem 1.25rem;
+}
+
+.wrap_main #container .lst_service li {
+	margin-bottom: 15px;
+}
+
+.wrap_main #container .lst_service li a {
+	display: block;
+	padding: 2.5rem 0 0 2.5rem;
+	width: 24.375rem;
+	height: 20.625rem;
+	background-color: #e5e5e5;
+	background-repeat: no-repeat;
+}
+
+.wrap_main #container .lst_service li a h3 {
+	line-height: 1.625rem;
+	font-size: 1.625rem;
+}
+
+.wrap_main #container .lst_service li a .desc {
+	padding-top: 1.25rem;
+	line-height: 1.625rem;
+	font-size: 1.125rem;
+	color: #666;
+}
+
+.wrap_main #container .lst_service li:nth-child(1) a {
+	background-image: url("../img/main_service1.png");
+	background-position: 2.1875rem 9.375rem;
+}
+
+.wrap_main #container .lst_service li:nth-child(2) a {
+	background-image: url("../img/main_service2.png");
+	background-position: 2.8125rem 7.5rem;
+}
+
+.wrap_main #container .lst_service li:nth-child(3) a {
+	background-image: url("../img/main_service3.png");
+	background-position: 6.25rem 7.1875rem;
+}
+
+.wrap_main #container .lst_service li:nth-child(4) a {
+	background-image: url("../img/main_service4.png");
+	background-position: 2.5rem 11.5rem;
+}
+
+.wrap_main #container .lst_service li:nth-child(5) a {
+	background-image: url("../img/main_service5.png");
+	background-position: 2.5rem 11rem;
+}
+
+.wrap_main #container .lst_service li:nth-child(6) a {
+	background-image: url("../img/main_service6.png");
+	background-position: 2.5rem 11.5rem;
+}
+
+.wrap_main .group_family {
+	overflow: hidden;
+	position: relative;
+	margin-bottom: 2.6875rem;
+	padding: 0 2.5rem;
+	height: auto;
+	background-color: #f8f8f8;
+	border-top: 1px solid #e5e5e5;
+}
+
+.wrap_main .group_family .swiper {
+	overflow: hidden;
+	padding: 1.25rem 0;
+}
+
+.wrap_main .group_family .swiper-wrapper {
+	position: relative;
+	padding: 1.25rem;
+}
+
+.wrap_main .group_family .lst_family {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	padding: 0;
+}
+
+.wrap_main .group_family .lst_family li {
+	width: 9.625rem;
+	height: 5.375rem;
+	background-color: transparent;
+}
+
+.wrap_main .group_family .lst_family li a {
+	display: block;
+}
+
+.wrap_main .group_family .lst_family li a img {
+	display: block;
+	width: 9.625rem;
+}
+
+.wrap_main .group_family .swiper-button-next {
+	right: 0.5rem;
+	margin-top: -0.75rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	background: url("../img/btn_next_main.png") no-repeat 50% 50%;
+}
+
+.wrap_main .group_family .swiper-button-next::after {
+	display: none;
+}
+
+.wrap_main .group_family .swiper-button-prev {
+	left: 0.5rem;
+	margin-top: -0.75rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	background: url("../img/btn_prev_main.png") no-repeat 50% 50%;
+}
+
+.wrap_main .group_family .swiper-button-prev::after {
+	display: none;
+}
+
+/*wrap_main*/
+@media (max-width: 768px) {
+	#wrap.wrap_main {
+		padding-top: 3.5rem;
+	}
+
+	#wrap.wrap_main #header {
+		height: 3.5rem !important;
+	}
+
+	#wrap.wrap_main #header h1 {
+		display: block;
+	}
+
+	#wrap.wrap_main #header .titlebar h2 {
+		display: none;
+	}
+
+	#wrap.wrap_main #header .titlebar .btn_prev {
+		display: none;
+	}
+
+	#wrap.wrap_main #header .titlebar .btn_gnb {
+		right: 0.3125rem;
+		top: 0.4375rem;
+	}
+
+	#wrap.wrap_main .swiper_main {
+		height: 8.25rem;
+		background: #00448d;
+	}
+
+	#wrap.wrap_main .swiper_main .swiper-slide {
+		background: none;
+	}
+
+	#wrap.wrap_main .swiper_main .swiper-slide .inner {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		padding: 1.375rem 1.25rem 0 !important;
+		width: auto;
+		height: 8.25rem;
+		background-color: #00448d !important;
+	}
+
+	#wrap.wrap_main .swiper_main .swiper-slide .inner h2 {
+		line-height: 1.125rem;
+		font-size: 1.125rem;
+		color: #fff;
+	}
+
+	#wrap.wrap_main .swiper_main .swiper-slide .inner .desc {
+		padding-top: 0.75rem;
+		line-height: 1.125rem;
+		font-size: 0.875rem;
+		color: #fff;
+		opacity: 1;
+	}
+
+	#wrap.wrap_main .swiper_main .swiper-pagination-bullets {
+		z-index: 10;
+		bottom: 1.125rem;
+		margin-left: auto;
+		-webkit-transform: translateX(-50%);
+		-moz-transform: translateX(-50%);
+		transform: translateX(-50%);
+		height: 0.5rem;
+		line-height: 0;
+	}
+
+	#wrap.wrap_main .swiper_main .swiper-pagination-bullets .swiper-pagination-bullet {
+		width: 0.5rem;
+		height: 0.5rem;
+		-moz-border-radius: 0.25rem;
+		border-radius: 0.25rem;
+		background-color: #0075F3;
+		border-color: #0075F3;
+		opacity: 1;
+	}
+
+	#wrap.wrap_main .swiper_main .swiper-pagination-bullets .swiper-pagination-bullet.swiper-pagination-bullet-active {
+		background-color: #fff;
+	}
+
+	#wrap.wrap_main #container .lst_service {
+		padding: 1.25rem 0;
+		-webkit-box-orient: horizontal;
+		-webkit-box-direction: normal;
+		-moz-box-orient: horizontal;
+		-moz-box-direction: normal;
+		-ms-flex-flow: row wrap;
+		flex-flow: row wrap;
+	}
+
+	#wrap.wrap_main #container .lst_service li {
+		-webkit-box-flex: 0;
+		-moz-box-flex: 0;
+		-ms-flex: 0 0 49%;
+		flex: 0 0 49%;
+		margin-bottom: 1.25rem;
+	}
+
+	#wrap.wrap_main #container .lst_service li a {
+		padding: 1.25rem 1rem;
+		width: auto;
+		height: 10.625rem;
+	}
+
+	#wrap.wrap_main #container .lst_service li a h3 {
+		font-size: 1rem;
+	}
+
+	#wrap.wrap_main #container .lst_service li a .desc {
+		display: none;
+		padding-top: 0.625rem;
+		font-size: 1rem;
+	}
+
+	#wrap.wrap_main #container .lst_service li:nth-child(1) a {
+		background-position: 50% 4.375rem;
+		-moz-background-size: 11.25rem;
+		background-size: 11.25rem;
+	}
+
+	#wrap.wrap_main #container .lst_service li:nth-child(2) a {
+		background-position: 50% 3.125rem;
+		background-position-x: -moz-calc(50% + 10px);
+		background-position-x: calc(50% + 10px);
+		-moz-background-size: 11.25rem;
+		background-size: 11.25rem;
+	}
+
+	#wrap.wrap_main #container .lst_service li:nth-child(3) a {
+		background-position: 50% 3.4375rem;
+		-moz-background-size: 5.625rem;
+		background-size: 5.625rem;
+	}
+
+	#wrap.wrap_main #container .lst_service li:nth-child(4) a {
+		background-position: 50% 4.375rem;
+	}
+
+	#wrap.wrap_main #container .lst_service li:nth-child(5) a {
+		background-position: 50% 4.375rem;
+	}
+
+	#wrap.wrap_main #container .lst_service li:nth-child(6) a {
+		background-position: 50% 4.375rem;
+	}
+
+	#wrap.wrap_main #footer {
+		display: block;
+	}
+}

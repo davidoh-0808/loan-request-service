@@ -1,0 +1,1394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neo.mappers.ConsultInfoMapper">
+
+    <select id="consultStatsCount" resultType="ConsultInfoVO" parameterType="ConsultInfoVO">
+	            SELECT 
+				tmc.MASTER_CODE , tmc.CODE_NAME as BRANCH_NAME 
+			            	, IFNULL(COUNT(case when tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as TOTAL_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100001') as SUBMIT
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100001' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as SUBMIT_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100002') as STANDBY
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100002' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as STANDBY_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100003') as PROGRESS
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100003' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as PROGRESS_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100004') as DELAY
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100004' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as DELAY_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100005') as COMPLETE
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100005' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as COMPLETE_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100006') as CANCEL
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100006' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as CANCEL_CNT  
+			            	, IFNULL(COUNT(case when tci.STATS_CODE IN ('MC0001100002', 'MC0001100003', 'MC0001100004') AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as SUM_PROGRESS_CNT     
+			FROM (SELECT tmc.CODE_NAME, tmc.MASTER_CODE
+					FROM TB_MASTER_CODE tmc 
+					WHERE tmc.PARENT_MASTER_CODE = 'MC0000000009'
+				) tmc
+			LEFT OUTER JOIN TB_CONSULT_INFO tci
+			ON tmc.MASTER_CODE = tci.BRANCH_CODE
+			
+		<if test="BRANCH_CODE != null and BRANCH_CODE != ''">  
+          AND tci.BRANCH_CODE = #{BRANCH_CODE}
+		</if>
+		
+        <if test="status != null and status != ''">
+            AND tci.STATS_CODE = #{status}
+        </if>
+
+        <if test="customer != null and customer != ''">
+            AND
+            tci.CUST_NM LIKE CONCAT('%', #{customer},'%')
+        </if>
+
+        <if test="searchStartDt != null and searchStartDt !='' and searchEndDt != null and searchEndDt != ''">
+            AND DATE_FORMAT(tci.IN_DTTM, '%Y.%m.%d')
+              BETWEEN STR_TO_DATE(#{searchStartDt}, '%Y.%m.%d') AND STR_TO_DATE(#{searchEndDt}, '%Y.%m.%d')
+        </if>
+        
+        <if test="phoneNumber != null and phoneNumber !=''">
+            AND tci.CUST_HP_NO LIKE CONCAT('%', #{phoneNumber}, '%')
+        </if>
+    </select>
+
+
+    <select id="consultInfoList" parameterType="ConsultInfoVO" resultType="ConsultInfoVO">
+        SELECT
+            <choose>
+                <when test="orderValue != null and orderValue !='' and orderName != null and orderName != ''">
+                    ROW_NUMBER() OVER(ORDER BY ${orderValue} ${orderName}) AS ROW_NUM
+                </when>
+                <otherwise>
+                    ROW_NUMBER() OVER(ORDER BY CONS_SEQ) AS ROW_NUM
+                </otherwise>
+            </choose>
+            , A.*
+        FROM( <include refid="listQuery"/> ) A
+        ORDER BY ROW_NUM DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <sql id="listQuery">
+        SELECT
+			TCI.CONS_SEQ
+			, DATE_FORMAT(TCI.CONS_DTTM, '%Y-%m-%d') AS CONS_DTTM
+			, TCI.CONS_MB_CODE
+			, FN_GET_CONSULT_MEMBER_NAME(TCI.CONS_MB_CODE) AS CONS_MB_NAME
+			, TCI.BRANCH_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.BRANCH_CODE) AS BRANCH_NAME
+			, TCI.BRANCH_MB_CODE
+			, FN_GET_CONSULT_MEMBER_NAME(TCI.BRANCH_MB_CODE) AS BRANCH_MB_NAME
+			, TCI.CUST_NM
+			, TCI.CUST_REGI_NO
+			, TCI.CUST_HP_NO
+			, TCI.INQU_CONS
+			, TCI.CERTI_MTHD_TP
+			, DATE_FORMAT(TCI.CERTI_DTTM, '%Y-%m-%d') AS CERTI_DTTM
+			, TCI.RECORD_TIME
+			, TCI.INFLOW_ROUTE1
+			, FN_GET_MASTER_CODE_NAME(TCI.INFLOW_ROUTE1) AS INFLOW_NAME1
+			, TCI.INFLOW_ROUTE2
+			, FN_GET_MASTER_CODE_NAME(TCI.INFLOW_ROUTE2) AS INFLOW_NAME2
+			, TCI.PRODUCT_TYPE
+			, FN_GET_MASTER_CODE_NAME(TCI.PRODUCT_TYPE) AS PRODUCT_NAME
+			, TCI.TYPE_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.TYPE_CODE) AS TYPE_NAME
+			, TCI.CORP_HIS
+			, TCI.DEBT_SETT
+			, TCI.CUST_TYPE
+			, FN_GET_MASTER_CODE_NAME(TCI.CUST_TYPE) AS CUST_TYPE_NAME
+			, TCI.CUST_CORP_NO
+			, TCI.CUST_CORP_NM
+			, TCI.CORP_REGI_DT
+			, TCI.CUST_CORP_AREA
+			, TCI.CUST_CORP_ADDR1
+			, TCI.CUST_CORP_ADDR2
+			, TCI.VULN_CLASS
+			, FN_GET_MASTER_CODE_NAME(TCI.VULN_CLASS) AS VULN_CLASS_NAME
+			, TCI.CORP_NM
+			, TCI.JOIN_DATE
+			, TCI.JOB_TYPE
+			, FN_GET_MASTER_CODE_NAME(TCI.JOB_TYPE) AS JOB_TYPE_NAME
+			, TCI.HOME_ADDR1
+			, TCI.HOME_ADDR2
+			, TCI.STATS_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.STATS_CODE) AS STATS_NAME
+			, TCI.COMP_DATE
+			, TCI.BRANCH_RESULT_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.BRANCH_RESULT_CODE) AS BRANCH_RESULT_NAME
+			, TCI.EVAL_RESULT_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.EVAL_RESULT_CODE) AS EVAL_RESULT_NAME
+			, TCI.DECLINE_REASON_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.DECLINE_REASON_CODE) AS DECLINE_REASON_NAME
+			, TCI.CANCEL_REASON_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.CANCEL_REASON_CODE) AS CANCEL_REASON_NAME
+			, TCI.NOTE
+			, TCI.ETC
+			, TCI.IN_USER
+			, CASE WHEN TCI.IN_USER = 'GUEST' THEN TCI.CUST_NM ELSE FN_GET_CONSULT_MEMBER_NAME(TCI.IN_USER) END  AS REGISTRAR
+			, DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') AS IN_DTTM
+			, TCI.UP_USER
+			, TCI.UP_DTTM 
+        FROM TB_CONSULT_INFO TCI
+        WHERE 1=1
+        AND TCI.BRANCH_CODE = #{BRANCH_CODE}
+        
+        <if test="memberAuthority == 'MC0002300001'">  
+          AND TCI.IN_USER != 'GUEST'
+		</if>
+		
+		<if test="memberAuthority == 'MC0002300002'">  
+          OR TCI.BRANCH_RESULT_CODE = 'MC0001000002'
+		</if>
+		
+        <if test="status != null and status != ''">
+            AND TCI.STATS_CODE = #{status}
+        </if>
+
+        <if test="customer != null and customer != ''">
+            AND
+            TCI.CUST_NM LIKE CONCAT('%', #{customer},'%')
+        </if>
+
+        <if test="searchStartDt != null and searchStartDt !='' and searchEndDt != null and searchEndDt != ''">
+            AND DATE_FORMAT(TCI.IN_DTTM, '%Y.%m.%d')
+              BETWEEN STR_TO_DATE(#{searchStartDt}, '%Y.%m.%d') AND STR_TO_DATE(#{searchEndDt}, '%Y.%m.%d')
+        </if>
+
+        <if test="phoneNumber != null and phoneNumber !=''">
+            AND TCI.CUST_HP_NO LIKE CONCAT('%', #{phoneNumber}, '%')
+        </if>
+        
+        UNION ALL
+        
+        SELECT
+			TCI.CONS_SEQ
+			, DATE_FORMAT(TCI.CONS_DTTM, '%Y-%m-%d') AS CONS_DTTM
+			, TCI.CONS_MB_CODE
+			, FN_GET_CONSULT_MEMBER_NAME(TCI.CONS_MB_CODE) AS CONS_MB_NAME
+			, TCI.BRANCH_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.BRANCH_CODE) AS BRANCH_NAME
+			, TCI.BRANCH_MB_CODE
+			, FN_GET_CONSULT_MEMBER_NAME(TCI.BRANCH_MB_CODE) AS BRANCH_MB_NAME
+			, TCI.CUST_NM
+			, TCI.CUST_REGI_NO
+			, TCI.CUST_HP_NO
+			, TCI.INQU_CONS
+			, TCI.CERTI_MTHD_TP
+			, DATE_FORMAT(TCI.CERTI_DTTM, '%Y-%m-%d') AS CERTI_DTTM
+			, TCI.RECORD_TIME
+			, TCI.INFLOW_ROUTE1
+			, FN_GET_MASTER_CODE_NAME(TCI.INFLOW_ROUTE1) AS INFLOW_NAME1
+			, TCI.INFLOW_ROUTE2
+			, FN_GET_MASTER_CODE_NAME(TCI.INFLOW_ROUTE2) AS INFLOW_NAME2
+			, TCI.PRODUCT_TYPE
+			, FN_GET_MASTER_CODE_NAME(TCI.PRODUCT_TYPE) AS PRODUCT_NAME
+			, TCI.TYPE_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.TYPE_CODE) AS TYPE_NAME
+			, TCI.CORP_HIS
+			, TCI.DEBT_SETT
+			, TCI.CUST_TYPE
+			, FN_GET_MASTER_CODE_NAME(TCI.CUST_TYPE) AS CUST_TYPE_NAME
+			, TCI.CUST_CORP_NO
+			, TCI.CUST_CORP_NM
+			, TCI.CORP_REGI_DT
+			, TCI.CUST_CORP_AREA
+			, TCI.CUST_CORP_ADDR1
+			, TCI.CUST_CORP_ADDR2
+			, TCI.VULN_CLASS
+			, FN_GET_MASTER_CODE_NAME(TCI.VULN_CLASS) AS VULN_CLASS_NAME
+			, TCI.CORP_NM
+			, TCI.JOIN_DATE
+			, TCI.JOB_TYPE
+			, FN_GET_MASTER_CODE_NAME(TCI.JOB_TYPE) AS JOB_TYPE_NAME
+			, TCI.HOME_ADDR1
+			, TCI.HOME_ADDR2
+			, TCI.STATS_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.STATS_CODE) AS STATS_NAME
+			, TCI.COMP_DATE
+			, TCI.BRANCH_RESULT_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.BRANCH_RESULT_CODE) AS BRANCH_RESULT_NAME
+			, TCI.EVAL_RESULT_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.EVAL_RESULT_CODE) AS EVAL_RESULT_NAME
+			, TCI.DECLINE_REASON_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.DECLINE_REASON_CODE) AS DECLINE_REASON_NAME
+			, TCI.CANCEL_REASON_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.CANCEL_REASON_CODE) AS CANCEL_REASON_NAME
+			, TCI.NOTE
+			, TCI.ETC
+			, TCI.IN_USER
+			, CASE WHEN TCI.IN_USER = 'GUEST' THEN TCI.CUST_NM ELSE FN_GET_CONSULT_MEMBER_NAME(TCI.IN_USER) END  AS REGISTRAR
+			, DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') AS IN_DTTM
+			, TCI.UP_USER
+			, TCI.UP_DTTM 
+        FROM TB_CONSULT_INFO TCI
+        WHERE 1=1
+
+        <if test="memberAuthority == 'MC0002300001'">   
+          AND TCI.BRANCH_CODE = #{BRANCH_CODE}
+          AND TCI.IN_USER = 'GUEST'
+          AND TCI.EVAL_RESULT_CODE IN ('MC0002100004', 'MC0002100005', 'MC0002100006')
+		</if>
+		
+		<if test="memberAuthority == 'MC0002300002'">  
+          AND TCI.IN_USER = 'GUEST'
+		</if>
+		
+        <if test="status != null and status != ''">
+            AND TCI.STATS_CODE = #{status}
+        </if>
+
+        <if test="customer != null and customer != ''">
+            AND
+            TCI.CUST_NM LIKE CONCAT('%', #{customer},'%')
+        </if>
+
+        <if test="searchStartDt != null and searchStartDt !='' and searchEndDt != null and searchEndDt != ''">
+            AND DATE_FORMAT(TCI.IN_DTTM, '%Y.%m.%d')
+              BETWEEN STR_TO_DATE(#{searchStartDt}, '%Y.%m.%d') AND STR_TO_DATE(#{searchEndDt}, '%Y.%m.%d')
+        </if>
+
+        <if test="phoneNumber != null and phoneNumber !=''">
+            AND TCI.CUST_HP_NO LIKE CONCAT('%', #{phoneNumber}, '%')
+        </if>
+        
+    </sql>
+    
+    <select id="consultInfoDetail" parameterType="ConsultInfoVO" resultType="ConsultInfoVO">
+        SELECT
+			TCI.CONS_SEQ
+			, DATE_FORMAT(TCI.CONS_DTTM, '%Y-%m-%d') AS CONS_DTTM
+			, TCI.CONS_MB_CODE
+			, FN_GET_CONSULT_MEMBER_NAME(TCI.CONS_MB_CODE) AS CONS_MB_NAME
+			, TCI.BRANCH_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.BRANCH_CODE) AS BRANCH_NAME
+			, TCI.BRANCH_MB_CODE
+			, FN_GET_CONSULT_MEMBER_NAME(TCI.BRANCH_MB_CODE) AS BRANCH_MB_NAME
+			, TCI.CUST_NM
+			, TCI.CUST_REGI_NO
+			, TCI.CUST_HP_NO
+			, TCI.INQU_CONS
+			, FN_GET_MASTER_CODE_NAME(TCI.CERTI_MTHD_TP) AS CERTI_MTHD_TP_NAME
+			, TCI.CERTI_MTHD_TP
+			, TCI.CERTI_DTTM
+			, TCI.RECORD_TIME
+			, TCI.INFLOW_ROUTE1
+			, FN_GET_MASTER_CODE_NAME(TCI.INFLOW_ROUTE1) AS INFLOW_NAME1
+			, TCI.INFLOW_ROUTE2
+			, FN_GET_MASTER_CODE_NAME(TCI.INFLOW_ROUTE2) AS INFLOW_NAME2
+			, TCI.PRODUCT_TYPE
+			, FN_GET_MASTER_CODE_NAME(TCI.PRODUCT_TYPE) AS PRODUCT_NAME
+			, TCI.TYPE_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.TYPE_CODE) AS TYPE_NAME
+			, TCI.CORP_HIS
+			, TCI.DEBT_SETT
+			, TCI.CUST_TYPE
+			, FN_GET_MASTER_CODE_NAME(TCI.CUST_TYPE) AS CUST_TYPE_NAME
+			, TCI.CUST_CORP_NO
+			, TCI.CUST_CORP_NM
+			, DATE_FORMAT(TCI.CORP_REGI_DT, '%Y-%m-%d') AS CORP_REGI_DT
+			, TCI.CUST_CORP_AREA
+			, TCI.CUST_CORP_ADDR1
+			, TCI.CUST_CORP_ADDR2
+			, TCI.VULN_CLASS
+			, FN_GET_MASTER_CODE_NAME(TCI.VULN_CLASS) AS VULN_CLASS_NAME
+			, TCI.CORP_NM
+			, TCI.JOIN_DATE
+			, TCI.JOB_TYPE
+			, FN_GET_MASTER_CODE_NAME(TCI.JOB_TYPE) AS JOB_TYPE_NAME
+			, TCI.HOME_ADDR1
+			, TCI.HOME_ADDR2
+			, TCI.STATS_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.STATS_CODE) AS STATS_NAME
+			, DATE_FORMAT(TCI.COMP_DATE, '%Y-%m-%d') AS COMP_DATE
+			, TCI.BRANCH_RESULT_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.BRANCH_RESULT_CODE) AS BRANCH_RESULT_NAME
+			, TCI.EVAL_RESULT_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.EVAL_RESULT_CODE) AS EVAL_RESULT_NAME
+			, TCI.DECLINE_REASON_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.DECLINE_REASON_CODE) AS DECLINE_REASON_NAME
+			, TCI.CANCEL_REASON_CODE
+			, FN_GET_MASTER_CODE_NAME(TCI.CANCEL_REASON_CODE) AS CANCEL_REASON_NAME
+			, TCI.NOTE
+			, TCI.ETC
+			, TCI.IN_USER
+			, FN_GET_CONSULT_MEMBER_NAME(TCI.IN_USER) AS REGISTRAR
+			, DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') AS IN_DTTM
+			, TCI.UP_USER
+			, TCI.UP_DTTM 
+        FROM TB_CONSULT_INFO TCI
+        WHERE TCI.CONS_SEQ = #{CONS_SEQ}
+    </select>
+
+    <insert id="consultInfoInsert" parameterType="ConsultInfoVO">
+        INSERT INTO HYUNDAISMILE.TB_CONSULT_INFO (
+                CONS_DTTM,
+                CONS_MB_CODE,
+                BRANCH_CODE,
+                BRANCH_MB_CODE,
+                CUST_NM,
+                CUST_REGI_NO,
+                CUST_HP_NO,
+                INQU_CONS,
+                RECORD_TIME,
+                INFLOW_ROUTE1,
+                INFLOW_ROUTE2,
+                PRODUCT_TYPE,
+                TYPE_CODE,
+                CORP_HIS,
+                DEBT_SETT,
+                CUST_TYPE,
+                CUST_CORP_NO,
+                CUST_CORP_NM,
+                CORP_REGI_DT,
+                CUST_CORP_AREA,
+                CUST_CORP_ADDR1,
+                CUST_CORP_ADDR2,
+                VULN_CLASS,
+                CORP_NM,
+                JOIN_DATE,
+                JOB_TYPE,
+                HOME_ADDR1,
+                HOME_ADDR2,
+                STATS_CODE,
+                COMP_DATE,
+                BRANCH_RESULT_CODE,
+                EVAL_RESULT_CODE,
+                DECLINE_REASON_CODE,
+                CANCEL_REASON_CODE,
+                NOTE,
+                IN_USER,
+                IN_DTTM,
+                ETC
+            ) VALUES(
+                #{CONS_DTTM},
+                #{CONS_MB_CODE},
+                #{BRANCH_CODE},
+                #{BRANCH_MB_CODE},
+                #{CUST_NM},
+                #{CUST_REGI_NO},
+                #{CUST_HP_NO},
+                #{INQU_CONS},
+                #{RECORD_TIME},
+                #{INFLOW_ROUTE1},
+                #{INFLOW_ROUTE2},
+                #{PRODUCT_TYPE},
+                #{TYPE_CODE},
+                #{CORP_HIS},
+                #{DEBT_SETT},
+                #{CUST_TYPE},
+                #{CUST_CORP_NO},
+                #{CUST_CORP_NM},
+                #{CORP_REGI_DT},
+                #{CUST_CORP_AREA},
+                #{CUST_CORP_ADDR1},
+                #{CUST_CORP_ADDR2},
+                #{VULN_CLASS},
+                #{CORP_NM},
+                #{JOIN_DATE},
+                #{JOB_TYPE},
+                #{HOME_ADDR1},
+                #{HOME_ADDR2},
+                #{STATS_CODE},
+                #{COMP_DATE},
+                #{BRANCH_RESULT_CODE},
+                #{EVAL_RESULT_CODE},
+                #{DECLINE_REASON_CODE},
+                #{CANCEL_REASON_CODE},
+                #{NOTE},
+                #{IN_USER},
+                NOW(),
+                #{ETC}
+            )
+    </insert>
+
+    <update id="consultInfoUpdate" parameterType="ConsultInfoVO" >
+        UPDATE TB_CONSULT_INFO SET
+                UP_DTTM                 = NOW()
+                <if test="CONS_DTTM != null and CONS_DTTM !=''">
+                    , CONS_DTTM         = #{CONS_DTTM}
+                </if>
+                <if test="CONS_MB_CODE != null and CONS_MB_CODE !=''">
+                    , CONS_MB_CODE      = #{CONS_MB_CODE}
+                </if>
+                <if test="BRANCH_CODE != null and BRANCH_CODE !=''">
+                    , BRANCH_CODE        = #{BRANCH_CODE}
+                </if>
+                <if test="BRANCH_MB_CODE != null and BRANCH_MB_CODE !=''">
+                    , BRANCH_MB_CODE     = #{BRANCH_MB_CODE}
+                </if>
+                <if test="CUST_NM != null and CUST_NM !=''">
+                    , CUST_NM            = #{CUST_NM}
+                </if>
+                <if test="CUST_REGI_NO != null and CUST_REGI_NO !=''">
+                    , CUST_REGI_NO       = #{CUST_REGI_NO}
+                </if>
+                <if test="CUST_HP_NO != null and CUST_HP_NO !=''">
+                    , CUST_HP_NO         = #{CUST_HP_NO}
+                </if>
+                <if test="INQU_CONS != null and INQU_CONS !=''">
+                    , INQU_CONS          = #{INQU_CONS}
+                </if>
+                <if test="RECORD_TIME != null and RECORD_TIME !=''">
+                    , RECORD_TIME        = #{RECORD_TIME}
+                </if>
+                <if test="INFLOW_ROUTE1 != null and INFLOW_ROUTE1 !=''">
+                    , INFLOW_ROUTE1      = #{INFLOW_ROUTE1}
+                </if>
+                <if test="INFLOW_ROUTE2 != null and INFLOW_ROUTE2 !=''">
+                    , INFLOW_ROUTE2      = #{INFLOW_ROUTE2}
+                </if>
+                <if test="PRODUCT_TYPE != null and PRODUCT_TYPE !=''">
+                    , PRODUCT_TYPE       = #{PRODUCT_TYPE}
+                </if>
+                <if test="TYPE_CODE != null and TYPE_CODE !=''">
+                    , TYPE_CODE          = #{TYPE_CODE}
+                </if>
+                <if test="CORP_HIS != null and CORP_HIS !=''">
+                    , CORP_HIS           = #{CORP_HIS}
+                </if>
+                <if test="DEBT_SETT != null and DEBT_SETT !=''">
+                    , DEBT_SETT          = #{DEBT_SETT}
+                    </if>
+                <if test="CUST_TYPE != null and CUST_TYPE !=''">
+                    , CUST_TYPE          = #{CUST_TYPE}
+                </if>
+                <if test="CUST_CORP_NO != null and CUST_CORP_NO !=''">
+                    , CUST_CORP_NO       = #{CUST_CORP_NO}
+                </if>
+                <if test="CUST_CORP_NM != null and CUST_CORP_NM !=''">
+                    , CUST_CORP_NM       = #{CUST_CORP_NM}
+                </if>
+                <if test="CORP_REGI_DT != null and CORP_REGI_DT !=''">
+                    , CORP_REGI_DT       = #{CORP_REGI_DT}
+                </if>
+                <if test="CUST_CORP_AREA != null and CUST_CORP_AREA !=''">
+                    , CUST_CORP_AREA     = #{CUST_CORP_AREA}
+                </if>
+                <if test="CUST_CORP_ADDR1 != null and CUST_CORP_ADDR1 !=''">
+                    , CUST_CORP_ADDR1    = #{CUST_CORP_ADDR1}
+                </if>
+                <if test="CUST_CORP_ADDR2 != null and CUST_CORP_ADDR2 !=''">
+                    , CUST_CORP_ADDR2    = #{CUST_CORP_ADDR2}
+                </if>
+                <if test="VULN_CLASS != null and VULN_CLASS !=''">
+                    , VULN_CLASS         = #{VULN_CLASS}
+                </if>
+                <if test="CORP_NM != null and CORP_NM !=''">
+                    , CORP_NM            = #{CORP_NM}
+                </if>
+                <if test="JOIN_DATE != null and JOIN_DATE !=''">
+                    , JOIN_DATE          = #{JOIN_DATE}
+                </if>
+                <if test="JOB_TYPE != null and JOB_TYPE !=''">
+                    , JOB_TYPE           = #{JOB_TYPE}
+                </if>
+                <if test="HOME_ADDR1 != null and HOME_ADDR1 !=''">
+                    , HOME_ADDR1         = #{HOME_ADDR1}
+                </if>
+                <if test="HOME_ADDR1 != null and HOME_ADDR1 !=''">
+                    , HOME_ADDR2         = #{HOME_ADDR2}
+                </if>
+                <if test="STATS_CODE != null and STATS_CODE !=''">
+                    , STATS_CODE         = #{STATS_CODE}
+                </if>
+                <if test="CONS_DTTM != null and CONS_DTTM !=''">
+                    , CONS_DTTM          = #{CONS_DTTM}
+                </if>
+                <if test="COMP_DATE != null and COMP_DATE !=''">
+                    , COMP_DATE          = #{COMP_DATE}
+                </if>
+                <if test="BRANCH_RESULT_CODE != null and BRANCH_RESULT_CODE !=''">
+                    , BRANCH_RESULT_CODE        = #{BRANCH_RESULT_CODE}
+                </if>
+                <if test="EVAL_RESULT_CODE != null and EVAL_RESULT_CODE !=''">
+                    , EVAL_RESULT_CODE        = #{EVAL_RESULT_CODE}
+                </if>
+                <if test="DECLINE_REASON_CODE != null and DECLINE_REASON_CODE !=''">
+                    , DECLINE_REASON_CODE        = #{DECLINE_REASON_CODE}
+                </if>
+                <if test="CANCEL_REASON_CODE != null and CANCEL_REASON_CODE !=''">
+                    , CANCEL_REASON_CODE        = #{CANCEL_REASON_CODE}
+                </if>
+                <if test="NOTE != null and NOTE !=''">
+                    , NOTE               = #{NOTE}
+                </if>
+                <if test="UP_USER != null and UP_USER !=''">
+                    , UP_USER            = #{UP_USER}
+                </if>
+                <if test="ETC != null and ETC !=''">
+                    , ETC                = #{ETC}
+                </if>
+        WHERE CONS_SEQ = #{CONS_SEQ}
+    </update>
+
+    <delete id="consultInfoDelete" parameterType="ConsultInfoVO">
+        DELETE
+        FROM TB_CONSULT_INFO
+        WHERE CONS_SEQ = #{CONS_SEQ}
+    </delete>
+
+	<!-- 승인처리 안된 상담신청 3(90일)개월 지나면 정보 삭제
+		 'MC0002100004' 심사결과	
+	-->
+    <delete id="consultInfoDeleteBatch">
+    	/** 승인처리 안된 상담신청 3(90일)개월 지나면 정보 삭제 **/
+    <![CDATA[
+		DELETE
+		FROM TB_CONSULT_INFO
+		WHERE STATS_CODE != 'MC0002100004'
+		AND ADDDATE(IN_DTTM, INTERVAL 90 DAY) < CURRENT_DATE() 
+	]]>
+	 
+    </delete>
+
+    <select id="consultInfoListForExcel" parameterType="ConsultInfoVO" resultType="ConsultInfoVO">
+        SELECT
+             TCI.CONS_SEQ
+             , DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') AS IN_DTTM_FM
+             , DATE_FORMAT(TCI.CONS_DTTM, '%Y-%m-%d') AS CONS_DTTM
+             , TCI.CONS_MB_CODE
+             , A.MEMBER_NAME AS CONS_MB_NAME
+             , TCI.BRANCH_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.BRANCH_CODE) AS BRANCH_NAME
+             , TCI.BRANCH_MB_CODE
+             , B.MEMBER_NAME AS BRANCH_MB_NAME
+             , TCI.CUST_NM
+             , TCI.CUST_REGI_NO
+             , TCI.INQU_CONS
+             , TCI.RECORD_TIME
+             , TCI.INFLOW_ROUTE1
+             , FN_GET_MASTER_CODE_NAME(TCI.INFLOW_ROUTE1) AS INFLOW_NAME1
+             , TCI.INFLOW_ROUTE2
+             , FN_GET_MASTER_CODE_NAME(TCI.INFLOW_ROUTE2) AS INFLOW_NAME2
+             , TCI.PRODUCT_TYPE
+             , FN_GET_MASTER_CODE_NAME(TCI.PRODUCT_TYPE) AS PRODUCT_NAME
+             , TCI.TYPE_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.TYPE_CODE) AS TYPE_NAME
+             , TCI.CORP_HIS
+             , TCI.DEBT_SETT
+             , TCI.STATS_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.STATS_CODE) AS STATS_NAME
+             , DATE_FORMAT(TCI.COMP_DATE, '%Y-%m-%d') AS COMP_DATE
+             , TCI.BRANCH_RESULT_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.BRANCH_RESULT_CODE) AS BRANCH_RESULT_NAME
+             , TCI.EVAL_RESULT_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.EVAL_RESULT_CODE) AS EVAL_RESULT_NAME
+             , TCI.DECLINE_REASON_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.DECLINE_REASON_CODE) AS DECLINE_REASON_NAME
+             , TCI.CANCEL_REASON_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.CANCEL_REASON_CODE) AS CANCEL_REASON_NAME
+             , TCI.NOTE
+             , TCI.ETC
+             , CONCAT( SUBSTRING(TCI.CUST_HP_NO, 1, 3) , "-****-" , SUBSTRING(TCI.CUST_HP_NO, 8, 4) ) AS CUST_HP_NO_FM
+        FROM TB_CONSULT_INFO TCI
+
+        LEFT OUTER JOIN TB_CONSULT_MEMBER A
+            ON TCI.CONS_MB_CODE = A.MEMBER_CODE
+        LEFT OUTER JOIN TB_CONSULT_MEMBER B
+            ON TCI.BRANCH_MB_CODE = B.MEMBER_CODE
+    </select>
+
+
+    <!--
+        상담신청내역/조회 requestList.jsp (지점로그인) 에서 사용
+
+        ConsultInfoMapper.branchStatsCount 메소드
+        접수, 진행중, 완료 상태를 카운트 하기 위한 쿼리
+        MC0001100001	접수           <<  처리현황은 접수지만 지점결과상태는 접수 MC0001000001 이 아닌 경우
+        MC0001100002	진행중          << 심사팀에서 픽업해간 내역은 제외 - 지점결과상태(상담이관 MC0001000002) & 심사결과상태(진행중 MC0002100002 , 부재/보류 MC0002100003) 제외
+        MC0001100003	부재/보류       << 심사팀에서 픽업해간 내역은 제외 - 지점결과상태(상담이관 MC0001000002) & 심사결과상태(진행중 MC0002100002 , 부재/보류 MC0002100003) 제외
+        MC0001100004	완료           << 심사팀에서 픽업해갔지만 완료, 취소 (즉 완료상태) 인 내역은 카운트
+        MC0001100005	취소           << 심사팀에서 픽업해갔지만 완료, 취소 (즉 완료상태) 인 내역은 카운트
+     -->
+    <!-- 현재 로그인한 지점유저의 지점에 해당하는 리스트만 가져온다 -->
+    <select id="branchConsultInfoListCount" resultType="Integer" parameterType="ConsultInfoVO">
+        SELECT  COUNT(1)
+        FROM ( <include refid="branchListQuery"/> ) TOT
+        WHERE TOT.BRANCH_CODE = #{BRANCH_CODE}
+    </select>
+
+    <!-- 현재 로그인한 지점유저의 지점에 해당하는 리스트만 가져온다 -->
+    <select id="branchStatsCount" resultType="ConsultInfoVO" parameterType="ConsultInfoVO">
+        SELECT
+             (  SELECT COUNT(1)
+                FROM (<include refid="branchListQuery"/>) TCI
+                WHERE TCI.STATS_CODE = 'MC0001100001'
+                    AND TCI.BRANCH_CODE = #{BRANCH_CODE}
+              )
+                AS SUBMIT_CNT
+
+             , (  SELECT COUNT(1)
+                FROM (<include refid="branchListQuery"/>) TCI
+                WHERE TCI.STATS_CODE IN ('MC0001100002','MC0001100003')
+                    AND TCI.BRANCH_CODE = #{BRANCH_CODE}
+             )
+                AS PROGRESS_CNT
+
+             , (  SELECT COUNT(1)
+                FROM (<include refid="branchListQuery"/>) TCI
+                WHERE TCI.STATS_CODE = 'MC0001100005'
+                    AND TCI.BRANCH_CODE = #{BRANCH_CODE}
+              )
+                AS CANCEL_CNT
+
+             , (  SELECT COUNT(1)
+                FROM (<include refid="branchListQuery"/>) TCI
+                WHERE TCI.STATS_CODE = 'MC0001100004'
+                    AND TCI.BRANCH_CODE = #{BRANCH_CODE}
+              )
+                AS COMPLETE_CNT
+
+        FROM DUAL
+    </select>
+
+    <!--
+        상담신청내역/조회 requestList.jsp (지점 로그인) 에서 사용
+        심사팀에서 픽업해갔지만 완료되지 않은 내역은 제외
+            ...
+    -->
+    <!-- 현재 로그인한 지점유저의 지점에 해당하는 리스트만 가져온다 -->
+    <select id="branchConsultInfoList" parameterType="ConsultInfoVO" resultType="ConsultInfoVO">
+        SELECT
+            <choose>
+                <when test="orderValue != null and orderValue !='' and orderName != null and orderName != ''">
+                    ROW_NUMBER() OVER(ORDER BY ${orderValue} ${orderName}) AS ROW_NUM
+                </when>
+                <otherwise>
+                    ROW_NUMBER() OVER(ORDER BY IN_DTTM DESC) AS ROW_NUM
+                </otherwise>
+            </choose>
+            , A.*
+        FROM (
+            <include refid="branchListQuery"/>
+        ) A
+        WHERE A.BRANCH_CODE = #{BRANCH_CODE}
+        ORDER BY ROW_NUM DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!-- 현재 로그인한 지점유저의 지점에 해당하는 리스트만 가져온다
+        *유의사항 : -->
+    <sql id="branchListQuery">
+        SELECT
+             TCI.CONS_SEQ
+             , TCI.IN_DTTM
+             , DATE_FORMAT(TCI.CONS_DTTM, '%Y-%m-%d') AS CONS_DTTM
+             , TCI.CONS_MB_CODE
+             , FN_GET_CONSULT_MEMBER_NAME(TCI.CONS_MB_CODE) AS CONS_MB_NAME
+             , TCI.BRANCH_CODE
+             , FN_GET_CONSULT_MEMBER_NAME(TCI.BRANCH_CODE) AS BRANCH_MB_NAME
+             , FN_GET_CONSULT_MEMBER_NAME(TCI.IN_USER) AS REGISTRAR
+             , TCI.CUST_NM
+             , TCI.CUST_REGI_NO
+             , TCI.CUST_HP_NO
+             , TCI.INQU_CONS
+             , TCI.RECORD_TIME
+             , TCI.INFLOW_ROUTE1
+             , FN_GET_MASTER_CODE_NAME(TCI.INFLOW_ROUTE1) AS INFLOW_NAME1
+             , TCI.INFLOW_ROUTE2
+             , FN_GET_MASTER_CODE_NAME(TCI.INFLOW_ROUTE2) AS INFLOW_NAME2
+             , TCI.PRODUCT_TYPE
+             , FN_GET_MASTER_CODE_NAME(TCI.PRODUCT_TYPE) AS PRODUCT_NAME
+             , TCI.TYPE_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.TYPE_CODE) AS TYPE_NAME
+             , TCI.CORP_HIS
+             , TCI.DEBT_SETT
+             , TCI.STATS_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.STATS_CODE) AS STATS_NAME
+             , DATE_FORMAT(TCI.COMP_DATE, '%Y-%m-%d') AS COMP_DATE
+             , TCI.BRANCH_RESULT_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.BRANCH_RESULT_CODE) AS BRANCH_RESULT_NAME
+             , TCI.EVAL_RESULT_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.EVAL_RESULT_CODE) AS EVAL_RESULT_NAME
+             , TCI.DECLINE_REASON_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.DECLINE_REASON_CODE) AS DECLINE_REASON_NAME
+             , TCI.CANCEL_REASON_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.CANCEL_REASON_CODE) AS CANCEL_REASON_NAME
+             , TCI.NOTE
+             , TCI.ETC
+        FROM TB_CONSULT_INFO TCI
+
+        WHERE TCI.BRANCH_RESULT_CODE = 'MC0001000001'
+          AND TCI.BRANCH_CODE = #{BRANCH_CODE}
+
+        <if test="status != null and status != ''">
+            AND TCI.STATS_CODE = #{status}
+        </if>
+
+        <if test="customer != null and customer != ''">
+            AND
+            TCI.CUST_NM LIKE CONCAT('%', #{customer},'%')
+        </if>
+
+        <if test="searchStartDt != null and searchStartDt !='' and searchEndDt != null and searchEndDt != ''">
+            AND DATE_FORMAT(TCI.IN_DTTM, '%Y.%m.%d')
+              BETWEEN STR_TO_DATE(#{searchStartDt}, '%Y.%m.%d') AND STR_TO_DATE(#{searchEndDt}, '%Y.%m.%d')
+        </if>
+
+        <if test="phoneNumber != null and phoneNumber !=''">
+            AND TCI.CUST_HP_NO LIKE CONCAT('%', #{phoneNumber}, '%')
+        </if>
+
+    </sql>
+
+    <!-- ********************** 지점 대시보드 - 전체 ********************** -->
+    <select id="getBranDash" resultType="ConsultInfoVO" parameterType="ConsultInfoVO">
+        SELECT
+        	(
+        		SELECT COUNT(1)
+        		FROM (
+        				SELECT *
+        				FROM TB_CONSULT_INFO TCI
+        				WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+        		) tot
+        	) AS TOTAL_CNT
+          , (
+        		SELECT COUNT(1)
+        		FROM (
+        				SELECT *
+        				FROM TB_CONSULT_INFO TCI
+        				WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+        					AND TCI.STATS_CODE = "MC0001100001"
+        		) submit
+        	) AS SUBMIT_CNT
+          , (
+        		SELECT COUNT(1)
+        		FROM (
+        				SELECT *
+        				FROM TB_CONSULT_INFO TCI
+        				WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+        					AND (TCI.STATS_CODE = "MC0001100002" OR TCI.STATS_CODE="MC0001100003")
+        		) progress
+        	) AS PROGRESS_CNT
+          , (
+        		SELECT COUNT(1)
+        		FROM (
+        				SELECT *
+        				FROM TB_CONSULT_INFO TCI
+        				WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+        					AND TCI.STATS_CODE = "MC0001100004"
+        		) complete
+        	) AS COMPLETE_CNT
+          , (
+        		SELECT COUNT(1)
+        		FROM (
+        				SELECT *
+        				FROM TB_CONSULT_INFO TCI
+        				WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+        					AND TCI.STATS_CODE = "MC0001100005"
+        		) cancel
+        	) AS CANCEL_CNT
+        FROM DUAL;
+    </select>
+
+    <select id="getBranDashDaily" resultType="ConsultInfoVO" parameterType="ConsultInfoVO">
+        SELECT
+            (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                        AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') = STR_TO_DATE(#{currDate}, '%Y.%m.%d')
+                ) tot
+            ) AS TOTAL_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100001"
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') = STR_TO_DATE(#{currDate}, '%Y.%m.%d')
+                ) submit
+            ) AS SUBMIT_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND (TCI.STATS_CODE = "MC0001100002" OR TCI.STATS_CODE="MC0001100003")
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') = STR_TO_DATE(#{currDate}, '%Y.%m.%d')
+                ) progress
+            ) AS PROGRESS_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100004"
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') = STR_TO_DATE(#{currDate}, '%Y.%m.%d')
+                ) complete
+            ) AS COMPLETE_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100005"
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') = STR_TO_DATE(#{currDate}, '%Y.%m.%d')
+                ) cancel
+            ) AS CANCEL_CNT
+        FROM DUAL
+    </select>
+
+    <select id="getBranDashMonthly" resultType="ConsultInfoVO" parameterType="ConsultInfoVO">
+        SELECT
+            (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                ) tot
+            ) AS TOTAL_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100001"
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                ) submit
+            ) AS SUBMIT_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND (TCI.STATS_CODE = "MC0001100002" OR TCI.STATS_CODE="MC0001100003")
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                ) progress
+            ) AS PROGRESS_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100004"
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                ) complete
+            ) AS COMPLETE_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100005"
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                ) cancel
+            ) AS CANCEL_CNT
+        FROM DUAL;
+    </select>
+
+    <select id="getBranDashYearly" resultType="ConsultInfoVO" parameterType="ConsultInfoVO">
+        SELECT
+            (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                        AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                ) tot
+            ) AS TOTAL_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100001"
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                ) submit
+            ) AS SUBMIT_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND (TCI.STATS_CODE = "MC0001100002" OR TCI.STATS_CODE="MC0001100003")
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                ) progress
+            ) AS PROGRESS_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100004"
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                ) complete
+            ) AS COMPLETE_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100005"
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                ) cancel
+            ) AS CANCEL_CNT
+        FROM DUAL;
+    </select>
+    <!-- ********************** 지점 대시보드 - 전체 ********************** -->
+
+    <!-- ********************** 지점 대시보드 - 유저 ********************** -->
+    <select id="getBranDashForUser" resultType="ConsultInfoVO" parameterType="ConsultInfoVO">
+        SELECT
+            (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                ) tot
+            ) AS TOTAL_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100001"
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                ) submit
+            ) AS SUBMIT_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND (TCI.STATS_CODE = "MC0001100002" OR TCI.STATS_CODE="MC0001100003")
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                ) progress
+            ) AS PROGRESS_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100004"
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                ) complete
+            ) AS COMPLETE_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100005"
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                ) cancel
+            ) AS CANCEL_CNT
+        FROM DUAL
+    </select>
+
+    <select id="getBranDashForUserDaily" resultType="ConsultInfoVO" parameterType="ConsultInfoVO">
+        SELECT
+            (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') = STR_TO_DATE(#{currDate}, '%Y.%m.%d')
+                ) tot
+            ) AS TOTAL_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100001"
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') = STR_TO_DATE(#{currDate}, '%Y.%m.%d')
+                ) submit
+            ) AS SUBMIT_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND (TCI.STATS_CODE = "MC0001100002" OR TCI.STATS_CODE="MC0001100003")
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') = STR_TO_DATE(#{currDate}, '%Y.%m.%d')
+                ) progress
+            ) AS PROGRESS_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100004"
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') = STR_TO_DATE(#{currDate}, '%Y.%m.%d')
+                ) complete
+            ) AS COMPLETE_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100005"
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') = STR_TO_DATE(#{currDate}, '%Y.%m.%d')
+                ) cancel
+            ) AS CANCEL_CNT
+        FROM DUAL
+    </select>
+
+    <select id="getBranDashForUserMonthly" resultType="ConsultInfoVO" parameterType="ConsultInfoVO">
+       SELECT
+            (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                ) tot
+            ) AS TOTAL_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100001"
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                ) submit
+            ) AS SUBMIT_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND (TCI.STATS_CODE = "MC0001100002" OR TCI.STATS_CODE="MC0001100003")
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                ) progress
+            ) AS PROGRESS_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100004"
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                ) complete
+            ) AS COMPLETE_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100005"
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+                ) cancel
+            ) AS CANCEL_CNT
+        FROM DUAL
+    </select>
+
+    <select id="getBranDashForUserYearly" resultType="ConsultInfoVO" parameterType="ConsultInfoVO">
+       SELECT
+            (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                ) tot
+            ) AS TOTAL_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100001"
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                ) submit
+            ) AS SUBMIT_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND (TCI.STATS_CODE = "MC0001100002" OR TCI.STATS_CODE="MC0001100003")
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                ) progress
+            ) AS PROGRESS_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100004"
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                ) complete
+            ) AS COMPLETE_CNT
+          , (
+                SELECT COUNT(1)
+                FROM (
+                        SELECT *
+                        FROM TB_CONSULT_INFO TCI
+                        WHERE TCI.BRANCH_CODE = #{BRANCH_CODE}
+                            AND TCI.STATS_CODE = "MC0001100005"
+                            AND TCI.BRANCH_MB_CODE = #{BRANCH_MB_CODE}
+                            AND DATE_FORMAT(TCI.IN_DTTM, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                ) cancel
+            ) AS CANCEL_CNT
+        FROM DUAL
+    </select>
+    <!-- ********************** 지점 대시보드 - 유저 ********************** -->
+
+
+
+
+
+    <select id="evalConsultInfoListCount" resultType="Integer" parameterType="ConsultInfoVO">
+        SELECT  COUNT(1)
+        FROM (
+            <include refid="evalListQuery"/>
+        ) TOT
+    </select>
+    <!-- 상담신청내역/조회 requestList.jsp (심사팀 로그인)에서 사용 -->
+    <select id="evalStatsCount" resultType="ConsultInfoVO" parameterType="ConsultInfoVO">
+        SELECT
+               (  SELECT COUNT(1)
+                FROM (
+                    <include refid="evalListQuery"/>
+                ) TCI
+                WHERE TCI.STATS_CODE = 'MC0001100001')
+                AS SUBMIT_CNT
+             , (  SELECT COUNT(1)
+                FROM (
+                    <include refid="evalListQuery"/>
+                ) TCI
+                WHERE TCI.STATS_CODE = 'MC0001100002'
+             )
+                AS PROGRESS_CNT
+
+             , (  SELECT COUNT(1)
+                FROM (
+                    <include refid="evalListQuery"/>
+                ) TCI
+                WHERE TCI.STATS_CODE = 'MC0001100003'
+             )
+                AS ABSENCE_CNT
+
+             , (  SELECT COUNT(1)
+                FROM (
+                    <include refid="evalListQuery"/>
+                ) TCI
+                WHERE TCI.STATS_CODE = 'MC0001100004'
+             )
+                AS COMPLETE_CNT
+
+             , (  SELECT COUNT(1)
+                FROM (
+                    <include refid="evalListQuery"/>
+                ) TCI
+                WHERE TCI.STATS_CODE = 'MC0001100005'
+              )
+                AS CANCEL_CNT
+
+        FROM DUAL
+    </select>
+    <!--
+        상담신청내역/조회 requestList.jsp (심사팀 로그인) 에서 사용
+
+        심사결과코드 가 존재하는 내역만 보여준다
+        MC0002100001	접수
+        MC0002100002	진행중
+        MC0002100003	부재/보류
+        MC0002100004	승인
+        MC0002100005	거절
+        MC0002100006	고객취소
+    -->
+    <select id="evalConsultInfoList" parameterType="ConsultInfoVO" resultType="ConsultInfoVO">
+        SELECT
+            <choose>
+                <when test="orderValue != null and orderValue !='' and orderName != null and orderName != ''">
+                    ROW_NUMBER() OVER(ORDER BY ${orderValue} ${orderName}) AS ROW_NUM
+                </when>
+                <otherwise>
+                    ROW_NUMBER() OVER(ORDER BY IN_DTTM DESC) AS ROW_NUM
+                </otherwise>
+            </choose>
+            , A.*
+        FROM(
+            <include refid="evalListQuery"/>
+        ) A
+        ORDER BY ROW_NUM DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!--
+        지점에서 신규등록 (처리현황코드 MC0001100001) 했지만 접수 (지점결과코드 MC0001000001) 시키지 않으면 심사팀에서 보이지 않는다
+        *유의사항 : 진행상태 search param이 진행중 MC0001100002 일 경우 사실상 가져오는 값은 두개 (진행중 2, 부재/보류 3)
+    -->
+    <sql id="evalListQuery">
+       SELECT
+             TCI.CONS_SEQ
+             , TCI.IN_DTTM
+             , DATE_FORMAT(TCI.CONS_DTTM, '%Y-%m-%d') AS CONS_DTTM
+             , TCI.CONS_MB_CODE
+             , A.MEMBER_NAME as CONS_MB_NAME
+             , TCI.BRANCH_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.BRANCH_CODE) AS BRANCH_NAME
+             , TCI.BRANCH_MB_CODE
+             , B.MEMBER_NAME AS BRANCH_MB_NAME
+             , C.MEMBER_NAME as REGISTRAR
+             , TCI.CUST_NM
+             , TCI.CUST_REGI_NO
+             , TCI.INQU_CONS
+             , TCI.RECORD_TIME
+             , TCI.INFLOW_ROUTE1
+             , FN_GET_MASTER_CODE_NAME(TCI.INFLOW_ROUTE1) as INFLOW_NAME1
+             , TCI.INFLOW_ROUTE2
+             , FN_GET_MASTER_CODE_NAME(TCI.INFLOW_ROUTE2) as INFLOW_NAME2
+             , TCI.PRODUCT_TYPE
+             , FN_GET_MASTER_CODE_NAME(TCI.PRODUCT_TYPE) as PRODUCT_NAME
+             , TCI.TYPE_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.TYPE_CODE) as TYPE_NAME
+             , TCI.CUST_CORP_NO
+             , TCI.CORP_HIS
+             , TCI.DEBT_SETT
+             , TCI.STATS_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.STATS_CODE) as STATS_NAME
+             , DATE_FORMAT(TCI.COMP_DATE, '%Y-%m-%d') as COMP_DATE
+             , TCI.BRANCH_RESULT_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.BRANCH_RESULT_CODE) as BRANCH_RESULT_NAME
+             , TCI.EVAL_RESULT_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.EVAL_RESULT_CODE) as EVAL_RESULT_NAME
+             , TCI.DECLINE_REASON_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.DECLINE_REASON_CODE) as DECLINE_REASON_NAME
+             , TCI.CANCEL_REASON_CODE
+             , FN_GET_MASTER_CODE_NAME(TCI.CANCEL_REASON_CODE) as CANCEL_REASON_NAME
+             , TCI.NOTE
+             , TCI.ETC
+             , TCI.CUST_HP_NO
+             , CONCAT( SUBSTRING(TCI.CUST_HP_NO, 1, 3) , "-****-" , SUBSTRING(TCI.CUST_HP_NO, 8, 4) ) AS CUST_HP_NO_FM
+        FROM TB_CONSULT_INFO TCI
+
+        LEFT OUTER JOIN TB_CONSULT_MEMBER A
+            ON TCI.CONS_MB_CODE = A.MEMBER_CODE
+        LEFT OUTER JOIN TB_CONSULT_MEMBER B
+            ON TCI.BRANCH_MB_CODE = B.MEMBER_CODE
+        LEFT OUTER JOIN TB_CONSULT_MEMBER C
+            ON TCI.IN_USER = C.MEMBER_CODE
+
+        WHERE 1 = 1
+            AND (
+                TCI.STATS_CODE != 'MC0001100001'
+                    OR
+                (TCI.BRANCH_RESULT_CODE != '' OR TCI.BRANCH_RESULT_CODE != NULL)
+            )
+        <choose>
+            <when test="status == 'MC0001100002'">
+                AND (TCI.STATS_CODE = "MC0001100002"
+                        OR
+                     TCI.STATS_CODE = "MC0001100003")
+            </when>
+            <when test="status != null and status != ''">
+                AND TCI.STATS_CODE = #{status}
+            </when>
+            <otherwise>
+
+            </otherwise>
+        </choose>
+
+        <if test="customer != null and customer != ''">
+            AND
+            TCI.CUST_NM LIKE CONCAT('%', #{customer},'%')
+        </if>
+
+        <if test="searchStartDt != null and searchStartDt !='' and searchEndDt != null and searchEndDt != ''">
+            AND DATE_FORMAT(TCI.IN_DTTM, '%Y.%m.%d')
+              BETWEEN STR_TO_DATE(#{searchStartDt}, '%Y.%m.%d') AND STR_TO_DATE(#{searchEndDt}, '%Y.%m.%d')
+        </if>
+
+        <if test="phoneNumber != null and phoneNumber !=''">
+            AND TCI.CUST_HP_NO LIKE CONCAT('%', #{phoneNumber}, '%')
+        </if>
+    </sql>
+
+    
+    <!-- 대출상담관리 - 접속현황 페이지(고객인증 리스트, 리스트 카운트) -->
+    <select id="connListCount" parameterType="ConsultInfoVO" resultType="Integer">
+        SELECT COUNT(1)
+        FROM ( <include refid="connListQuery"/> ) A
+    </select>
+
+    <select id="connList" parameterType="ConsultInfoVO" resultType="ConsultInfoVO">
+        SELECT
+            ROW_NUMBER() OVER(ORDER BY CERTI_MTHD_TP DESC) AS ROW_NUM
+            , A.*
+        FROM ( <include refid="connListQuery"/> ) A
+        ORDER BY ROW_NUM DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+    <sql id="connListQuery">
+        SELECT
+            TCI.CUST_NM
+            , TCI.CUST_REGI_NO
+            , TCI.CUST_CORP_NO
+            , TCI.CERTI_MTHD_TP
+            , FN_GET_MASTER_CODE_NAME(TCI.CERTI_MTHD_TP) AS CERTI_MTHD_TP_NAME
+
+        FROM TB_CONSULT_INFO TCI
+
+        WHERE 1=1
+            <if test="CUST_NM != null and CUST_NM !=''">
+                AND TCI.CUST_NM LIKE CONCAT('%', #{CUST_NM}, '%')
+            </if>
+            <if test="CUST_CORP_NO != null and CUST_CORP_NO !=''">
+                AND TCI.CUST_CORP_NO = #{CUST_CORP_NO}
+            </if>
+            <if test="CERTI_MTHD_TP != null and CERTI_MTHD_TP !=''">
+                AND TCI.CERTI_MTHD_TP = #{CERTI_MTHD_TP}
+            </if>
+
+    </sql>
+
+</mapper>

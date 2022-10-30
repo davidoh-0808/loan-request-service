@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>퍼블리싱 목록 | HYUNDAI Smile</title>
+	<style>
+		* {
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			word-break: break-all;
+			-webkit-text-size-adjust: none;
+			-webkit-transition: all .3s ease;
+			-moz-transition: all .3s ease;
+			-o-transition: all .3s ease;
+			transition: all .3s ease
+		}
+
+		a,
+		abbr,
+		acronym,
+		address,
+		applet,
+		article,
+		aside,
+		audio,
+		b,
+		big,
+		blockquote,
+		body,
+		canvas,
+		caption,
+		center,
+		cite,
+		code,
+		dd,
+		del,
+		details,
+		dfn,
+		div,
+		dl,
+		dt,
+		em,
+		embed,
+		fieldset,
+		figcaption,
+		figure,
+		footer,
+		form,
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		header,
+		hgroup,
+		html,
+		i,
+		iframe,
+		img,
+		ins,
+		kbd,
+		label,
+		legend,
+		li,
+		mark,
+		menu,
+		nav,
+		object,
+		ol,
+		output,
+		p,
+		pre,
+		q,
+		ruby,
+		s,
+		samp,
+		section,
+		small,
+		span,
+		strike,
+		strong,
+		sub,
+		summary,
+		sup,
+		table,
+		tbody,
+		td,
+		tfoot,
+		th,
+		thead,
+		time,
+		tr,
+		tt,
+		u,
+		ul,
+		var,
+		video {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			font-size: 100%;
+			vertical-align: baseline
+		}
+
+		body,
+		html {
+			width: 100%;
+			min-height: 100%
+		}
+
+		body {
+			font-size: 12px;
+			line-height: 1;
+			font-family: "맑은 고딕", dotum, sans-serif;
+			color: #000;
+			letter-spacing: -.5px
+		}
+
+		li,
+		nav,
+		ol,
+		ul {
+			list-style: none
+		}
+
+		button,
+		img,
+		input,
+		label,
+		select {
+			vertical-align: middle
+		}
+
+		button,
+		input {
+			margin: 0;
+			padding: 0;
+			font-family: "맑은 고딕", dotum, sans-serif;
+			font-size: 1rem
+		}
+
+		button {
+			cursor: pointer
+		}
+
+		button,
+		img,
+		input,
+		select,
+		textarea {
+			vertical-align: middle
+		}
+
+		select,
+		textarea {
+			font-family: "맑은 고딕", dotum, sans-serif;
+			font-size: 1rem
+		}
+
+		select {
+			margin: 0;
+			background-color: #fff
+		}
+
+		b,
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		strong {
+			font-weight: 700
+		}
+
+		address,
+		cite,
+		em,
+		i {
+			font-style: normal
+		}
+
+		a {
+			text-decoration: none
+		}
+
+		a:active,
+		a:focus,
+		a:hover {
+			color: #39c;
+			background-color: transparent
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			border-spacing: 0
+		}
+
+		caption,
+		legend {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 1px;
+			height: 1px;
+			font-size: 1px;
+			text-indent: -20000px
+		}
+
+		.ellipsis {
+			display: inline-block;
+			max-width: 85%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			vertical-align: middle
+		}
+
+		body,
+		html {
+			width: 100%;
+			overflow: auto
+		}
+
+		#wrap,
+		body {
+			background-color: #ebebeb
+		}
+
+		a {
+			text-decoration: none
+		}
+
+		#wrap {
+			width: 100%;
+			min-height: 100%
+		}
+
+		section {
+			width: 100%;
+			padding: 60px 20px 15px
+		}
+
+		#contents {
+			min-width: 900px;
+			padding: 15px 45px 30px;
+			background-color: #fff;
+			box-shadow: .5px 1px 3px 0 rgba(51, 51, 51, .2)
+		}
+
+		.guide_tit {
+			margin: 30px 0 20px;
+			font-size: 22px;
+			font-weight: 700;
+			user-select: none;
+			-ms-user-select: none
+		}
+
+		.header_category {
+			position: fixed;
+			top: 0;
+			right: 0;
+			z-index: 9999;
+			width: 100%;
+			text-align: right;
+			font-size: 0;
+			background: #1a2229;
+			padding-left: 20px;
+			padding-right: 20px;
+			overflow-x: auto
+		}
+
+		.header_category li {
+			display: inline-block
+		}
+
+		.header_category li a {
+			position: relative;
+			display: inline-block;
+			padding: 0 6px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 12px;
+			font-weight: 400;
+			color: #fff;
+		}
+
+		.header_category li a:hover {
+			background: #969ba1
+		}
+
+		.header_category li a:hover::before {
+			display: none;
+		}
+
+		.header_category li a::before {
+			content: "";
+			display: inline-block;
+			width: 1px;
+			height: 16px;
+			background: #969ba1;
+			position: absolute;
+			top: 50%;
+			left: -1px;
+			margin-top: -8px;
+		}
+
+		.header_category li:last-of-type a::after {
+			content: "";
+			display: inline-block;
+			width: 1px;
+			height: 16px;
+			background: #969ba1;
+			position: absolute;
+			top: 50%;
+			right: 0px;
+			margin-top: -8px;
+		}
+
+		.count {
+			margin-bottom: 10px;
+			text-align: right;
+			font-size: 11px;
+			user-select: none
+		}
+
+		.count span {
+			margin-left: 8px
+		}
+
+		.count span em {
+			font-size: 18px;
+			font-weight: 700
+		}
+
+		.count span.progress em {
+			color: #ee4048
+		}
+
+		.guide_data table {
+			width: 100%;
+			table-layout: fixed;
+			margin-bottom: 50px
+		}
+
+		.guide_data table thead th {
+			position: relative;
+			padding: 10px 0 10px 0;
+			border-top: 2px solid #36485f;
+			border-bottom: 2px solid #888;
+			text-align: center;
+			background-color: #fff
+		}
+
+		.guide_data table tbody {
+			border-bottom: 2px solid #888
+		}
+
+		.guide_data table tr.delete td {
+			text-decoration: line-through;
+			user-select: none;
+		}
+
+		.guide_data table tbody th {
+			padding: 7px 30px;
+			border-bottom: 1px solid #ddd;
+			color: #111;
+			font-weight: 700;
+			background-color: #f7f7f7
+		}
+
+		.guide_data table td {
+			padding: 7px 10px;
+			border-bottom: 1px solid #ddd;
+			font-size: 12px;
+			word-break: break-word;
+			text-align: center;
+			border-right: 1px solid #ddd;
+		}
+
+		.guide_data table td:nth-of-type(3),
+		.guide_data table td:nth-of-type(4),
+		.guide_data table td:nth-of-type(5),
+		.guide_data table td:nth-of-type(6),
+		.guide_data table td:nth-of-type(7),
+		.guide_data table td:nth-of-type(8),
+		.guide_data table td:nth-of-type(10) {
+			text-align: left
+		}
+
+		.guide_data table td:nth-of-type(10) {
+			line-height: 16px;
+		}
+
+		.guide_data table td:nth-last-of-type(1) {
+			border-right: none
+		}
+
+		.guide_data table tr:hover td {
+			background: #f9f9f9
+		}
+
+		.guide_data table td a {
+			color: #015293
+		}
+
+		.guide_data table td a:hover {
+			color: #39c
+		}
+
+		.guide_data table .category {
+			text-align: left
+		}
+
+		@media screen and (max-width:1168px) {
+			section {
+				padding-left: 40px
+			}
+		}
+
+		@media screen and (max-width:720px) {
+			.count {
+				text-align: left
+			}
+
+			section {
+				padding-left: 20px
+			}
+		}
+	</style>
+	<script src="./common/js/jquery-1.12.4.min.js"></script>
+	<script>
+		/**
+		 * guide_data 프로젝트명 및 카테고리, 데이터 입력
+		 */
+		var GUIDE_DATA = {
+			projectName: "HYUNDAI Smile : Responsive Web",
+			data: {
+				/**
+				 * key 값 : 카테고리명(동일 카테고리명 불가)
+				 */
+				// 로그인: [
+				// [ 화면 ID || 1depth || 2depth || 3depth || 4edpth || fileName || 완료일 || 비고 || option(delete)]
+				// ["03-01-01", "메인1", "2뎁스1", "3뎁스1", "4뎁스1", "html/abc.html", "2018.09", "비고1"],
+				// ["", "", "", "", "", "", "", "", ""],
+				// ],
+
+				공통: [
+					["", "에러", "", "", "", "", "page/error.html", "", ""],
+					["", "loading", "", "", "", "", "page/loading.html", "22.10.07", ""],
+				],
+
+				메인: [
+					["", "메인", "", "", "", "", "page/main.html", "", ""],
+				],
+
+				상담신청: [
+					["", "미소금융 상담신청", "", "", "", "", "page/consultation_request.html", "", "기존페이지"],
+					["", "미소금융 상담신청", "본인확인", "", "", "", "page/consultation_request_step01.html", "", "22.07.28 리뉴얼작업<br>22.08.19 상담신청절차 SETP 총 5단계 -> 총 4단계로 변경<br>22.10.21 총 3단계로 변경(정보확인 포함)"],
+					["", "", "정보입력", "", "", "", "page/consultation_request_step02.html", "", ""],
+					["", "", "정보입력(정보확인)", "", "", "", "page/consultation_request_step03.html", "", "22.10.21 수정버튼 추가"],
+					["", "", "신청완료", "", "", "", "page/consultation_request_step04.html", "", ""],
+					["", "미소금융 자주하는 질문", "", "", "", "", "page/consultation_qna.html", "", ""],
+					["", "", "상담신청_검색결과", "", "", "", "page/consultation_qna_search.html", "", ""],
+					["", "", "상담신청_검색결과 없을 경우", "", "", "", "page/consultation_qna_blank.html", "", ""],
+				],
+
+				미소금융대출상품: [
+					["", "미소금융 사업소개", "", "", "", "", "page/product_intro.html", "", ""],
+					["", "미소금융 지원대상", "", "", "", "", "page/product_target.html", "", ""],
+					["", "미소금융 대출절차", "", "", "", "", "page/product_process.html", "", ""],
+					["", "미소금융 대출거래기본약관", "", "", "", "", "page/product_policy.html", "", ""],
+				],
+
+				고마워요미소금융: [
+					["", "고마워요 미소금융", "목록", "", "", "", "page/thank_finance.html", "", ""],
+					["", "", "목록 없을 경우", "", "", "", "page/thank_finance_blank.html", "", ""],
+					["", "", "상세", "", "", "", "page/thank_finance_detail.html", "", ""],
+					["", "NEWS", "목록", "", "", "", "page/thank_news.html", "", ""],
+					["", "", "목록 없을 경우", "", "", "", "page/thank_news_blank.html", "", ""],
+					["", "", "상세", "", "", "", "page/thank_news_detail.html", "", ""],
+					["", "고객의소리", "", "", "", "", "page/thank_report.html", "", ""],
+				],
+
+				재단소개: [
+					["", "인사말", "", "", "", "", "page/foundation_greeting.html", "", ""],
+					["", "재단비전", "", "", "", "", "page/foundation_vision.html", "", ""],
+					["", "조직안내", "", "", "", "", "page/foundation_organization.html", "", ""],
+					["", "지점안내", "", "", "", "", "page/foundation_branch.html", "", ""],
+					["", "재정보고", "목록", "", "", "", "page/foundation_report.html", "", ""],
+					["", "", "목록 없을 경우", "", "", "", "page/foundation_report_blank.html", "", ""],
+					["", "", "상세", "", "", "", "page/foundation_report_detail.html", "", ""],
+				],
+			}
+		};
+		// 총 page count
+		var TOTAL_COUNT = 0;
+		// 완료페이지 count
+		var $complete = 0;
+		// 진행률
+		var $pagePercent = 0;
+
+		// document ready
+		$(document).ready(function () {
+			//프로젝트명 설정
+			$('.guide_tit').text(GUIDE_DATA.projectName);
+			//tr 생성 및 데이터 뿌려주기
+			$.each(GUIDE_DATA.data, function (key, value) {
+				var $category_index = Object.keys(GUIDE_DATA.data).indexOf(key);
+				//카테고리 tr 추가
+				$('tbody').append('<tr><th id="category' + $category_index + '" class="category" colspan="10">' + key + '</th></tr>');
+				$('.header_category').append('<li><a href="#category' + $category_index + '">' + key + '</a></li>');
+
+				$.each(value, function (key, value) {
+					$('tbody').append(
+						'<tr class="' + (value[8] || "") + '">' +
+						'<td class="no">' + (key + 1) + '</td>' +
+						'<td>' + value[0] + '</td>' +
+						'<td>' + value[1] + '</td>' +
+						'<td>' + value[2] + '</td>' +
+						'<td>' + value[3] + '</td>' +
+						'<td>' + value[4] + '</td>' +
+						'<td>' + value[5] + '</td>' +
+						'<td><a href="' + value[6] + '" target="_blank">' + value[6] + '</a></td>' +
+						'<td class="complete">' + value[7] + '</td>' +
+						'<td title="' + value[8] + '">' + value[8] + '</td></tr>');
+				});
+				TOTAL_COUNT = TOTAL_COUNT + value.length;
+			});
+
+			//헤더 메뉴 눌렀을 때
+			$('.header_category').find('li').each(function () {
+				var _liThis = $(this);
+				var divId = _liThis.find('a').attr('href');
+				var divIdtop = $(divId).offset().top - $('.header_category').height();
+
+				_liThis.on('click', function (e) {
+					e.preventDefault(); // 하위 태그의 이벤트들 막기
+					$('body,html').animate({ scrollTop: divIdtop }, 600);
+				});
+			});
+
+			//bacground 배경지정
+			$('.complete:not(:empty)').each(function () {
+				$(this).closest('tr').find('td').css('background', '#DFF9FB');
+			});
+
+			//총 pagecount 설정
+			$('.total em').text(' ' + TOTAL_COUNT);
+			//완료된 page 설정
+			$complete = $('.complete:not(:empty)').length;
+			$('.okCheck em').text(' ' + $complete);
+			//진행률계산 - 완료일 입력되지 않을 tr 기준
+			$pagePercent = ($complete / TOTAL_COUNT) * 100;
+			$('.progress em').text(' ' + $pagePercent.toFixed(1));
+		});
+	</script>
+</head>
+
+<body>
+	<div id="wrap">
+		<!-- section -->
+		<section>
+			<div id="contents">
+				<h1 class="guide_tit"></h1>
+				<ul class="header_category"></ul>
+				<div class="count">
+					<span class="total">총 PageCount :
+						<em> 136</em>
+					</span>
+					<span class="okCheck">완료된 Page :
+						<em> 136</em>
+					</span>
+					<span class="progress">진행률 : <em> 100.0</em>%</span>
+				</div>
+				<div class="guide_data">
+					<table>
+						<colgroup>
+							<col width="3%" />
+							<col width="8%" />
+							<col width="10%" />
+							<col width="10%" />
+							<col width="10%" />
+							<col width="10%" />
+							<col width="10%" />
+							<col width="10%" />
+							<col width="8%" />
+							<col width="*" />
+						</colgroup>
+						<thead>
+							<th>No</th>
+							<th>화면 ID</th>
+							<th>1Depth</th>
+							<th>2Depth</th>
+							<th>3Depth</th>
+							<th>4Depth</th>
+							<th></th>
+							<th>FileName</th>
+							<th>완료일</th>
+							<th>비고</th>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+		<!-- // section -->
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>마크업가이드 - FORM</title>
+<!-- 가이드 css -->
+<link rel="stylesheet" href="../common/css/common.css">
+<link rel="stylesheet" href="../common/css/shCoreDefault.css">
+<link href='../css/vendor/jquery.timepicker.min.css' rel='stylesheet'>
+<link href='../css/vendor/flatpickr.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="../css/common.css">
+
+<link rel="stylesheet" href="../css/vendor/jquery-ui.min.css">
+<script src="../js/vendor/jquery-3.4.1.min.js"></script>
+<script src="../js/vendor/jquery-ui.min.js"></script>
+<script src="../js/vendor/jquery.timepicker.min.js"></script>
+<script src="../js/vendor/flatpickr.js"></script>
+<script src="../js/common.js"></script>
+
+<script type="text/javascript" src=" ../common/js/shCore.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushXml.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushCss.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushJScript.js"></script>
+<script type="text/javascript" src=" ../common/js/guide.js"></script>
+<script type="text/javascript">
+	SyntaxHighlighter.all();
+	$(document).ready(function(){
+		$('.g-nav-snb').append(webSnb);
+		$('.g-nav-snb ul li').eq(3).addClass("active");
+	});
+</script>
+</head>
+<body>
+<div id="g-wrap" class="open-aside">
+	<!-- aside -->
+	<div id="g-aside">
+		<!-- # 좌측컨텐츠 # -->
+		<div class="wrap-aside">
+			<!-- 사용자정보영역 -->
+			<div class="box-info">
+			</div>
+			<!-- 네비게이션 : SNB -->
+			<div class="g-nav-snb guide"></div>
+		</div>
+		<!-- # 컨트롤 # -->
+		<div class="g-area-control">
+			<a href="#none">좌측영역 펼침/닫기</a>
+		</div>
+	</div>
+	<!-- //aside -->
+
+	<div class="g-content">
+		<div class="g-box-basic">
+			<h2 class="g-tit-basic">FORM</h2>
+			
+			<!-- 탭그룹 -->
+			<div class="row">
+				<h3 class="g-tit-basic">INPUT BASIC</h3>
+				<div class="tab-wrap g-tab-sample ui-tab">
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<!-- view -->
+							<input type="text" class="form_control" maxlength="" placeholder="input basic">
+							<input type="text" class="form_control mt20" maxlength="" placeholder="input basic" disabled>
+							<!-- //view -->
+						</div>
+					</div>
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<p class="on">HTML</p>
+							<pre class="syntax brush:html">
+								<input type="text" class="form_control" maxlength="" placeholder="input basic">
+
+								<input type="text" class="form_control" maxlength="" placeholder="input basic" disabled>
+								
+							</pre>
+							<p>CSS</p>
+							<pre class="syntax brush:css">
+								
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //탭그룹 -->
+
+			<!-- 탭그룹 -->
+			<div class="row">
+				<h3 class="g-tit-basic">INPUT (radio,checkbox)</h3>
+				<div class="tab-wrap g-tab-sample ui-tab">
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<!-- view -->
+							<h3 class="g-tit-basic">텍스트 없는 체크박스</h3>
+							<div>
+								<label class="input_check blank">
+									<input type="checkbox" id="" name="check1">
+									<span class="label_text">체크박스 체크해제</span>
+								</label>
+
+								<label class="input_check blank">
+									<input type="checkbox" id="" name="check1" checked>
+									<span class="label_text">체크박스 체크</span>
+								</label>
+							</div>
+							<br>
+							
+							<h3 class="g-tit-basic">체크박스 Default</h3>
+							<div>
+								<label class="input_check">
+									<input type="checkbox" id="" name="">
+									<span class="label_text">체크박스 체크해제</span>
+								</label>
+								<label class="input_check">
+									<input type="checkbox" id="" name="" checked>
+									<span class="label_text">체크박스 체크</span>
+								</label>
+							</div>
+							<br>
+
+							<!-- <h3 class="g-tit-basic">텍스트 없는 라디오박스</h3>
+							<div>
+								<label class="input_radio pop_notext" for="rdoSolar2">
+									<input type="radio" id="rdoSolar2" name="birthday_type2" checked>
+									<span class="label_text"></span>
+								</label>
+								<label class="input_radio pop_notext" for="rdoLunar2">
+									<input type="radio" id="rdoLunar2" name="birthday_type2">
+									<span class="label_text"></span>
+								</label>
+							</div>
+							<br>
+							<h3 class="g-tit-basic">라디오박스 Default</h3>
+							<div>
+								<label class="input_radio" for="rdoSolar">
+									<input type="radio" id="rdoSolar" name="birthday_type" checked>
+									<span class="label_text">라디오 체크</span>
+								</label>
+								<label class="input_radio" for="rdoLunar">
+									<input type="radio" id="rdoLunar" name="birthday_type">
+									<span class="label_text">라디오 체크해제</span>
+								</label>
+							</div>
+							<br> -->
+							
+							<!-- //view -->
+						</div>
+					</div>
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<p class="on">HTML</p>
+								<pre class="syntax brush:html">
+								<!-- 텍스트 없는 체크박스 -->
+								<div>
+									<label class="input_check blank">
+										<input type="checkbox" id="" name="check1">
+										<span class="label_text">체크박스 체크해제</span>
+									</label>
+	
+									<label class="input_check blank">
+										<input type="checkbox" id="" name="check1" checked>
+										<span class="label_text">체크박스 체크</span>
+									</label>
+								</div>
+								
+								<!-- 체크박스 Default -->
+								<div>
+									<label class="input_check">
+										<input type="checkbox" id="" name="">
+										<span class="label_text">체크박스 체크해제</span>
+									</label>
+									<label class="input_check">
+										<input type="checkbox" id="" name="" checked>
+										<span class="label_text">체크박스 체크</span>
+									</label>
+								</div>
+
+								
+								
+							</pre>
+							<p>CSS</p>
+							<pre class="syntax brush:css">
+								
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //탭그룹 -->
+
+			<!-- 탭그룹 -->
+			<div class="row">
+				<h3 class="g-tit-basic">select css(IE 10 ~)</h3>
+				<div class="tab-wrap g-tab-sample ui-tab">
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<!-- view -->
+							<div>
+								<select class="form_control">
+									<option>전체</option>
+									<option>Apples</option>
+									<option>Bananas</option>
+									<option>Grapes</option>
+									<option>Oranges</option>
+								</select>
+							</div>
+							
+							<div class="mt20">
+								<select class="form_control" disabled>
+									<option>전체</option>
+									<option>Apples</option>
+									<option>Bananas</option>
+									<option>Grapes</option>
+									<option>Oranges</option>
+								</select>
+							</div>
+							<!-- //view -->
+						</div>
+					</div>
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<p class="on">HTML</p>
+							<pre class="syntax brush:html">
+								<select class="form_control">
+									<option>전체</option>
+									<option>Apples</option>
+									<option>Bananas</option>
+									<option>Grapes</option>
+									<option>Oranges</option>
+								</select>
+	
+								<select class="form_control" disabled>
+									<option>전체</option>
+									<option>Apples</option>
+									<option>Bananas</option>
+									<option>Grapes</option>
+									<option>Oranges</option>
+								</select>
+							</pre>
+							<p>CSS</p>
+							<pre class="syntax brush:css">
+								
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //탭그룹 -->
+
+			<!-- 탭그룹 -->
+			
+
+			<!-- 탭그룹 -->
+			<div class="row">
+				<h3 class="g-tit-basic">FILE Upload</h3>
+				<div class="tab-wrap g-tab-sample ui-tab">
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<!-- view -->
+							<div class="wrap_file">
+							    <input id="input_copy" class="upload_name form_control" value="" disabled="disabled">
+							    <input type="file" id="input_upload_copy" class="upload_hidden">
+							    <label for="input_upload_copy" class="btn btn_sm btn_lightgray btn_radius">파일찾기</label>
+							</div>
+							<!-- //view -->
+						</div>
+					</div>
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<p class="on">HTML</p>
+							<pre class="syntax brush:html">
+								<div class="wrap_file">
+							    <input id="input_copy" class="upload_name form_control" value="" disabled="disabled">
+							    <input type="file" id="input_upload_copy" class="upload_hidden">
+							    <label for="input_upload_copy" class="btn btn_sm btn_lightgray btn_radius">파일찾기</label>
+								</div>
+							</pre>
+							<p>CSS</p>
+							<pre class="syntax brush:css">
+								
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //탭그룹 -->
+
+
+		</div>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="description" />
+	<meta name="keywords" content="keywords" />
+	<meta name="author" content="author" />
+	<title>현대차미소금융재단</title>
+	<link type="text/css" rel="stylesheet" href="../common/css/jquery-ui.min.css" />
+	<link type="text/css" rel="stylesheet" href="../common/css/admin.css" />
+	<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+
+
+	<script type="text/javascript">
+		jQuery(function () {
+			//팝업
+			$(".btn_delete").on("click", function () {
+
+				$('.alert_msg').dialog({
+					dialogClass: 'pop_alert',
+					showAlertMessage: '해당 재정보고를 삭제하시겠습니까?',
+					buttons: [
+						{
+							text: "확인",
+							class: "btn btn_m btn_blue",
+							click: function () {
+								$(this).dialog("close");
+							}
+						},
+						{
+							text: "취소",
+							class: "btn btn_m btn_white",
+							click: function () {
+								$(this).dialog("close");
+							}
+						}
+					]
+				});
+
+			});
+		});
+	</script>
+</head>
+
+
+
+<body>
+	<!--wrap -->
+	<div class="admin_wrap">
+		<!-- 관리자 상단 -->
+		<div class="admin_top">
+			<div class="top_area">
+				<!-- 로고 -->
+				<div class="logo">
+					<h1><span><img src="../img/h_logo.gif" alt="서민금융진흥원 사업수행기관 현대차미소금융재단"></span></h1>
+				</div>
+				<!-- // 로고 -->
+				<!-- 사용자 -->
+				<div class="user">
+					<span class="name">홍길동</span> <button type="button" class="r_box">Log-Out</button>
+				</div>
+				<!-- //사용자 -->
+			</div>
+		</div>
+		<!-- // 관리자 상단 -->
+		<!-- 관리자 히단 -->
+		<div class="admin_bottom">
+			<!-- lnb -->
+			<div class="lnb_wrap">
+				<div class="lnb">
+					<ul class="dep1">
+						<li>
+							<p><a href="#none" class="tit">관리자 관리</a></p>
+							<ul class="dep2">
+								<li class="on"><a href="#none">- 계정 및 권한 관리</a></li>
+							</ul>
+						</li>
+						<li>
+							<p><a href="#none" class="tit">게시판 관리</a></p>
+							<ul class="dep2">
+								<li><a href="#none">- NEWS 관리</a></li>
+								<li><a href="#none">- 재정보고 관리</a></li>
+							</ul>
+						</li>
+						<li>
+							<p><a href="#none" class="tit">통계 관리</a></p>
+							<ul class="dep2">
+								<li><a href="#none">- 통계현황 관리</a></li>
+							</ul>
+						</li>
+						<li>
+							<p><a href="#none" class="tit">대출상담관리</a></p>
+							<ul class="dep2">
+								<li><a href="#none">- 상담신청내역 관리</a></li>
+								<li><a href="#none">- 대출상담사 관리</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- // lnb -->
+			<!--content-->
+			<div class="content">
+				<h2 class="con_tit">재정보고 관리</h2>
+				<h3 class="s_tit">재정보고 조회</h3>
+
+				<div class="tb_style tb_htype sp10">
+					<table>
+						<caption>재정보고 등록</caption>
+						<colgroup>
+							<col style="width: 138px;">
+							<col style="width: auto;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">작성자</th>
+								<td>
+									홍길동
+									<ul class="board_info">
+										<li><span class="date">등록일</span> <span>2021-10-30</span></li>
+										<li><span class="count">조회</span> <span>75</span></li>
+									</ul>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">첨부파일1</th>
+								<td>
+									<a href="#" class="file_dw">asffasd.jpg</a>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">첨부파일2</th>
+								<td>
+									<a href="#" class="file_dw">asffasd352342343.jpg</a>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">첨부파일3</th>
+								<td>
+									<a href="#" class="file_dw">asffasd333.jpg</a>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div class="memo_con">
+										2012년 기부금 모금액 및 활용 실적 내용 2012년 기부금 모금액 및 활용 실적 내용 2012년 기부금 모금액 및 활용 실적 내용2012년
+										기부금 모금액 및 활용 실적 내용 2012년 기부금 모금액 및 활용 실적 내용 2012년 기부금 모금액 및 활용 실적 내용 2012년 기부금
+										모금액 및 활용 실적 내용 2012년 기부금 모금액 및 활용 실적 내용 2012년 기부금 모금액 및 활용 실적 내용2012년 기부금 모금액 및
+										활용 실적 내용 2012년 기부금 모금액 및 활용 실적 내용 2012년 기부금 모금액 및 활용 실적 내용2012년 기부금 모금액 및 활용 실적
+										내용 2012년 기부금 모금액 및 활용 실적 내용 2012년 기부금 모금액 및 활용 실적 내용2012년 기부금 모금액 및 활용 실적 내용
+										2012년 기부금 모금액 및 활용 실적 내용 2012년 기부금 모금액 및 활용 실적 내용
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="btn_area sp30">
+					<div class="left_a">
+						<button type="button" class="btn btn_gray btn_l">목록</button>
+					</div>
+					<div class="center_a">
+						<button type="button" class="btn btn_blue btn_l">수정</button>
+						<button type="button" class="btn btn_white btn_l pop_btn btn_delete">삭제</button>
+					</div>
+				</div>
+
+
+			</div>
+			<!--//content-->
+
+		</div>
+		<!-- //관리자 하단 -->
+
+	</div>
+	<!-- //Wrap-->
+</body>
+
+</html>

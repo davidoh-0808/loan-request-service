@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace= "com.neo.mappers.MasterCodeMapper">
+	
+	<select id="listMasterCode" parameterType="MasterCodeVO" resultType="MasterCodeVO">
+		/* masterCodeMapper.listMasterCode 마스터코드리스트*/
+		SELECT 
+			@ROWNUM := @ROWNUM + 1 AS ROW_NUM,
+			A.*
+		FROM ( <include refid="listQeury" /> ) A, (SELECT @ROWNUM := 0) R
+		ORDER BY A.IN_DTTM DESC
+		LIMIT #{pageStartRow}, #{pageSize}
+	</select>
+	
+	<select id="listCntMasterCode" resultType="Integer" parameterType="MasterCodeVO" >
+		/* masterCodeMapper.listCntMasterCode 마스터코드리스트 카운트 */
+		SELECT COUNT(1) totCnt 
+		FROM(
+		
+			<include refid="listQeury" />
+			
+		) TOT
+	</select> 
+	
+	<sql id="listQeury">
+		/* listQeury 마스터코드리스트 쿼리 */
+		SELECT 
+			TMC.MASTER_CODE
+			, TMC.GROUP_CODE
+			, TMC.PARENT_MASTER_CODE
+			, TMC.CODE_NAME
+			, TMC.CODE_VAL
+			, TMC.EXPLANATION
+			, TMC.SORT_ORDER
+			, TMC.DEL_YN
+			, TMC.IN_USER
+			, TMC.IN_DTTM
+			, TMC.UP_USER
+			, TMC.UP_DTTM
+		FROM TB_MASTER_CODE TMC
+		WHERE DEL_YN = 'N'
+		<where>
+			<if test="searchValue != null and searchValue != ''">
+				(
+					TMC.MASTER_CODE LIKE CONCAT('%', #{searchValue}, '%')
+					OR TMC.CODE_NAME LIKE CONCAT('%', #{searchValue}, '%')
+					OR TMC.CODE_VAL LIKE CONCAT('%', #{searchValue}, '%')
+					OR TMC.EXPLANATION LIKE CONCAT('%', #{searchValue}, '%')
+				)
+			</if>
+		</where>
+	</sql>
+	
+	<select id="detailMasterCode" parameterType="MasterCodeVO" resultType="MasterCodeVO">
+		/* masterCodeMapper.detailMasterCode 마스터코드상세 */
+		SELECT 
+			TMC.MASTER_CODE
+			, TMC.GROUP_CODE
+			, TMC.PARENT_MASTER_CODE
+			, TMC.CODE_NAME
+			, TMC.CODE_VAL
+			, TMC.EXPLANATION
+			, TMC.SORT_ORDER
+			, TMC.DEL_YN
+			, TMC.IN_USER
+			, TMC.IN_DTTM
+			, TMC.UP_USER
+			, TMC.UP_DTTM
+		FROM TB_MASTER_CODE TMC
+		WHERE TMC.MASTER_CODE = #{MASTER_CODE}
+		LIMIT 1
+	</select>
+	
+	<insert id="insertMasterCode" parameterType="MasterCodeVO">
+		/* masterCodeMapper.insertMasterCode 마스터코드등록 */
+		INSERT INTO TB_MASTER_CODE (
+			MASTER_CODE
+			, GROUP_CODE
+			, PARENT_MASTER_CODE
+			, CODE_NAME
+			, CODE_VAL
+			, EXPLANATION
+			, SORT_ORDER
+			, IN_USER
+			, IN_DTTM
+			, UP_USER
+			, UP_DTTM
+		) VALUES (
+			TRIM(#{MASTER_CODE})
+			, TRIM(#{GROUP_CODE})
+			, TRIM(#{PARENT_MASTER_CODE})
+			, TRIM(#{CODE_NAME})
+			, TRIM(#{CODE_VAL})
+			, TRIM(#{EXPLANATION})
+			, TRIM(#{SORT_ORDER})
+			, #{IN_USER}
+			, NOW()
+			, #{UP_USER}
+			, NOW()
+		)
+	</insert>
+	
+	<update id="updateMasterCode" parameterType="MasterCodeVO">
+		/* masterCodeMapper.updateMasterCode 마스터코드수정 */
+		UPDATE TB_MASTER_CODE SET
+			PARENT_MASTER_CODE	= TRIM(#{PARENT_MASTER_CODE})
+			, GROUP_CODE		= TRIM(#{GROUP_CODE})
+			, CODE_NAME			= TRIM(#{CODE_NAME})
+			, CODE_VAL			= TRIM(#{CODE_VAL})
+			, EXPLANATION		= TRIM(#{EXPLANATION})
+			, SORT_ORDER		= TRIM(#{SORT_ORDER})
+			, DEL_YN			= #{DEL_YN}
+			, UP_USER			= #{UP_USER}
+			, UP_DTTM			= NOW()
+		WHERE MASTER_CODE = #{MASTER_CODE}
+	</update>
+	
+	<update id="deleteMasterCode" parameterType="MasterCodeVO">
+		/* masterCodeMapper.deleteMasterCode 마스터코드삭제 */
+		UPDATE TB_MASTER_CODE SET
+			DEL_YN = #{DEL_YN}
+			, UP_USER = #{UP_USER}
+			, UP_DTTM = NOW()
+		WHERE MASTER_CODE = #{MASTER_CODE}
+	</update>
+	
+	<select id="subAllListMasterCode" parameterType="MasterCodeVO" resultType="MasterCodeVO">
+		/* masterCodeMapper.subAllListMasterCode 하위전체마스터코드리스트*/
+		WITH RECURSIVE CTE AS (
+			SELECT
+				TMC.MASTER_CODE
+				, TMC.GROUP_CODE
+				, TMC.PARENT_MASTER_CODE
+				, TMC.CODE_NAME
+				, TMC.CODE_VAL
+				, TMC.EXPLANATION
+				, TMC.SORT_ORDER
+				, 1 AS LEVEL 
+			FROM TB_MASTER_CODE TMC
+			WHERE TMC.MASTER_CODE = #{MASTER_CODE}
+			AND TMC.DEL_YN = 'N'
+			
+			UNION ALL
+			
+			SELECT 
+				TMC.MASTER_CODE
+				, TMC.GROUP_CODE
+				, TMC.PARENT_MASTER_CODE
+				, TMC.CODE_NAME
+				, TMC.CODE_VAL
+				, TMC.EXPLANATION
+				, TMC.SORT_ORDER
+				, 1+LEVEL AS LEVEL
+			FROM TB_MASTER_CODE TMC
+			JOIN CTE ON TMC.PARENT_MASTER_CODE = CTE.MASTER_CODE
+			WHERE TMC.DEL_YN = 'N'
+		)
+		SELECT 
+			MASTER_CODE
+			, GROUP_CODE
+			, PARENT_MASTER_CODE
+			, CODE_NAME
+			, CODE_VAL
+			, EXPLANATION
+			, SORT_ORDER
+			, LEVEL
+		FROM CTE
+	</select>
+	
+	<select id="subListMasterCode" parameterType="MasterCodeVO" resultType="MasterCodeVO">
+		/* masterCodeMapper.subListMasterCode 하위마스터코드리스트*/
+		SELECT 
+			TMC.MASTER_CODE
+			, TMC.GROUP_CODE
+			, TMC.PARENT_MASTER_CODE
+			, TMC.CODE_NAME
+			, TMC.CODE_VAL
+			, TMC.EXPLANATION
+			, TMC.SORT_ORDER
+			, TMC.DEL_YN
+			, TMC.IN_USER
+			, TMC.IN_DTTM
+			, TMC.UP_USER
+			, TMC.UP_DTTM
+		FROM TB_MASTER_CODE TMC
+		WHERE TMC.DEL_YN = 'N'
+		AND TMC.PARENT_MASTER_CODE = #{PARENT_MASTER_CODE}
+		ORDER BY TMC.SORT_ORDER, TMC.MASTER_CODE
+	</select>
+	
+    <select id="detailMasterCodeByGroupCode" parameterType="MasterCodeVO" resultType="MasterCodeVO">
+        SELECT * FROM (
+
+            SELECT ROW_NUMBER() OVER(ORDER BY tmc.MASTER_CODE ASC) row
+                 , tmc.*
+            FROM TB_MASTER_CODE tmc
+            WHERE del_yn = 'N'
+              AND tmc.GROUP_CODE = #{GROUP_CODE}
+
+        ) TMP
+            WHERE row != 1;
+    </select>
+
+	<select id="searchBranch" parameterType="String" resultType="MasterCodeVO">
+		/* masterCodeMapper.searchBranch 지점 명 검색 */
+		SELECT 
+			TMC.MASTER_CODE
+			, TMC.CODE_NAME 
+		FROM TB_MASTER_CODE TMC, (  
+			SELECT 
+				PARENT_MASTER_CODE
+				, CODE_NAME 
+			FROM TB_MASTER_CODE 
+			WHERE CODE_NAME  LIKE #{branchNm}
+			AND PARENT_MASTER_CODE != 'MC0000000009'
+		) AS TMCC
+		WHERE TMC.MASTER_CODE = TMCC.PARENT_MASTER_CODE
+		LIMIT 1
+	</select>
+	
+</mapper>

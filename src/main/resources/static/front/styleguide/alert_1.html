@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>마크업가이드 - Alert</title>
+<!-- 가이드 css -->
+<link rel="stylesheet" href="../common/css/common.css">
+<link rel="stylesheet" href="../common/css/shCoreDefault.css">
+<link rel="stylesheet" href="../pub/css/common.css">
+<link rel="stylesheet" href="../pub/css/vendor/jquery-ui.min.css">
+<script src="../pub/js/vendor/jquery-3.4.1.min.js"></script>
+<script src="../pub/js/vendor/jquery-ui.min.js"></script>
+<script src="../pub/js/common.js"></script>
+<!-- //style -->
+<script type="text/javascript" src=" ../common/js/shCore.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushXml.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushCss.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushJScript.js"></script>
+<script type="text/javascript" src=" ../common/js/guide.js"></script>
+<script type="text/javascript">
+	SyntaxHighlighter.all();
+	$(document).ready(function(){
+		$('.g-nav-snb').append(webSnb);
+		$('.g-nav-snb ul li').eq(9).addClass("active");
+
+
+		// ALERT POPUP 클릭시
+		$('.open_alert_sample1').click(function() {
+			$('#pop_alertsample1').neoModal();
+		});
+
+		// ALERT POPUP 클릭시2
+		$('.open_alert_sample2').click(function() {
+			$('#pop_alertsample2').neoModal();
+		});
+
+		
+
+		// MODAL POPUP - 미들사이즈 클릭시
+		$('.open_alert_sample3').click(function() {
+			$('#pop_modalsample1').neoModal();
+		});
+
+		// MODAL POPUP - 미들사이즈 클릭시
+		$('.open_alert_sample4').click(function() {
+			$('#pop_modalsample2').neoModal();
+		});
+
+		// MODAL POPUP - 라지사이즈 클릭시
+		$('.open_alert_sample5').click(function() {
+			$('#pop_modalsample3').neoModal();
+		});
+
+		// MODAL POPUP - x라지사이즈 클릭시
+		$('.open_alert_sample6').click(function() {
+			$('#pop_modalsample4').neoModal();
+		});
+
+		// MODAL POPUP - x라지사이즈 클릭시
+		$('.open_alert_sample7').click(function() {
+			$('#pop_modalsample5').neoModal();
+		});
+	});
+</script>
+</head>
+<body>
+<div id="g-wrap" class="open-aside">
+	<!-- aside -->
+	<div id="g-aside">
+		<!-- # 좌측컨텐츠 # -->
+		<div class="wrap-aside">
+			<!-- 사용자정보영역 -->
+			<div class="box-info">
+			</div>
+			<!-- 네비게이션 : SNB -->
+			<div class="g-nav-snb guide"></div>
+		</div>
+		<!-- # 컨트롤 # -->
+		<div class="g-area-control">
+			<a href="#none">좌측영역 펼침/닫기</a>
+		</div>
+	</div>
+	<!-- //aside -->
+
+	<div class="g-content">
+		<div class="g-box-basic">
+			<h2 class="g-tit-basic">ALERT</h2>
+
+			<!-- 탭그룹 -->
+			<div class="row">
+			<h3 class="g-tit-basic">ALERT POPUP</h3>
+			<div class="tab-wrap g-tab-sample ui-tab">
+				<div class="tab-content">
+					<div class="g-tab-inner">
+						<!-- view -->
+						<button type="button" class="btn_sm btn_blue open_alert_sample1">ALERT POPUP(확인)</button>
+						<button type="button" class="btn_sm btn_blue open_alert_sample2">ALERT POPUP(아니오, 예)</button>
+
+						<div id="pop_alertsample1" class="pop_dim_wrap pop_alert">
+							<div class="pop_wrap">
+								<button class="pop_btn_close pop_close">닫기</button>
+								<div class="message_table">
+									<div class="messageWrap">
+										닉네임 중복확인을 체크해주세요.
+									</div>
+								</div>
+								<div class="button_wrap">
+									<button type="button" class="btn_pop_default btn_white pop_close">확인</button>
+								</div>
+							</div>
+						</div>
+
+						<div id="pop_alertsample2" class="pop_dim_wrap pop_alert">
+							<div class="pop_wrap">
+								<button class="pop_btn_close pop_close">닫기</button>
+								<div class="message_table">
+									<div class="messageWrap">
+										입력한 내용이 모두 사라집니다.<br>
+										서비스가입을 취소하시겠습니까?
+									</div>
+								</div>
+								<div class="button_wrap">
+									<button type="button" class="btn_pop_default btn_white w50 pop_close">아니오</button>
+									<button type="button" class="btn_pop_default btn_white w50 pop_close">예</button>
+								</div>
+							</div>
+						</div>
+
+						<!-- //view -->
+					</div>
+				</div>
+				<div class="tab-content">
+					<div class="g-tab-inner">
+						<p class="on">HTML</p>
+						<pre class="syntax brush:html">
+							<div id="pop_alertsample1" class="pop_dim_wrap pop_alert">
+								<div class="pop_wrap">
+									<button class="pop_btn_close pop_close">닫기</button>
+									<div class="message_table">
+										<div class="messageWrap">
+											닉네임 중복확인을 체크해주세요.
+										</div>
+									</div>
+									<div class="button_wrap">
+										<button type="button" class="btn_pop_default btn_white pop_close">확인</button>
+									</div>
+								</div>
+							</div>
+
+							<div id="pop_alertsample2" class="pop_dim_wrap pop_alert">
+								<div class="pop_wrap">
+									<button class="pop_btn_close pop_close">닫기</button>
+									<div class="message_table">
+										<div class="messageWrap">
+											입력한 내용이 모두 사라집니다.<br>
+											서비스가입을 취소하시겠습니까?
+										</div>
+									</div>
+									<div class="button_wrap">
+										<button type="button" class="btn_pop_default btn_white w50 pop_close">아니오</button>
+										<button type="button" class="btn_pop_default btn_white w50 pop_close">예</button>
+									</div>
+								</div>
+							</div>
+						</pre>
+						<p>CSS</p>
+						<pre class="syntax brush:css">
+							.pop_alert .pop_wrap{width:400px;padding-top:50px;}
+							.pop_alert.pop_lg .pop_wrap{width:440px;}
+							.pop_alert.pop_lg .pop_wrap .messageWrap{letter-spacing: -2px;}
+							.pop_alert.pop_xlg .pop_wrap{width:550px;}
+							.pop_alert .pop_wrap .pop_btn_close{position:absolute;top:10px;right:10px;display:inline-block;width:23px;height:23px;border:0;background:url(../img/common/ico_close_alert.png) no-repeat 50%;font-size:0;text-indent:-9999px;cursor:pointer;}
+							.pop_alert .pop_wrap .message_table{display:table;width:100%;height:120px;padding:0 20px;}
+							.pop_alert .pop_wrap .messageWrap{display:table-cell;font-size:16px; font-weight: 300; line-height:26px;color:#333;text-align:center;vertical-align:middle;}
+							.pop_alert .pop_wrap .button_wrap{margin-top:35px;font-size:0;text-align:center;}
+							.pop_alert .pop_wrap .button_wrap button + .btn_white.w50{border-left: 1px solid #ddd; color: #152475;}
+						</pre>
+					</div>
+				</div>
+			</div>
+			</div>
+			<!-- //탭그룹 -->
+
+			<!-- 탭그룹 -->
+			<div class="row">
+			<h3 class="g-tit-basic">MODAL POPUP</h3>
+			<div class="tab-wrap g-tab-sample ui-tab">
+				<div class="tab-content">
+					<div class="g-tab-inner">
+						<!-- view -->
+						<button type="button" class="btn_sm btn_blue open_alert_sample3">MODAL POPUP</button>
+						<button type="button" class="btn_sm btn_blue open_alert_sample4">MODAL POPUP - Middle 사이즈</button>
+						<button type="button" class="btn_sm btn_blue open_alert_sample5">MODAL POPUP - Large 사이즈</button>
+						<button type="button" class="btn_sm btn_blue open_alert_sample6">MODAL POPUP - XLarge 사이즈</button>
+						<button type="button" class="btn_sm btn_blue open_alert_sample7">MODAL POPUP - XXLarge 사이즈</button>
+
+						<div id="pop_modalsample1" class="pop_dim_wrap pop_modal">
+							<div class="pop_wrap">
+								<button class="pop_btn_close pop_close">닫기</button>
+								<div class="title_wrap">
+									알림
+								</div>
+								<div class="contents_wrap">
+									가입 시 입력하신 e-mail로 임시 비밀번호를 발송합니다.<br>
+									사업자등록번호를 입력하시고 비밀번호 찾기를 클릭하세요.
+								</div>
+								<div class="button_wrap">
+									<button type="button" class="btn btn_md btn_blue pop_close">확인</button>
+								</div>
+							</div>
+						</div>
+
+						<div id="pop_modalsample2" class="pop_dim_wrap pop_modal pop_md">
+							<div class="pop_wrap">
+								<button class="pop_btn_close pop_close">닫기</button>
+								<div class="title_wrap">
+									알림
+								</div>
+								<div class="contents_wrap">
+									가입 시 입력하신 e-mail로 임시 비밀번호를 발송합니다.<br>
+									사업자등록번호를 입력하시고 비밀번호 찾기를 클릭하세요.
+								</div>
+								<div class="button_wrap">
+									<button type="button" class="btn btn_md btn_blue pop_close">확인</button>
+								</div>
+							</div>
+						</div>
+
+						<div id="pop_modalsample3" class="pop_dim_wrap pop_modal pop_lg">
+							<div class="pop_wrap">
+								<button class="pop_btn_close pop_close">닫기</button>
+								<div class="title_wrap">
+									알림
+								</div>
+								<div class="contents_wrap">
+									가입 시 입력하신 e-mail로 임시 비밀번호를 발송합니다.<br>
+									사업자등록번호를 입력하시고 비밀번호 찾기를 클릭하세요.
+								</div>
+								<div class="button_wrap">
+									<button type="button" class="btn btn_md btn_blue pop_close">확인</button>
+								</div>
+							</div>
+						</div>
+
+						<div id="pop_modalsample4" class="pop_dim_wrap pop_modal pop_xlg">
+							<div class="pop_wrap">
+								<button class="pop_btn_close pop_close">닫기</button>
+								<div class="title_wrap">
+									알림
+								</div>
+								<div class="contents_wrap">
+									가입 시 입력하신 e-mail로 임시 비밀번호를 발송합니다.<br>
+									사업자등록번호를 입력하시고 비밀번호 찾기를 클릭하세요.
+								</div>
+								<div class="button_wrap">
+									<button type="button" class="btn btn_md btn_blue pop_close">확인</button>
+								</div>
+							</div>
+						</div>
+
+						<div id="pop_modalsample5" class="pop_dim_wrap pop_modal pop_xxlg">
+							<div class="pop_wrap">
+								<button class="pop_btn_close pop_close">닫기</button>
+								<div class="title_wrap">
+									알림
+								</div>
+								<div class="contents_wrap">
+									가입 시 입력하신 e-mail로 임시 비밀번호를 발송합니다.<br>
+									사업자등록번호를 입력하시고 비밀번호 찾기를 클릭하세요.
+								</div>
+								<div class="button_wrap">
+									<button type="button" class="btn btn_md btn_blue pop_close">확인</button>
+								</div>
+							</div>
+						</div>
+						<!-- //view -->
+					</div>
+				</div>
+				<div class="tab-content">
+					<div class="g-tab-inner">
+						<p class="on">HTML</p>
+						<pre class="syntax brush:html">
+							<div id="pop_modalsample1" class="pop_dim_wrap pop_modal">
+								<div class="pop_wrap">
+									<button class="pop_btn_close pop_close">닫기</button>
+									<div class="title_wrap">
+										알림
+									</div>
+									<div class="contents_wrap">
+										가입 시 입력하신 e-mail로 임시 비밀번호를 발송합니다.<br>
+										사업자등록번호를 입력하시고 비밀번호 찾기를 클릭하세요.
+									</div>
+									<div class="button_wrap">
+										<button type="button" class="btn btn_md btn_blue pop_close">확인</button>
+									</div>
+								</div>
+							</div>
+
+							<div id="pop_modalsample2" class="pop_dim_wrap pop_modal pop_md">
+								<div class="pop_wrap">
+									<button class="pop_btn_close pop_close">닫기</button>
+									<div class="title_wrap">
+										알림
+									</div>
+									<div class="contents_wrap">
+										가입 시 입력하신 e-mail로 임시 비밀번호를 발송합니다.<br>
+										사업자등록번호를 입력하시고 비밀번호 찾기를 클릭하세요.
+									</div>
+									<div class="button_wrap">
+										<button type="button" class="btn btn_md btn_blue pop_close">확인</button>
+									</div>
+								</div>
+							</div>
+
+							<div id="pop_modalsample3" class="pop_dim_wrap pop_modal pop_lg">
+								<div class="pop_wrap">
+									<button class="pop_btn_close pop_close">닫기</button>
+									<div class="title_wrap">
+										알림
+									</div>
+									<div class="contents_wrap">
+										가입 시 입력하신 e-mail로 임시 비밀번호를 발송합니다.<br>
+										사업자등록번호를 입력하시고 비밀번호 찾기를 클릭하세요.
+									</div>
+									<div class="button_wrap">
+										<button type="button" class="btn btn_md btn_blue pop_close">확인</button>
+									</div>
+								</div>
+							</div>
+
+							<div id="pop_modalsample4" class="pop_dim_wrap pop_modal pop_xlg">
+								<div class="pop_wrap">
+									<button class="pop_btn_close pop_close">닫기</button>
+									<div class="title_wrap">
+										알림
+									</div>
+									<div class="contents_wrap">
+										가입 시 입력하신 e-mail로 임시 비밀번호를 발송합니다.<br>
+										사업자등록번호를 입력하시고 비밀번호 찾기를 클릭하세요.
+									</div>
+									<div class="button_wrap">
+										<button type="button" class="btn btn_md btn_blue pop_close">확인</button>
+									</div>
+								</div>
+							</div>
+
+							<div id="pop_modalsample5" class="pop_dim_wrap pop_modal pop_xxlg">
+								<div class="pop_wrap">
+									<button class="pop_btn_close pop_close">닫기</button>
+									<div class="title_wrap">
+										알림
+									</div>
+									<div class="contents_wrap">
+										가입 시 입력하신 e-mail로 임시 비밀번호를 발송합니다.<br>
+										사업자등록번호를 입력하시고 비밀번호 찾기를 클릭하세요.
+									</div>
+									<div class="button_wrap">
+										<button type="button" class="btn btn_md btn_blue pop_close">확인</button>
+									</div>
+								</div>
+							</div>
+						</pre>
+						<p>CSS</p>
+						<pre class="syntax brush:css">
+							/* MODAL POPUP */
+							.pop_modal .pop_wrap{width:460px;}
+							.pop_modal .pop_wrap .pop_btn_close{position:absolute;top:25px;right:30px; display:inline-block;width:24px;height:24px;border:0;background:url(../img/common/ico_close_modal.png) no-repeat 50%;font-size:0;text-indent:-9999px;cursor:pointer;}
+
+							.pop_modal .pop_wrap .title_wrap{height:70px;line-height: 70px; padding:0 30px;background:#fff;font-size:25px;color:#333; letter-spacing: -3px; border-bottom: 1px solid #cdcdcd;}
+							.pop_modal .pop_wrap .contents_wrap{padding:40px 30px;font-size:14px;line-height:24px;color:#333;vertical-align:middle;}
+
+							.pop_modal .pop_wrap .button_wrap{padding: 0 0 40px;  font-size:0;text-align:center;}
+							.pop_modal .pop_wrap .button_wrap button{min-width: 200px; height: 55px; line-height: 55px; border-radius: 8px; font-size: 20px; letter-spacing: -1px;}
+							.pop_modal .pop_wrap .button_wrap button + button{margin-left:10px;}
+
+							.pop_modal.pop_sm .pop_wrap{width:560px;}
+							.pop_modal.pop_md .pop_wrap{width:670px;}
+							.pop_modal.pop_lg .pop_wrap{width:900px;}
+							.pop_modal.pop_lg_lg .pop_wrap{width:960px;}
+							.pop_modal.pop_xlg .pop_wrap{width:1100px;height:auto;}
+							.pop_modal.pop_xxlg .pop_wrap{width:1180px;height:auto;}
+						</pre>
+					</div>
+				</div>
+			</div>
+			</div>
+			<!-- //탭그룹 -->
+
+			
+
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

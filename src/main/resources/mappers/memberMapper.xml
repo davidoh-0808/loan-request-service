@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTM Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace= "com.neo.mappers.MemberMapper">
+	
+	<select id="memberListCount" resultType="Integer" parameterType="MemberVO" >
+		/* memberMapper.memberListCount 멤버리스트 카운트 */
+		SELECT COUNT(1) totCnt 
+		FROM(
+			<include refid="listQeury" />
+		) TOT
+	</select>
+	
+	<select id="memberList" parameterType="MemberVO" resultType="MemberVO">
+		/* memberMapper.memberList 멤버리스트*/
+		SELECT 
+			A.*
+		FROM ( <include refid="listQeury" /> ) A
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<sql id="listQeury">
+		/* listQeury 멤버리스트 쿼리 */
+		SELECT 
+			TM.MEMBER_CODE			/* 회원코드(MB) */
+			, TM.MEMBER_ID			/* 회원아이디 */
+			, TM.MEMBER_PW			/* 회원비밀번호 */
+			, TM.MEMBER_NAME			/* 회원이름 */
+			, TM.MEMBER_PHONE			/* 전화번호 */
+			, TM.MEMBER_EMAIL			/* 이메일 */
+			, TM.MEMBER_AUTHORITY			/* 회원권한(MC0000000006) */
+			, FN_GET_MASTER_CODE_NAME(TM.MEMBER_AUTHORITY) MEMBER_AUTHORITY_NAME			/* 회원권한(MC0000000006) */
+			, TM.MEMBER_STATUS			/* 회원상태(MC0000000007) */
+			, FN_GET_MASTER_CODE_NAME(TM.MEMBER_STATUS) MEMBER_STATUS_NAME			/* 회원상태(MC0000000007) */
+			, TM.EXPLANATION			/* 회원메모 */
+			, ACCOUNT_USE
+			, THANKS_USE
+			, NEWS_USE
+			, FINAN_USE
+			, REPORT_USE
+			, TM.JOIN_DTTM			/* 가입일시 */
+			, TM.LAST_LOGIN_DTTM			/* 최종로그인일시 */
+			, TM.DEL_YN
+			, TM.IN_USER
+			, TM.IN_DTTM
+			, TM.UP_USER
+			, TM.UP_DTTM
+			
+			, FN_GET_MEMBER_NAME(TM.IN_USER) IN_USER_NAME
+			, FN_GET_MEMBER_NAME(TM.UP_USER) UP_USER_NAME
+
+			, FORMAT(@ROWNUM := @ROWNUM + 1, 0) AS ROW_NUM
+		FROM TB_MEMBER TM
+		, (SELECT @ROWNUM := 0) R
+		<where>
+			AND DEL_YN = 'N'
+			<if test="searchValue != null and searchValue != ''">
+				AND (
+					TM.MEMBER_ID LIKE CONCAT('%', #{searchValue}, '%')
+					OR TM.MEMBER_NAME LIKE CONCAT('%', #{searchValue}, '%')
+					OR TM.MEMBER_EMAIL LIKE CONCAT('%', #{searchValue}, '%')
+					OR TM.MEMBER_PHONE LIKE CONCAT('%', #{searchValue}, '%')
+				)
+			</if>
+		</where>
+		ORDER BY TM.IN_DTTM DESC
+	</sql>
+	
+	<select id="memberDetail" parameterType="MemberVO" resultType="MemberVO">
+		/* memberMapper.memberDetail 멤버상세 */
+		SELECT 
+			TM.MEMBER_CODE			/* 회원코드(MB) */
+			, TM.MEMBER_ID			/* 회원아이디 */
+			, TM.MEMBER_PW			/* 회원비밀번호 */
+			, TM.MEMBER_NAME			/* 회원이름 */
+			, TM.MEMBER_PHONE			/* 전화번호 */
+			, TM.MEMBER_EMAIL			/* 이메일 */
+			, TM.MEMBER_AUTHORITY			/* 회원권한(MC0000000006) */
+			, FN_GET_MASTER_CODE_NAME(TM.MEMBER_AUTHORITY) MEMBER_AUTHORITY_NAME			/* 회원권한(MC0000000006) */
+			, TM.MEMBER_STATUS			/* 회원상태(MC0000000007) */
+			, FN_GET_MASTER_CODE_NAME(TM.MEMBER_STATUS) MEMBER_STATUS_NAME			/* 회원상태(MC0000000007) */
+			, TM.EXPLANATION			/* 회원메모 */
+			, ACCOUNT_USE
+			, THANKS_USE
+			, NEWS_USE
+			, FINAN_USE
+			, REPORT_USE
+			, TM.JOIN_DTTM			/* 가입일시 */
+			, TM.LAST_LOGIN_DTTM			/* 최종로그인일시 */
+			, TM.DEL_YN
+			, TM.IN_USER
+			, TM.IN_DTTM
+			, TM.UP_USER
+			, TM.UP_DTTM
+			
+			, FN_GET_MEMBER_NAME(TM.IN_USER) IN_USER_NAME
+			, FN_GET_MEMBER_NAME(TM.UP_USER) UP_USER_NAME
+		FROM TB_MEMBER TM
+		WHERE TM.MEMBER_CODE = #{MEMBER_CODE}
+		LIMIT 1
+	</select>
+	
+	<insert id="memberInsert" parameterType="MemberVO">
+		/* memberMapper.memberInsert 멤버등록 */
+		INSERT INTO TB_MEMBER (
+			MEMBER_CODE			/* 회원코드(MB) */
+			, MEMBER_ID			/* 회원아이디 */
+			, MEMBER_PW			/* 회원비밀번호 */
+			, MEMBER_NAME			/* 회원이름 */
+			, MEMBER_PHONE			/* 전화번호 */
+			, MEMBER_EMAIL			/* 이메일 */
+			, MEMBER_AUTHORITY			/* 회원권한(MC0000000006) */
+			, MEMBER_STATUS			/* 회원상태(MC0000000007) */
+			, EXPLANATION			/* 회원메모 */
+			, ACCOUNT_USE
+			, THANKS_USE
+			, NEWS_USE
+			, FINAN_USE
+			, REPORT_USE
+			, JOIN_DTTM			/* 가입일시 */
+			, DEL_YN
+			, IN_USER
+			, IN_DTTM
+			, UP_USER
+			, UP_DTTM
+		) VALUES (
+			#{MEMBER_CODE}
+			, TRIM(#{MEMBER_ID})
+			, TRIM(#{MEMBER_PW})
+			, TRIM(#{MEMBER_NAME})
+			, TRIM(#{MEMBER_PHONE})
+			, TRIM(#{MEMBER_EMAIL})
+			, #{MEMBER_AUTHORITY}
+			, #{MEMBER_STATUS}
+			, TRIM(#{EXPLANATION})
+			, IFNULL(#{ACCOUNT_USE}, 0)
+			, IFNULL(#{THANKS_USE}, 0)
+			, IFNULL(#{NEWS_USE}, 0)
+			, IFNULL(#{FINAN_USE}, 0)
+			, IFNULL(#{REPORT_USE}, 0)
+			, NOW()
+			, IFNULL(#{DEL_YN}, 'N')
+			, #{IN_USER}
+			, NOW()
+			, #{UP_USER}
+			, NOW()
+		)
+	</insert>
+	
+	<update id="memberUpdate" parameterType="MemberVO">
+		/* memberMapper.memberUpdate 멤버수정 */
+		UPDATE TB_MEMBER SET
+			MEMBER_NAME		= #{MEMBER_NAME}
+			<if test="MEMBER_PW != null and MEMBER_PW != ''">
+			, MEMBER_PW			= #{MEMBER_PW}
+			</if>
+			, MEMBER_PHONE		= #{MEMBER_PHONE}
+			, MEMBER_EMAIL		= #{MEMBER_EMAIL}
+			, MEMBER_AUTHORITY	= #{MEMBER_AUTHORITY}
+			, MEMBER_STATUS		= #{MEMBER_STATUS}
+			, EXPLANATION		= #{EXPLANATION}
+			, ACCOUNT_USE		= IFNULL(#{ACCOUNT_USE}, 0)
+			, THANKS_USE		= IFNULL(#{THANKS_USE}, 0)
+			, NEWS_USE			= IFNULL(#{NEWS_USE}, 0)
+			, FINAN_USE			= IFNULL(#{FINAN_USE}, 0)
+			, REPORT_USE		= IFNULL(#{REPORT_USE}, 0)
+			, UP_USER			= #{UP_USER}
+			, UP_DTTM			= NOW()
+		WHERE MEMBER_CODE = #{MEMBER_CODE}
+	</update>
+	
+	<update id="memberDelete" parameterType="MemberVO">
+		/* memberMapper.memberDelete 멤버삭제 */
+		UPDATE TB_MEMBER SET
+			DEL_YN = #{DEL_YN}
+			, UP_USER = #{UP_USER}
+			, UP_DTTM = NOW()
+		WHERE MEMBER_CODE = #{MEMBER_CODE}
+	</update>
+	
+	<select id="memberDetailById" parameterType="MemberVO" resultType="MemberVO">
+		/* memberMapper.memberDetailById 회원정보상세(아이디기반) */
+		SELECT 
+			TM.MEMBER_CODE			/* 회원코드(MB) */
+			, TM.MEMBER_ID			/* 회원아이디 */
+			, TM.MEMBER_PW			/* 회원비밀번호 */
+			, TM.MEMBER_NAME			/* 회원이름 */
+			, TM.MEMBER_PHONE			/* 전화번호 */
+			, TM.MEMBER_EMAIL			/* 이메일 */
+			, TM.MEMBER_AUTHORITY			/* 회원권한(MC0000000006) */
+			, FN_GET_MASTER_CODE_NAME(TM.MEMBER_AUTHORITY) MEMBER_AUTHORITY_NAME			/* 회원권한(MC0000000006) */
+			, TM.MEMBER_STATUS			/* 회원상태(MC0000000007) */
+			, FN_GET_MASTER_CODE_NAME(TM.MEMBER_STATUS) MEMBER_STATUS_NAME			/* 회원상태(MC0000000007) */
+			, TM.EXPLANATION			/* 회원메모 */
+			, ACCOUNT_USE
+			, THANKS_USE
+			, NEWS_USE
+			, FINAN_USE
+			, REPORT_USE
+			, TM.JOIN_DTTM			/* 가입일시 */
+			, TM.LAST_LOGIN_DTTM			/* 최종로그인일시 */
+			, TM.DEL_YN
+			, TM.IN_USER
+			, TM.IN_DTTM
+			, TM.UP_USER
+			, TM.UP_DTTM
+		FROM TB_MEMBER TM
+		WHERE TM.MEMBER_ID = #{MEMBER_ID}
+		LIMIT 1
+	</select>
+	
+<!-- 로그인 -->
+	<select id="memberLogin" parameterType="MemberVO" resultType="MemberVO">
+		/* memberMapper.memberLogin 멤버로그인 */
+		SELECT 
+			TM.MEMBER_CODE			/* 회원코드(MB) */
+			, TM.MEMBER_ID			/* 회원아이디 */
+			, TM.MEMBER_PW			/* 회원비밀번호 */
+			, TM.MEMBER_NAME			/* 회원이름 */
+			, TM.MEMBER_PHONE			/* 전화번호 */
+			, TM.MEMBER_EMAIL			/* 이메일 */
+			, TM.MEMBER_AUTHORITY			/* 회원권한(MC0000000006) */
+			, FN_GET_MASTER_CODE_NAME(TM.MEMBER_AUTHORITY) MEMBER_AUTHORITY_NAME			/* 회원권한(MC0000000006) */
+			, TM.MEMBER_STATUS			/* 회원상태(MC0000000007) */
+			, FN_GET_MASTER_CODE_NAME(TM.MEMBER_STATUS) MEMBER_STATUS_NAME			/* 회원상태(MC0000000007) */
+			, TM.EXPLANATION			/* 회원메모 */
+			, ACCOUNT_USE
+			, THANKS_USE
+			, NEWS_USE
+			, FINAN_USE
+			, REPORT_USE
+			, TM.JOIN_DTTM			/* 가입일시 */
+			, TM.LAST_LOGIN_DTTM			/* 최종로그인일시 */
+			, TM.DEL_YN
+			, TM.IN_USER
+			, TM.IN_DTTM
+			, TM.UP_USER
+			, TM.UP_DTTM
+		FROM TB_MEMBER TM
+		WHERE TM.DEL_YN = 'N'
+		AND TM.MEMBER_ID = #{MEMBER_ID}
+		LIMIT 1
+	</select>	
+<!-- 로그인 -->
+	
+</mapper>

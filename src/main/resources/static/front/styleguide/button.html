@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>마크업가이드 - BUTTON</title>
+<!-- 가이드 css -->
+<link rel="stylesheet" href="../common/css/common.css">
+<link rel="stylesheet" href="../common/css/shCoreDefault.css">
+<link rel="stylesheet" href="../css/common.css">
+<!-- //style -->
+<script type="text/javascript" src="../common/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src=" ../common/js/shCore.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushXml.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushCss.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushJScript.js"></script>
+<script type="text/javascript" src=" ../common/js/guide.js"></script>
+<script type="text/javascript">
+	SyntaxHighlighter.all();
+	$(document).ready(function(){
+		$('.g-nav-snb').append(webSnb);
+		$('.g-nav-snb ul li').eq(1).addClass("active");
+	});
+</script>
+</head>
+<body>
+<div id="g-wrap" class="open-aside">
+	<!-- aside -->
+	<div id="g-aside">
+		<!-- # 좌측컨텐츠 # -->
+		<div class="wrap-aside">
+			<!-- 사용자정보영역 -->
+			<div class="box-info">
+			</div>
+			<!-- 네비게이션 : SNB -->
+			<div class="g-nav-snb guide"></div>
+		</div>
+		<!-- # 컨트롤 # -->
+		<div class="g-area-control">
+			<a href="#none">좌측영역 펼침/닫기</a>
+		</div>
+	</div>
+	<!-- //aside -->
+
+	<div class="g-content">
+		<div class="g-box-basic">
+			<h2 class="g-tit-basic">BUTTON</h2>
+
+			<!-- 탭그룹 -->
+			<div class="row">
+				<h3 class="g-tit-basic">공통버튼</h3>
+				<div class="tab-wrap g-tab-sample ui-tab">
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<!-- view -->
+							<h3 class="g-tit-basic">Large(130 * 48)</h3>
+							<button type="button" class="btn btn_lg btn_blue">완료</button>
+							<button type="button" class="btn btn_lg btn_white">취소</button>
+							<br><br>
+
+							<h3 class="g-tit-basic">Middle(117 * 45)</h3>
+							<button type="button" class="btn btn_md btn_blue">자세히보기</button>
+							<button type="button" class="btn btn_md btn_blue btn_radius w200">상담신청</button>
+							<button type="button" class="btn btn_md btn_lightblue btn_radius w200">KCB 신용평점 조회</button>
+							<button type="button" class="btn btn_md btn_yellow btn_radius w200">NICE 신용평점 조회</button>
+							<br><br>
+
+							<h3 class="g-tit-basic">Small(91 * 38)</h3>
+							<button type="button" class="btn btn_sm btn_lightgray btn_radius">파일선택</button>
+							<br><br>
+
+							<!-- <h3 class="g-tit-basic">xSmall()</h3>
+							<br><br> -->
+
+							<!-- //view -->
+						</div>
+					</div>
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<p class="on">HTML</p>
+							<pre class="syntax brush:html">
+								<!-- xLarge(130 * 48) -->
+								<button type="button" class="btn btn_lg btn_blue">완료</button>
+								<button type="button" class="btn btn_lg btn_white">취소</button>
+
+								<!-- Middle(117 * 45) -->
+								<button type="button" class="btn btn_md btn_blue">자세히보기</button>
+								<button type="button" class="btn btn_md btn_blue btn_radius w200">상담신청</button>
+								<button type="button" class="btn btn_md btn_lightblue btn_radius w200">KCB 신용평점 조회</button>
+								<button type="button" class="btn btn_md btn_yellow btn_radius w200">NICE 신용평점 조회</button>
+
+								<!-- Small(91 * 38) -->
+								<button type="button" class="btn btn_sm btn_lightgray btn_radius">파일선택</button>
+							</pre>
+							<p>CSS</p>
+							<pre class="syntax brush:css">
+
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //탭그룹 -->
+		</div>
+	</div>
+</div>
+</body>
+</html>

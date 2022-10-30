@@ -1,0 +1,95 @@
+error:
+  server:
+    403: "페이지를 찾을 수 없습니다(403)"
+    404: "페이지를 찾을 수 없습니다(404)"
+    405: "페이지를 찾을 수 없습니다(405)"
+    500: "서버 내부의 오류로 인해 서비스를 제공할 수 없습니다"
+  
+  xhr:
+    401: "인증에 실패 했습니다. 메인 페이지로 이동합니다"
+    403: "세션이 만료가 되었습니다. 메인 페이지로 이동합니다"
+    500: "시스템 오류입니다. 관리자에게 문의바랍니다"
+    else: "기타 시스템 오류입니다. 관리자에게 문의바랍니다"
+
+  system:
+    default: "시스템 오류입니다"
+
+
+validation:
+  empty:
+    input: "{0} 입력하세요"
+    object: "{0} 확인해주세요"
+    required: "필수항목 누락입니다"
+    check: "정확한 정보를 입력해주세요"
+  update:
+    empty:
+      object: "수정대상이 없습니다"
+  delete:
+    empty:
+      object: "수정대상이 없습니다"
+  login:
+    deplication: "다른 매체에서 로그인 되어 로그아웃 되었습니다."
+  file:
+#    availableExt: "허용하지 않는 파일입니다"
+    availableExt: "이미지 파일만 업로드 가능합니다"
+  join:
+    idPattern: "아이디는 5~20자를 사용하세요."
+    pwdPattern: "8~16자 영문, 숫자, 특수문자(~!@#$%^*())를 혼합하여 사용하세요"
+    pwdInconsistency: "비밀번호가 일치하지 않습니다"
+    idDupCheck: "아이디 중복확인을 해주세요"
+    idSuccess: "사용가능한 아이디입니다"
+  check:
+    required: "동의 후 상담신청이 가능합니다."
+    requiredMail: "동의 후 문의메일 발송이 가능합니다"
+  password:
+    notMatched: "새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다"
+    reg: "비밀번호는 8~16자의 영문 대소문자와 숫자, 특수문자를 사용할 수 있습니다"
+  search:
+    reg: "특수 문자를 제외하고 검색해주세요"
+  date:
+    reg: "시작일은 종료일을 초과할 수 없습니다"
+
+
+message:
+  insert:
+    confirm: "저장하시겠습니까"
+    success: "저장되었습니다"
+    cancel:
+      confirm: "저장을 취소하시겠습니까"
+  update:
+    confirm: "수정하시겠습니까?"
+    success: "수정되었습니다"
+    failure: "수정 실패하였습니다"
+    cancel:
+      confirm: "수정을 취소하시겠습니까?"
+    password:
+      success: "비밀번호가 변경되었습니다"
+  delete:
+    confirm: "삭제를 진행 하시겠습니까?"
+    success: "삭제 완료 되었습니다"
+  reset:
+    password:
+      confirm: "패스워드를 초기화 하시겠습니까? 초기화할 경우 Miso!@34로 초기화됩니다"
+      success: "패스워드가 초기화 되었습니다"
+  assignConsultant:
+    confirm: "상담자를 배정하시겠습니까?"
+    success: "배정되었습니다"
+  otp:
+    confirm: "인증 OTP 를 초기화 하시겠습니까"
+    success: "인증 OTP QR코드가 메일로 재발행 되었습니다"
+  activate:
+    confirm: "휴면 해제 하시겠습니까?"
+    success: "휴면 해제 되었습니다"
+
+
+login:
+  fail:
+    notFound: "회원정보가 없습니다"
+    missmatchPassword: "아이디 및 비밀번호를 확인해주세요"
+    missmatchOtp: "인증번호를 확인해주세요"
+    vanUser: "차단된 사용자입니다. 관리자에게 문의해주세요"
+    notConfirmUser: "사용승인 전 사용자입니다. 관리자에게 문의해주세요"
+
+join:
+  fail:
+    duplicateId: "이미 사용중인 아이디입니다"

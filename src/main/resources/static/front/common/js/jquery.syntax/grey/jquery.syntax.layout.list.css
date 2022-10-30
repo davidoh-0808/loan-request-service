@@ -1,0 +1,53 @@
+/*
+.syntax-container.syntax-theme-grey ol.syntax {
+  background-color: #e3e3e3;
+  border: 1px solid #aaaaaa; }
+  .syntax-container.syntax-theme-grey ol.syntax li {
+    color: #979797; }
+  .syntax-container.syntax-theme-grey ol.syntax li div.source {
+    color: #333333;
+    border-left: 1px solid #aaaaaa;
+    background-color: #f0f0f0; }
+  .syntax-container.syntax-theme-grey ol.syntax li.alt div.source {
+    background-color: whitesmoke; }
+.syntax-container.syntax-theme-grey ul.syntax {
+  background-color: #e3e3e3;
+  border: 1px solid #aaaaaa; }
+  .syntax-container.syntax-theme-grey ul.syntax li div.source {
+    color: #333333;
+    background-color: #f0f0f0; }
+  .syntax-container.syntax-theme-grey ul.syntax li.alt div.source {
+    background-color: whitesmoke; }
+*/
+
+.syntax-container.syntax-theme-grey ol.syntax {
+  background-color: #000;
+  border: 0 solid #aaaaaa; border-radius:3px;}
+  .syntax-container.syntax-theme-grey ol.syntax li {
+    color: #979797; }
+  .syntax-container.syntax-theme-grey ol.syntax li div.source {
+    color: #333333;
+    border-left: 0 solid #aaaaaa;
+    background-color: #000; }
+  .syntax-container.syntax-theme-grey ol.syntax li.alt div.source {
+    background-color: #000; }
+.syntax-container.syntax-theme-grey ul.syntax {
+  background-color: #000;
+  border: 1px solid #aaaaaa; }
+  .syntax-container.syntax-theme-grey ul.syntax li div.source {
+    color: #333333;
+    background-color: #222; }
+.syntax-container.syntax-theme-base ol.syntax li div.source{
+	color:#eee !important;
+}
+  .syntax-container.syntax-theme-grey ul.syntax li.alt div.source {background-color: whitesmoke;}
+.syntax-theme-base .syntax .xml .xml-tag, .syntax-theme-base .syntax .xml .cdata {color:#ccc !important;}
+.syntax-theme-base .syntax .xml .tag-name, .syntax-theme-base .syntax .xml .cdata-tag {color:#0099cc !important}
+.syntax-theme-base .syntax .string, .syntax-theme-base .syntax .symbol {color:lightgreen !important}
+.syntax-container.syntax-theme-base ol.syntax {padding:0.5em !important;}
+.syntax-theme-base .syntax .comment {color:#ccc !important;}
+.syntax-theme-base .syntax .css .property {color:#0099cc !important; text-decoration:none;}
+.syntax-theme-base .syntax .css .selector {color:lightgray !important}
+.syntax-container.syntax-theme-base ol.syntax li div.source {color:lightgray !important}
+.syntaxhighlighter .plain, .syntaxhighlighter .plain a {color:lightgray !important}
+.syntax-container.syntax-theme-base ol.syntax li div.source .value {color:lightgreen !important}

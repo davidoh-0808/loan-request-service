@@ -1,0 +1,110 @@
+spring:
+  profiles:
+    active: local # 로컬
+    #active: dev # 개발
+    #active: real # 운영
+
+  #jsp 경로설정
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/ # viewresolve jsp 파일경로 접두어
+      suffix: .jsp   # viewresolve jsp 파일경로 접미어
+    static-path-pattern: /resources/**  # static 폴더 view 경로 지정
+    format:
+      date: yyyy-MM-dd  # 날짜표현형식(주로view에서 사용)
+      date-time: yyyy.MM.dd HH:ss # 날짜표현형식(주로view에서 사용)
+
+  #인코딩
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+  # 메세지
+  messages:
+    basename: messages/message  # 메세지파일 소스경로
+    encoding: UTF-8
+    cache-duration: 60  # 메세지파일 변경시 갱신반영시간(초)
+    use-code-as-default-message: true # 메세지키를 못 찾을 경우 디폴트 메세지 내용 노출여부
+
+  # jackson 응답 타임스탬프를 날짜로
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false  # jsonview 리턴시 타임스탬프 값을 포맷형식으로 변경(안먹음)
+
+  # 메일발송
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    port: 587
+    username: hdsmile.mail@gmail.com
+    password: kebmtacmbljklgne
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+#            required: true
+
+  #파일용량제한
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  
+application:
+  index: /front/main/mainList # 시스템 index경로
+
+mybatis:
+  type-aliases-package: com.neo.common.vo # mybatis 사용시 Type경로: resultType, parameterType 에 VO class 명만 적으면됨 
+  mapper-locations: classpath:mappers/**/*Mapper.xml # mapper경로와 파일 패턴 지정
+
+
+# CUSTOM CODE ################################################################################################
+# 마스터코드값
+mastercode:
+  member_gubun:
+    admin: MC0000100001
+    member: MC0000100002
+    consult: MC0000100003
+  member_authority:
+    branch_member: MC0002300001
+    consult_member: MC0002300002
+    consult_admin: MC0002300003
+    system_admin: MC0002300004    
+  platform_gubun:
+    pc: MC0000200001
+    mobile: MC0000200002
+
+#성공실패코드
+resultcode:
+  success: "0000"
+  fail: "9999"
+
+#페이지URL 설정값
+pageurl:
+  index:
+    member: /member/main/mainList
+    admin: /admin/report/reportDeviceList
+    mobile: /mobile/main/mainList
+    consult: /consult/consult/consultList
+    #dashboard: /consult/user/profile
+    dashboard: /consult/main/dashboard
+  login:
+    member: /login/loginFormMember
+    admin: /login/loginFormAdmin
+    mobile: /login/loginFormMobile
+    consult: /login/loginFormConsult
+    firstotp: /login/loginFirstOtp
+    loginotp: /login/loginOtp
+  
+#회사정보
+company:  
+  homepage : www.hyundaismile.or.kr
+  name : 현대차미소금융
+  
+
+server:
+  max-http-header-size: 30000

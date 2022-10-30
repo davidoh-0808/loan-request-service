@@ -1,0 +1,921 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>한국전자금융 KIOSK</title>
+<link rel="stylesheet" href="../common/css/common.css">
+<link rel="stylesheet" href="../common/css/shCoreDefault.css">
+<!-- //style -->
+<script type="text/javascript" src=" ../common/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src=" ../common/js/shCore.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushXml.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushCss.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushJScript.js"></script>
+<script type="text/javascript" src=" ../common/js/guide.js"></script>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+</head>
+<body>
+<div id="g-wrap" class="open-aside">
+	<!-- aside -->
+	<div id="g-aside">
+		<!-- # 좌측컨텐츠 # -->
+		<div class="wrap-aside">
+			<!-- 사용자정보영역 -->
+			<div class="box-info">
+			</div>
+			<!-- 네비게이션 : SNB -->
+			<div class="g-nav-snb">
+				<ul>
+					<li><a href="#" data-target="M0">기본정책</a></li>
+					<li><a href="#" data-target="M1">네이밍 규칙</a></li>
+					<li><a href="#" data-target="M2">HTML 코드 작성 규칙</a></li>
+					<li><a href="#" data-target="M3">HTML 엘리먼트 작성 규칙</a></li>
+					<li><a href="#" data-target="M4">CSS 코드 작성 규칙</a></li>
+					<!-- <li><a href="#" data-target="M5">용어정의</a></li> -->
+				</ul>
+			</div>
+		</div>
+		<!-- # 컨트롤 # -->
+		<div class="g-area-control">
+			<a href="#none">좌측영역 펼침/닫기</a>
+		</div>
+	</div>
+	<!-- //aside -->
+
+	<div class="g-content page-guide">
+		<!-- 페이지타이틀 -->
+		<!-- <div class="g-tit-page">
+			<h1>작업규칙</h1>
+		</div> -->
+
+		<!-- 기본정책 -->
+		<h2 class="g-tit-basic toggle open" id="M0">기본정책</h2>
+		<ul class="g-desc">
+			<li>Document Type 은 html5을 기준으로 선정한다.</li>
+			<li>UI 지원 브라우저 : ie11 최적, Chrome, FF 등 표준브라우저</li>
+			<li>디자인최소 해상도 : 1280px </li>
+		</ul>
+
+		<!-- 네이밍 규칙 -->
+		<h2 class="g-tit-basic toggle open" id="M1">네이밍 규칙</h2>
+
+		<h3 class="g-tit-basic">표기법</h3>
+		<ul class="g-desc">
+			<li>일반규칙 - 이름은 영문 소문자, 숫자, 언더스코어(_)로 작성한다.</li>
+			<li>시작이름 - 이름은 영문 소문자로만 시작할 수 있다.<br>단, css 주석문은 영문 대문자를 허용한다.</li>
+		</ul>
+		<div class="g-tbl-data1 guide">
+			<table>
+				<caption>공통 네이밍 규칙 예</caption>
+				<colgroup>
+					<col style="width:50%;">
+					<col style="width:50%;">
+					<col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th>잘못된 예</th>
+						<th>올바른 예</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="align-left">Btn</td>
+						<td class="align-left">btn</td>
+					</tr>
+					<tr>
+						<td class="align-left">2btn</td>
+						<td class="align-left">btn2</td>
+					</tr>
+					<tr>
+						<td class="align-left">_btn</td>
+						<td class="align-left">btn</td>
+					</tr>
+					<tr>
+						<td class="align-left">btn_</td>
+						<td class="align-left">btn</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<ul class="g-desc">
+			<li>영문 소문자, 숫자, 언더스코어 조합 - 영문 소문자, 숫자, 언더스코어(_)만 사용할 수 있다.
+				<br>언더스코어(_)는 단어와 단어 조합할 때만 사용한다.
+				<br>언더스코어(_)가 포함된 약속어는 숫자, 영문 소문자와 조합하여 사용할 수 있다.
+			</li>
+		</ul>
+		<div class="g-tbl-data1 guide">
+			<table>
+				<caption>네이밍 조합 예</caption>
+				<colgroup>
+					<col style="width:20%;">
+					<col style="width:40%;">
+					<col style="width:40%;">
+					<col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th>기본형</th>
+						<th>잘못된 예</th>
+						<th>올바른 예</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="align-left">section</td>
+						<td class="align-left">sectionList</td>
+						<td class="align-left">section_list</td>
+					</tr>
+					<tr>
+						<td class="align-left">no</td>
+						<td class="align-left">-</td>
+						<td class="align-left">no1, no2, no3, no4, no5</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h3 class="g-tit-basic">파일 및 폴더</h3>
+		<ul class="g-desc">
+			<li>개발과 기획에서 정의된 디렉토리 구조도 및 화면 아이디가 정의가 되어있다면 그에 준한 규칙에 따라 파일 및 폴더의 이름을 사용한다.</li>
+		</ul>
+		<div class="g-tbl-data1 guide">
+			<table>
+				<caption>파일 및 폴더 네이밍 규칙 예</caption>
+				<colgroup><col span="5" style="width:12%;"/><col /></colgroup>
+				<thead>
+					<tr>
+						<th colspan="3">경로/폴더</th>
+						<th colspan="2">파일</th>
+						<th>설명</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td rowspan="11">사이트별 폴더</td>
+						<td colspan="3">카테고리별 폴더</td>
+						<td>**.html</td>
+						<td>1차카테고리 html</td>
+					</tr>
+					<tr>
+						<td rowspan="9">common</td>
+						<td rowspan="4">css</td>
+						<td></td>
+						<td>common.css</td>
+						<td>초기화, 공통</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>main.css</td>
+						<td>메인페이지 스타일</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>sub.css</td>
+						<td>컨텐츠 스타일</td>
+					</tr>
+					<tr>
+						<td>vendor</td>
+						<td></td>
+						<td>플러그인 UI 관련 css</td>
+					</tr>
+					<tr>
+						<td colspan="2">fonts</td>
+						<td>.eot / .otf / .woff / .ttf</td>
+						<td>웹폰트 관련 파일</td>
+					</tr>
+					<tr>
+						<td rowspan="4">js</td>
+						<td></td>
+						<td>common.js</td>
+						<td>ui 관련 스크립트</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>plugins.js</td>
+						<td>plugin 모음</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>main.js</td>
+						<td>메인페이지 스크립트 모음</td>
+					</tr>
+					<tr>
+						<td>vendor</td>
+						<td>jquery.min.js</td>
+						<td>jquery 라이브러리 모음</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h3 class="g-tit-basic">ID Selector</h3>
+		<ul class="g-desc">
+			<li>지정된 레이아웃 및 폼객체를 제외한 스타일 지정을 위하여 id를 사용하지 않는다.</li>
+			<li>앵커로서 사용되는 엘리먼트는 id 지정이 가능하다.</li>
+			<li>User Interface 동작을 위하여 DOM 선택자로서의 id 지정은 가능하다.</li>
+			<li>예약어가 있는 경우 예약어를 사용한다.</li>
+		</ul>
+
+		<h4 class="g-tit-sub1">예약어</h4>
+		<div class="g-tbl-data1 guide">
+			<table>
+				<caption>예약어</caption>
+				<colgroup><col span="2" style="width:25%;"/><col /></colgroup>
+				<thead>
+					<tr>
+						<th>구분</th>
+						<th>예약어</th>
+						<th>설명</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td rowspan="6">사이트 레이아웃</td>
+						<td>#wrap</td>
+						<td>사이트 전체영역</td>
+					</tr>
+					<tr>
+						<td>#header</td>
+						<td>머리글 영역</td>
+					</tr>
+					<tr>
+						<td>#container</td>
+						<td>페이지 영역</td>
+					</tr>
+					<tr>
+						<td>#content</td>
+						<td>본문 영역</td>
+					</tr>
+					<tr>
+						<td>#footer</td>
+						<td>바닥글 영역</td>
+					</tr>
+					<tr>
+						<td>#popXXX</td>
+						<td>레이어팝업 페이지별 ID</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h3 class="g-tit-basic">Class 네이밍 확장</h3>
+		<br>
+		<h4 class="g-tit-sub1">종속확장 class<br>기본형 class에 종속되어 여백, 색깔, 행간 등의 몇 가지 속성을 부여하고자 할 때 사용하는 class</h4>
+		<div class="g-code">
+			<pre class="brush:html">
+				<style>
+				.mykin_list a{font-size:12px;line-height:14px;font-weight:bold}
+				.mykin_list_v1 a{color:#f00}
+				.mykin_list_v2 a{color:#03f}
+				</style> 
+
+				<div class="mykin_list"><a href="#">바로가기</a> </div> 
+				<div class="mykin_list mykin_list_v1"><a href="#">바로가기</a> </div>
+				<div class="mykin_list mykin_list_v2"><a href="#">바로가기</a> </div>
+			</pre>
+		</div>
+		<br>
+		<h4 class="g-tit-sub1">독립확장 class<br>기본형 class의 변형이 타입으로 분류할 만큼 클 경우 사용하는 class</h4>
+		<div class="g-code">
+			<pre class="brush:html">
+					<ul class="mykin_list2">
+						<li>리스트1</li>
+						<li>리스트1</li>
+						<li>리스트1</li>
+					</ul>
+
+					<ul class="mykin_list3">
+						<li>리스트1</li>
+						<li>리스트1</li>
+						<li>리스트1</li>
+					</ul>
+			</pre>
+		</div>
+		<div class="g-tbl-data1 guide">
+			<table>
+				<caption>class 네이밍 확장 예</caption>
+				<colgroup><col span="2" style="width:25%;"/><col /></colgroup>
+				<thead>
+					<tr>
+						<th>기본형</th>
+						<th>확장형</th>
+						<th>설명</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td rowspan="2">mykin_list</td>
+						<td>mykin_list_v1, mykin_list_v2...</td>
+						<td>종속 확장 class </td>
+					</tr>
+					<tr>
+						<td>mykin_list2, mykin_list3</td>
+						<td>독립 확장 class </td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h3 class="g-tit-basic">이미지 네이밍 규칙</h3>
+		<ul class="g-desc">
+			<li>이미지 네이밍의 조합은 '형태_의미_상태'의 순서로 조합한다.</li>
+			<li>같은 이름의 이미지가 두 개 이상 존재하면 두자리 숫자로 구분한다.</li>
+			<li>이미지 네이밍은 이미지의 확장자에 관계 없이 순차적으로 적용한다. 예) btn_confirm.gif, btn_confirm_02.jpg, btn_confirm_03.png</li>
+		</ul>
+		<h4 class="g-tit-sub1">이미지 예약어</h4>
+		<div class="g-tbl-data1 guide">
+			<table>
+				<caption>이미지 예약어</caption>
+				<colgroup><col span="2" style="width:25%;"/><col /></colgroup>
+				<thead>
+					<tr>
+						<th>분류</th>
+						<th>파일명</th>
+						<th>설명</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>버튼</td>
+						<td>btn_</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>아이콘</td>
+						<td>ico_</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>배경</td>
+						<td>bg_</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>비주얼</td>
+						<td>visual_</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>임시</td>
+						<td>sample_</td>
+						<td>관리자나 사용자에 의해 등록될 이미지 영역으로 기본코딩을 위한 임시이미지</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- HTML 코드 작성 규칙 -->
+		<h2 class="g-tit-basic toggle open" id="M2">HTML 코드 작성 규칙</h2>
+
+		<h3 class="g-tit-basic">&lt;head&gt; 영역의 파일 링크</h3>
+		<p>웹 문서 전송 속도를 높이기 위하여(Request Count 감소) 최소한의 파일을 사용한다.</p>
+
+		<h3 class="g-tit-basic">표준 문법의 사용</h3>
+		<ul class="g-desc">
+			<li>HTML은 해당 DTD의 명세에 맞게 작성하며, W3C validation을 통과해야 한다.</li>
+			<li>DTD를 제외한 모든 엘리먼트와 애트리뷰트는 소문자로 작성한다.</li>
+			<li>애트리뷰트의 값은 큰따움표("")로 묶는다.</li>
+			<li>특수기호는 Entity name을 사용하여 entity 코드로 변환한다. Entity 코드는 ISO-8859-1을 기준으로 한다.</li>
+			<li>마크업은 <a href="http://www.w3.org/html/wg/drafts/html/master/" target="_blank" title="새창">W3C html5문법</a>에 준하여 사용한다.</li>
+			<li>종료 태그는 생략하지 않는다.</li>
+		</ul>
+
+		<h4 class="g-tit-sub1">주의 해야할 특수기호 Entity name</h4>
+		<div class="g-tbl-data1 guide">
+			<table>
+				<caption>주의 해야할 특수기호</caption>
+				<tbody>
+					<tr>
+						<th>Character</th>
+						<td>&#8361;</td>
+						<td>"</td>
+						<td>&amp;</td>
+						<td>&lt;</td>
+						<td>&gt;</td>
+						<td>&nbsp;</td>
+						<td>&middot;</td>
+						<td>&#47;</td>
+					</tr>
+					<tr>
+						<th>Entity Name</th>
+						<td>&amp;#8361;</td>
+						<td>&amp;quot;</td>
+						<td>&amp;amp;</td>
+						<td>&amp;lt;</td>
+						<td>&amp;gt;</td>
+						<td>&amp;nbsp;</td>
+						<td>&amp;middot;</td>
+						<td>&amp;#47;</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p class="txt-guide1"> * 참고 : <a href="http://www.w3schools.com/html/html_entities.asp" target="_blank" title="새창">HTML Entities</a></p>
+
+		<h3 class="g-tit-basic">파일의 인코딩</h3>
+		<p>*.html, *.css, *.js의 파일의 저장 방식을 UTF-8로 설정한다. 반드시 개발과 협의가 필요하다.</p>
+		<div class="g-tbl-data1 guide">
+			<table>
+				<caption>문자셋(charset)별 인코딩</caption>
+				<thead>
+				<tr>
+					<th>문자셋(charset)</th>
+					<th>기본 인코딩</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td>charset=utf-8</td>
+					<td>utf-8</td>
+				</tr>
+				<tr>
+					<td>charset=euc-kr</td>
+					<td>ANSI</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h3 class="g-tit-basic">코드 들여쓰기</h3>
+		<ul class="g-desc">
+			<li>코드의 가독성을 높이고 전체 HTML 구조를 쉽게 파악하기 위하여 들여쓰기 규칙을 준수한다. 마크업의 중첩이 깊어질 때마다 자식 엘리먼트는 1탭 들여 쓰고, 1탭의 크기는 공백 4칸으로 설정한다.</li>
+		</ul>
+
+		<h4 class="g-tit-sub1">들여쓰기를 하지 않는 경우</h4>
+		<div class="g-code">
+			<pre class="brush:html">
+			&lt;!doctype html&gt;
+			&lt;html lang="ko"&gt;
+			&lt;head&gt;
+		
+			&lt;/head&gt;
+			&lt;body&gt;
+			&lt;div id="wrap"&gt;
+		
+			&lt;/div&gt;
+			&lt;/body&gt;
+			&lt;/html&gt;
+			</pre>
+		</div>
+		<ul class="g-desc">
+			<li>html의 자식 엘리먼트인 head, body</li>
+			<li>body의 자식 첫 번째 엘리먼트 div="wrap"</li>
+		</ul>
+
+		<h3 class="g-tit-basic">빈줄 / 주석</h3>
+		<div class="g-code">
+			<pre class="brush:html">
+			&lt;header id="header"&gt;
+			&lt;/header&gt; <!-- // header -->
+		
+			&lt;div id="container"&gt;
+			&lt;/div&gt; <!-- // container -->
+		
+			&lt;footer id="footer"&gt;
+			&lt;/footer&gt; <!-- // footer -->
+			</pre>
+		</div>
+		<ul class="g-desc">
+			<li>주석 기호와 주석 내용 사이에는 반드시 공백 한 칸이 있어야 한다.</li>
+			<li>시작주석은 작성하지 않으며 종료주석의 내용은 동일해야 한다. 그룹간 1줄 빈줄이 있을경우(예:레이아웃관련)에는 종료주석을 생략할 수 있다.</li>
+			<li>레이아웃 엘리먼트를 제외한 독립된 콘텐츠 영역의 주석 표기는 선택 사항이다.</li>
+		</ul>
+
+		<!-- HTML 엘리먼트 작성 규칙 -->
+		<h2 class="g-tit-basic toggle open" id="M3">HTML 엘리먼트 작성 규칙</h2>
+
+		<h3 class="g-tit-basic">기본문서 포맷</h3>
+		<ul class="g-desc">
+			<li>DOCTYPE : HTML5로 선언한다. DTD 선언시 앞에 공백이 오지 않도록 해야하며, 문서 최상단에 선언 한다.</li>
+			<li>lang : lang="ko"를 기본으로 표기하며 언어에 따라서 해당국가 언어로 표기한다.</li>
+			<li>charset : &lt;head> 첫 번째에 선언한다. utf-8을 기본으로 한다.</li>
+			<li>&lt;meta> : 최소한의 메타정보가 제공되어야 하며 상세내용은 기획과 협의필요.</li>
+			<li>&lt;title> : 페이지별 제목이 구분 되어야 한다. (예) 인사말 &gt; 회사소개 - 네오</li>
+			<li>keywords(키워드) : 페이지 키워드를 기재/콤마(,)로 구별하여 기술/동의어와 유의어를 포함.</li>
+			<li>description(페이지 정보 요약) : 구글검색에서, 결과 페이지 내용 미리보기로 사용할 수도 있음.</li>
+			<li>참고 : <a href="https://static.googleusercontent.com/media/www.google.co.kr/ko/kr/intl/ko/webmasters/docs/search-engine-optimization-starter-guide-ko.pdf" target="_blank">구글 검색엔진 최적화 방법</a></li>
+		</ul>
+		<div class="g-code">
+			<pre class="brush:html">
+			&lt;!DOCTYPE html&gt;
+			&lt;html lang="ko"&gt;
+			&lt;head&gt;
+			&lt;title>페이지 &gt; 대메뉴 - 사이트&lt;/title&gt;
+			&lt;meta charset="utf-8"&gt;
+			&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+			&lt;meta http-equiv="imagetoolbar" content="no"&gt;
+			&lt;meta name="title" content=""&gt;
+			&lt;meta name="keywords" content=""&gt;
+			&lt;meta name="description" content=""&gt;
+			&lt;meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"&gt;
+			
+			&lt;link rel="stylesheet" href="/css/common.css"&gt;
+			&lt;link rel="stylesheet" href="/css/main.css"&gt;
+			&lt;link rel="stylesheet" href="/css/sub.css"&gt;
+			
+			&lt;script src="/js/vendor/jquery-1.12.4.min.js">&lt;/script&gt;
+			&lt;script src="/js/vendor/jquery-ui.min.js">&lt;/script&gt;
+			&lt;script src="/js/plugins.js">&lt;/script&gt;
+			&lt;/head&gt;
+			&lt;body&gt;
+			&lt;/body&gt;
+			&lt;/html&gt;
+			</pre>
+		</div>
+
+		<h3 class="g-tit-basic">구조, 표현, 동작의 분리</h3>
+		<p>문서의 구조(HTML)와 표현(CSS), 동작(script) 언어를 본래의 목적에 맞게 최대한 분리한다.</p>
+
+		<h4 class="g-tit-sub1">예외사항</h4>
+		<div class="g-code">
+			<pre class="brush:html">
+			&lt;input type="text" id="formMyClass" class="my-class" style="width:80%;" /&gt;
+			</pre>
+		</div>
+		<ul class="g-desc">
+			<li>특정 엘리먼트에 id, class, style을 선언할 때에 선언 순서는 엘리먼트의 기본 애트리뷰트 지정후 마지막에 id, class와 style을 선언한다.</li>
+			<li>테이블 셀의 경우 다양한 너비의 고정폭을 지닐 수 있는데 이것을 모두 CSS로 지정하는 것은 기대했던 효과에 대한 이점이 없으므로 예외의 경우를 허용함</li>
+			<li>input[text], select 엘리먼트의 경우 너비의 고정폭 지정 허용함</li>
+		</ul>
+
+		<h3 class="g-tit-basic">table 엘리먼트 사용 방법</h3>
+		<p>레이아웃을 표현하기 위하여 표를 사용하지 않는다.</p>
+
+		<h4 class="g-tit-sub1">올바른 테이블 사용 방법</h4>
+		<div class="g-tbl-data1 guide">
+			<table>
+				<caption>사용자정보</caption>
+				<colgroup>
+					<col style="width:30%">
+					<col style="width:*">
+				</colgroup>
+				<tbody>
+					<tr>
+						<th scope="row">이름</th>
+						<td>홍길동</td>
+					</tr>
+					<tr>
+						<th scope="row">전화번호</th>
+						<td>02-1234-5678</td>
+					</tr>
+					<tr>
+						<th scope="row">E-mail</th>
+						<td>abcd@pantos.com</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="g-code">
+			<pre class="brush:html">
+			&lt;div class="tbl_data1"&gt;
+				&lt;table&gt;
+					&lt;caption&gt;사용자정보&lt;/caption&gt;
+					&lt;colgroup&gt;
+						&lt;col style="width:30%"&gt;
+						&lt;col style="width:*"&gt;
+					&lt;/colgroup&gt;
+					&lt;tbody&gt;
+						&lt;tr&gt;
+							&lt;th scope="row"&gt;이름&lt;/th&gt;
+							&lt;td&gt;홍길동&lt;/td&gt;
+						&lt;/tr&gt;
+						&lt;tr&gt;
+							&lt;th scope="row"&gt;전화번호&lt;/th&gt;
+							&lt;td&gt;02-1234-5678&lt;/td&gt;
+						&lt;/tr&gt;
+						&lt;tr&gt;
+							&lt;th scope="row"&gt;E-mail&lt;/th&gt;
+							&lt;td&gt;abcd@pantos.com&lt;/td&gt;
+						&lt;/tr&gt;
+					&lt;/tbody&gt;
+				&lt;/table&gt;
+			&lt;/div&gt;
+			</pre>
+		</div>
+		<ul class="g-desc">
+			<li>모바일에서의 테이블은 가급적 세로형 데이터테이블 형태로 사용(기획협의)</li>
+			<li>table 엘리먼트의 border 값은 클래스를 지정하여 사용한다.</li>
+			<li>caption 엘리먼트는 표의 제목을 표현하며 표의 윗부분에 헤딩 엘리먼트로 표의 제목을 표시하면 생략가능하다.</li>
+			<li>디자인에 머리글이 제공되어 있지 않더라도 반드시 머리글을 제공한다. </li>
+			<li>행 제목과 열 제목이 있는 경우 이에 대한 scope 애트리뷰트를 사용하여 행과 열의 범위를 적절히 구분하여 배치한다.</li>
+		</ul>
+
+		<h3 class="g-tit-basic">엘리먼트의 기본 애트리뷰트 지정 순서</h3>
+		<p>User Interface 의 동작이 요구되면 id 애트리 뷰트를 선택적으로 사용할 수 있으며 위치는 기본 애트리뷰트의 지정후 다음에 위치한다. class 애트리뷰트는 가장 마지막에 작성한다. id와 class의 사용여부는 선택 사항이다.</p>
+
+		<h4 class="g-tit-sub1">A 엘리먼트</h4>
+		<div class="g-code">
+			<pre class="brush:html">&lt;a href="#none" title="새창" target="_blank"&gt;인쇄하기&lt;/a&gt;</pre>
+		</div>
+		<ul class="g-desc">
+			<li><em>href 애트리뷰트의 값은 #none</em>로 한다. 앵커 기능이 있다면 해당 엘리먼트의 id값을 작성한다.</li>
+			<li>링크의 목표가 명확하지 않은 경우 title 애트리뷰트의 값으로 부가적인 설명을 제공한다.</li>
+			<li>새창열림 : [title="새창"] 새 창으로 페이지를 표시해야 할 경우 target 애트리뷰트를 선택적으로 사용</li>
+			<li>다운로드 : [title="파일명+파일확장자 다운로드"]</li>
+		</ul>
+
+		<h4 class="g-tit-sub1">Iframe 엘리먼트</h4>
+		<div class="g-code">
+			<pre class="brush:html">&lt;iframe src="about:blank" title="빈프레임"&gt;&lt;/iframe&gt;</pre>
+		</div>
+		<ul class="g-desc">
+			<li>iframe 사용은 페이지 성능에 영향을 주시 때문에 가급적 사용을 하지 않는다.<em>유투브 동영상 사용으로 동영상컨텐츠에 한하여 사용함</em></li>
+			<li>align, frameborder, longdesc, marginheight, marginwidth, scrolling등의 속성은 html5에서 지원되지 않으므로 사용시 참고<br/><a href="http://www.w3schools.com/tags/tag_iframe.asp" target="_blank" title="새창">http://www.w3schools.com/tags/tag_iframe.asp</a></li>
+			<li>iframe을 포함하는 페이지의 도메인과 iframe에서 불러오는 페이지의 도메인이 다르면, 크로스 도메인 설정을 위해 별도의 소스 코드가 추가되어 성능의 영향을 줄 수 있다</li>
+			<li>iframe은 가장 마지막으로 로딩되기 때문에 페이지 로딩 초기에는 화면이 비어 보일 수 있다.</li>
+			<li><strong>>본 프로젝트에서는 개발방법에 따라 선택적으로 사용</strong></li>
+		</ul>
+
+		<h4 class="g-tit-sub1">Img 엘리먼트</h4>
+		<div class="g-code">
+			<pre class="brush:html">&lt;img src="img.gif" alt="대체텍스트"/&gt;</pre>
+		</div>
+		<ul class="g-desc">
+			<li>alt 애트리뷰트는 반드시 제공되어야 하며 빈 값을 사용하지 않는다.(의미가 없는 이미지에 한하여 부분허용)</li>
+			<li>유지보수의 편의성을 위하여 width, height 애트리뷰트는 사용하지 않는다.</li>
+			<li>이미지 맵 사용을 지양하며 포지셔닝 방법을 사용한다.</li>
+		</ul>
+
+		<!-- CSS 코드 작성 규칙 -->
+		<h2 class="g-tit-basic toggle open" id="M4">CSS 코드 작성 규칙</h2>
+
+		<h3 class="g-tit-basic">기본 규칙</h3>
+		<p>문서의 첫 줄에 인코딩을 선언하며 인코딩은 HTML과 동일한 인코딩을 지정한다. 작업 정보를 아래와 같은 방법으로 작성한다.</p>
+
+		<h4 class="g-tit-sub1">작업 정보</h4>
+		<div class="g-code">
+	<pre class="brush:css">
+	@charset "utf-8";
+	/*------------------------------------------------------------------------------------------------------------------------
+		File   : Layout.css
+		Author : Gildong, Hong 2017-07
+		CSS 적용순서 : 아이디 > 태그와 클래스 > 클래스 > 태그
+		CSS 선택자 선언순서 : Type Selector, Layout Selector, Class Selector, Etc
+		CSS 속성 선언순서 : float/clear, display, position, width/height, margin/padding, border, border-radius, background, box-shadow,
+						   overflow, font, opacity, cursor, box-sizing, etc
+	/*------------------------------------------------------------------------------------------------------------------------*/
+	</pre>
+		</div>
+
+		<h4 class="g-tit-sub1">모든 속성은 영문 소문자로만 작성</h4>
+		<div class="g-code">
+	<pre class="brush:css">
+	/* 잘못된 예 */
+	.class_name {color:#FFF;}
+
+	/* 올바른 예 */
+	.class_name {color:#fff;}</pre>
+		</div>
+
+		<h4 class="g-tit-sub1">작은 따옴표('') 사용 범위</h4>
+		<p>폰트의 선언, filter, content에 작은 따옴표('')를 사용한다. 그 외의 경우는 사용하지 않는다.</p>
+		<div class="g-code">
+	<pre class="brush:css">
+	.class_name {font-family:'dotum';}
+	.filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img.png', sizingMethod='scale';}
+	.class_name:after{content:'.'}
+	.class_name {background:url(img.gif) no-repeat}</pre>
+
+		<h4 class="g-tit-sub1">세미콜론(;)</h4>
+		<p>마지막 선언된 속성에도 세미콜론(;)을 사용한다.</p>
+		<div class="g-code">
+	<pre class="brush:css">
+	/* 잘못된 예 */
+	.class_name {margin-left:0; padding-left:10px}
+
+	/* 올바른 예 */
+	.class_name {margin-left:0; padding-left:10px;}</pre>
+		</div>
+
+		<h4 class="g-tit-sub1">공백의 사용</h4>
+		<p>중괄호 안쪽 좌우에는 공백은 사용하지 않는다.</p>
+		<div class="g-code">
+			<pre class="brush:css">
+			/* 잘못된 예 */
+			.class_name {padding:0;margin:0}
+			.class_name { padding:0;margin:0 }
+		
+			/* 올바른 예 */
+			.class_name {padding:0;margin:0;}
+			</pre>
+		</div>
+
+		<h3 class="g-tit-basic">들여쓰기/줄 바꿈</h3>
+		<ul class="g-desc">
+			<li>CSS 코드 작성시 들여쓰기는 허용하지 않는다.</li>
+			<li>공통으로 사용되는 속성의 선택자간의 줄 바꿈은 허용하며 이 외의 줄바꿈은 허용하지 않는다.</li>
+		</ul>
+		<div class="g-code">
+	<pre class="brush:css">
+	/* 잘못된 예 */
+	h4.class_name {
+		font-size:1.25em;
+		letter-spacing:-1px;
+		margin:0.5em 0 0 0;
+	}
+
+	/* 올바른 예 */
+	h4.class_name {font-size:1.25em;letter-spacing:-1px;margin:0.5em 0 0 0;}
+
+	.class_name,
+	.class_name .child-class {background:url(../img/img.gif) no-repeat;}</pre>
+		</div>
+
+		<h3 class="g-tit-basic">주석 / 빈줄</h3>
+		<ul class="g-desc">
+			<li>CSS 주석 처리는 시작 주석을 작성하며 종료 주석은 작성하지 않는다. 종료코드 이후에 오는 요소에 한 칸 띄어 쓰기를 허용한다.</li>
+			<li>객체를 구분하기 위하여 코드 그룹 간 1줄의 빈 줄을 허용한다. 빈 줄의 1줄을 초과하지 않는다.</li>
+		</ul>
+		<div class="g-code">
+	<pre class="brush:css">
+	/* title */
+	.title-type1 {margin:30px 0 10px 0;}
+
+	/* description */
+	.desc1 {padding:2px 0 0 15px;font-size:0.917em;}</pre>
+		</div>
+
+		<h3 class="g-tit-basic">선택자</h3>
+		<h4 class="g-tit-sub1">공통 선택자</h4>
+		<p>'*' 공통 선택자는 웹 페이지의 성능을 저하를 가져오기 때문에 가급적 사용하지 않는다.</p>
+		<div class="g-code">
+	<pre class="brush:css">
+	/* 잘못된 예 */
+	* {margin:0;padding:0}</pre>
+		</div>
+
+		<h3 class="g-tit-basic">속성의 선언 순서</h3>
+		<p>전체 속성의 선언 순서는 시계 방향으로 명시한다. top, right, bottom, left</p>
+		<div class="g-tbl-data1 guide">
+			<table>
+				<caption>CSS 속성선언순서</caption>
+				<colgroup>
+					<col style="width:20%;">
+					<col style="width:20%;">
+					<col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th>구분</th>
+						<th>속성</th>
+						<th>속성 값</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td rowspan="2">1. 표시</td>
+						<td>display</td>
+						<td>none, block, inline, inline-block, inline-table, list-item, table, table-caption, table-cell, table-column, table-column-group, table-footer-group, table-header-group, table-row, table-row-group</td>
+					</tr>
+					<tr>
+						<td>visibility</td>
+						<td>visible, hidden, collapse</td>
+					</tr>
+					<tr>
+						<td rowspan="3">2. 위치</td>
+						<td>position</td>
+						<td>absolute, fixed, relative, static</td>
+					</tr>
+					<tr>
+						<td>top, right, bottom, left</td>
+						<td>length(px), %</td>
+					</tr>
+					<tr>
+						<td>z-index</td>
+						<td>number</td>
+					</tr>
+					<tr>
+						<td rowspan="2">3. 넘침/흐름</td>
+						<td>overflow</td>
+						<td>visible, hidden, scroll, auto</td>
+					</tr>
+					<tr>
+						<td>float</td>
+						<td>left, right, none</td>
+					</tr>
+					<tr>
+						<td rowspan="4">4. 크기/간격</td>
+						<td>width, max-width, min-width</td>
+						<td>auto, length(px), %</td>
+					</tr>
+					<tr>
+						<td>height, max-height, min-height</td>
+						<td>auto, length(px), %</td>
+					</tr>
+					<tr>
+						<td>margin</td>
+						<td>auto, length(px, em), %</td>
+					</tr>
+					<tr>
+						<td>padding</td>
+						<td>auto, length(px, em), %</td>
+					</tr>
+					<tr>
+						<td rowspan="2">5. 모양</td>
+						<td>border</td>
+						<td>border-width, border-style, border-color</td>
+					</tr>
+					<tr>
+						<td>background</td>
+						<td>background-color, background-image, background-repeat, background-attachment, background-position</td>
+					</tr>
+					<tr>
+						<td rowspan="4">6. 폰트/정렬</td>
+						<td>font</td>
+						<td>font-style, font-variant, font-weigth, font-size/line-height, font-family</td>
+					</tr>
+					<tr>
+						<td>color</td>
+						<td>hex_number, hex_number</td>
+					</tr>
+					<tr>
+						<td>text-align</td>
+						<td>left, right, center, justify</td>
+					</tr>
+					<tr>
+						<td>vertical-align</td>
+						<td>top, middle, bottom, baseline</td>
+					</tr>
+					<tr>
+						<td>7. 기타</td>
+						<td></td>
+						<td>언급되지 않은 속성들은 후순위로 적용한다.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h3 class="g-tit-basic">속성의 축약/약식 속성 사용</h3>
+		<p>CSS 최적화를 위해 속성값을 축약 한다.</p>
+		<div class="g-tbl-data1 guide">
+			<table>
+				<caption>CSS 축약/약식 속성</caption>
+				<colgroup><col span="2" style="width:25%;"/><col/></colgroup>
+				<thead>
+					<tr>
+						<th>축약 전</th>
+						<th>축약 후</th>
+						<th>설명</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>#ffffff</td>
+						<td>#fff</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>background-position:left center</td>
+						<td>background-position:0 50%</td>
+						<td>문자로 표현은 지양하며 숫자 사용을 지향한다.</td>
+					</tr>
+					<tr>
+						<td>top:0px</td>
+						<td>top:0</td>
+						<td>속성의 값이 0일 경우 단위를 표시하지 않는다.</td>
+					</tr>
+					<tr>
+						<td>margin:15px 15px 15px 15px</td>
+						<td>margin:15px</td>
+						<td rowspan="3">속성의 값이 동일한 경우 top, right, bottom, left 순서대로 축약한다.</td>
+					</tr>
+					<tr>
+						<td>margin:0 auto 0 auto</td>
+						<td>margin:0 auto</td>
+					</tr>
+					<tr>
+						<td>margin:25px 15px 30px 15px</td>
+						<td>margin:25px 15px 30px</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h4 class="g-tit-sub1">Background 약식 속성</h4>
+		<p>배경 이미지의 속성의 초기 선언시 반드시 background 단일 속성을 사용하며, 이후 배경적인 부분의 속성이 변경될 경우 background 관련 속성을 사용하여 제 선언 한다. 선언 순서는 background-attachment, background-color, background-image, background-repeat, background-position 이다.</p>
+		<div class="g-code">
+	<pre class="brush:css">
+	.class_name {border:1px solid #ccc;}
+	.class_name .child-bg-1 {background-position:0 -18px;}
+	.class_name .child-bg-2 {background-position:0 -36px;}</pre>
+		</div>
+
+		<h4 class="g-tit-sub1">Border 약식 속성</h4>
+		<p>테두리의 스타일이 동일할 경우 반드시 border 단일 속성을 사용하고 동일하지 않을 경우 부분적 border 속성을 사용할 수 있다.속성의 값의 선언 순서는 border-width, border-style, border-color의 순서이다.</p>
+		<div class="g-code">
+	<pre class="brush:css">
+	.class_name {border:1px solid #ccc;}
+	.class_name .top-border {border-top:2px solid #000;}
+	.class_name .left-border {border-left-width:0;}</pre>
+		</div>
+
+		<h4 class="g-tit-sub1">Font 약식 속성</h4>
+		<p>폰트의 약식 속성에 대하여는 부분적으로 허용하며 폰트의 크기와 라인의 높이를 동시에 제어를 하는 경우에 한하여 사용한다. 속성의 선언순서는 font-style font-variant font-weight font-size/line-height font-family 이며 style, variant, weight는 생략 가능하지만 font-size/line-height font-family는 필수 입력 사항이다.</p>
+		<div class="g-code">
+	<pre class="brush:css">
+	.class_name {font:1em/1.2 'dotum';}</pre>
+		</div>
+	</div>
+</div>
+</body>
+</html>

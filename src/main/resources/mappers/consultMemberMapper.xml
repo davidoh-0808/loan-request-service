@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTM Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neo.mappers.ConsultMemberMapper">
+    <!--  @Repository("consultMemberMapper") -->
+
+    <!-- 상담원(관리) 페이지 에서 지점 MC0002300001, 심사팀 MC0002300002 권한의 유저만 카운트  -->
+    <select id="consultantListCount" resultType="Integer" parameterType="ConsultMemberVO">
+        SELECT COUNT(1) totCnt
+        FROM(
+        <include refid="listQuery"/>
+        ) TOT
+    </select>
+
+    <!-- 상담원(관리) 페이지 에서 지점 MC0002300001, 심사팀 MC0002300002 권한의 유저만 리스트 -->
+    <select id="consultantList" parameterType="ConsultMemberVO" resultType="ConsultMemberVO">
+        SELECT
+            <choose>
+               <when test="orderValue != null and orderValue !='' and orderName != null and orderName != ''">
+                   ROW_NUMBER() OVER(ORDER BY ${orderValue} ${orderName}) AS ROW_NUM
+               </when>
+               <otherwise>
+                   ROW_NUMBER() OVER(ORDER BY LAST_LOGIN_DTTM) AS ROW_NUM
+               </otherwise>
+            </choose>
+            , A.*
+        FROM (<include refid="listQuery"/>) A
+        ORDER BY ROW_NUM DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!-- 유저상태 MEMBER_STATUS 가 (대기, 승인, 차단) 중,  승인상태 MC0000700002 지점 MC0002300001, 심사팀 MC0002300002 권한의 유저만 리스트 한다 -->
+    <sql id="listQuery">
+            SELECT
+                   TCM.MEMBER_CODE
+                   , TCM.MEMBER_ID
+                   , TCM.MEMBER_PW
+                   , TCM.MEMBER_OTP
+                   , TCM.MEMBER_NAME
+                   , TCM.MEMBER_PHONE
+                   , TCM.MEMBER_EMAIL
+                   , TCM.MEMBER_AUTHORITY
+                   , FN_GET_MASTER_CODE_NAME(TCM.MEMBER_AUTHORITY) AS MEMBER_AUTHORITY_NAME
+                   , TCM.BRANCH_CODE
+                   , FN_GET_MASTER_CODE_NAME(TCM.BRANCH_CODE) AS BRANCH_NAME
+                   , TCM.MEMBER_STATUS
+                   , TCM.EXPLANATION
+                   , TCM.JOIN_DTTM
+                   , TCM.MEMBER_WORK_STATUS
+                   , FN_GET_MASTER_CODE_NAME(TCM.MEMBER_WORK_STATUS) AS MEMBER_WORK_STATUS_NAME
+                   , TCM.USE_YN
+                   , TCM.DEL_YN
+                   , TCM.IN_USER
+                   , TCM.UP_USER
+                   , DATE_FORMAT(TCM.IN_DTTM, '%Y-%m-%d') AS IN_DTTM
+                   , DATE_FORMAT(TCM.UP_DTTM, '%Y-%m-%d') AS UP_DTTM
+                   , (SELECT CONN_IP FROM TB_MEMBER_LOG tml WHERE tml.MEMBER_CODE = TCM.MEMBER_CODE ORDER BY tml.LOGIN_DTTM  DESC LIMIT 1) AS CONN_IP
+                   , (SELECT LOGIN_DTTM FROM TB_MEMBER_LOG tml WHERE tml.MEMBER_CODE = TCM.MEMBER_CODE ORDER BY tml.LOGIN_DTTM  DESC LIMIT 1) AS LAST_LOGIN_DTTM
+            FROM    TB_CONSULT_MEMBER TCM
+            WHERE   TCM.DEL_YN = 'N'
+                    AND TCM.MEMBER_STATUS = 'MC0000700002'
+                    AND TCM.MEMBER_AUTHORITY IN ('MC0002300001', 'MC0002300002')
+                <if test="memberAuthority != null and memberAuthority !=''">
+                    AND TCM.MEMBER_AUTHORITY=#{memberAuthority}
+                </if>
+
+                <if test="workStatus != null and workStatus != ''">
+                    AND TCM.MEMBER_WORK_STATUS=#{workStatus}
+                </if>
+
+                <if test="inUse != null and inUse != ''">
+                    AND TCM.USE_YN=#{inUse}
+                </if>
+    </sql>
+
+
+    <!-- 시스템관리 메뉴 - 계정/권한관리 페이지
+        심사팀관리자 MC0002300003, 시스템 관리자 MC0002300004 만 카운트 -->
+    <select id="systemConsultMemberListCount" resultType="Integer" parameterType="ConsultMemberVO">
+        SELECT COUNT(1) totCnt
+        FROM TB_CONSULT_MEMBER TCM
+        <where>
+                TCM.DEL_YN = 'N'
+
+            <if test="memberName != null and memberName !=''">
+                AND
+                TCM.MEMBER_NAME LIKE CONCAT('%', #{memberName}, '%')
+            </if>
+
+            <if test="memberAuthority != null and memberAuthority != ''">
+                AND
+                TCM.MEMBER_AUTHORITY LIKE CONCAT('%', #{memberAuthority},'%')
+            </if>
+
+            <if test="memberStatus != null and memberStatus != ''">
+                AND
+                TCM.MEMBER_STATUS LIKE CONCAT('%', #{memberStatus},'%')
+            </if>
+
+                AND TCM.MEMBER_AUTHORITY IN ('MC0002300003', 'MC0002300004')
+        </where>
+    </select>
+
+    <!--
+        시스템관리 메뉴의 계정/권한관리 페이지
+            -> 심사팀관리자 MC0002300003 , 시스템관리자 MC0002300004 만 리스트
+            -> 조회 param 은
+                    MEMBER_NAME (memberName),
+                    MEMBER_AUTHORITY (memberAuthority),
+                    MEMBER_STATUS (memberStatus) 대기 MC0000700001 , 승인 MC0000700002 , 차단 MC0000700003
+     -->
+    <select id="systemConsultMemberList" parameterType="ConsultMemberVO" resultType="ConsultMemberVO">
+        SELECT TCM.MEMBER_CODE
+               , TCM.MEMBER_ID
+               , TCM.MEMBER_PW
+               , TCM.MEMBER_OTP
+               , TCM.MEMBER_NAME
+               , TCM.MEMBER_PHONE
+               , TCM.MEMBER_EMAIL
+               , TCM.MEMBER_TYPE
+               , TCM.MEMBER_AUTHORITY
+               , A.CODE_NAME AS MEMBER_AUTHORITY_NAME
+               , TCM.MEMBER_STATUS
+               , B.CODE_NAME AS MEMBER_WORK_STATUS_NAME
+               , TCM.EXPLANATION
+               , TCM.USE_YN
+               , TCM.DEL_YN
+               , TCM.IN_USER
+               , DATE_FORMAT(TCM.IN_DTTM, '%Y-%m-%d') AS IN_DTTM
+               , TCM.UP_USER
+               , DATE_FORMAT(TCM.UP_DTTM, '%Y-%m-%d') AS UP_DTTM
+        FROM TB_CONSULT_MEMBER TCM
+        LEFT OUTER JOIN TB_MASTER_CODE A
+            ON TCM.MEMBER_AUTHORITY = A.MASTER_CODE
+        LEFT OUTER JOIN TB_MASTER_CODE B
+            ON TCM.MEMBER_STATUS = B.MASTER_CODE
+        <where>
+                TCM.DEL_YN = 'N'
+
+            <if test="memberName != null and memberName !=''">
+                AND
+                TCM.MEMBER_NAME LIKE CONCAT('%', #{memberName}, '%')
+            </if>
+
+            <if test="memberAuthority != null and memberAuthority != ''">
+                AND
+                TCM.MEMBER_AUTHORITY LIKE CONCAT('%', #{memberAuthority},'%')
+            </if>
+
+            <if test="memberStatus != null and memberStatus != ''">
+                AND
+                TCM.MEMBER_STATUS LIKE CONCAT('%', #{memberStatus},'%')
+            </if>
+
+                AND TCM.MEMBER_AUTHORITY IN ('MC0002300003', 'MC0002300004')
+        </where>
+        ORDER BY TCM.IN_DTTM DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!-- consultMemberMapper.consultMemberDetail 메소드  -->
+    <select id="consultMemberDetail" parameterType="ConsultMemberVO" resultType="ConsultMemberVO">
+        SELECT TCM.MEMBER_CODE
+               , TCM.MEMBER_ID
+               , TCM.MEMBER_PW
+               , TCM.MEMBER_OTP
+               , TCM.MEMBER_NAME
+               , TCM.MEMBER_PHONE
+               , TCM.MEMBER_EMAIL
+               , TCM.MEMBER_TYPE
+               , TCM.BRANCH_CODE
+               , A.CODE_NAME as BRANCH_NAME
+               , TCM.MEMBER_AUTHORITY
+               , B.CODE_NAME AS MEMBER_AUTHORITY_NAME
+               , TCM.MEMBER_STATUS
+               , TRIM(TCM.EXPLANATION) AS EXPLANATION
+               , TCM.JOIN_DTTM
+               , DATE_FORMAT(TCM.LAST_LOGIN_DTTM, '%Y-%m-%d') AS LAST_LOGIN_DTTM
+               , TCM.MEMBER_WORK_STATUS
+               , C.CODE_NAME AS MEMBER_WORK_STATUS_NAME
+               , TCM.USE_YN
+               , TCM.DEL_YN
+               , TCM.IN_USER
+               , DATE_FORMAT(TCM.IN_DTTM, '%Y-%m-%d') AS IN_DTTM
+               , TCM.UP_USER
+               , DATE_FORMAT(TCM.UP_DTTM, '%Y-%m-%d') AS UP_DTTM
+        FROM TB_CONSULT_MEMBER TCM
+        LEFT OUTER JOIN TB_MASTER_CODE A
+            ON TCM.BRANCH_CODE = A.MASTER_CODE
+        LEFT OUTER JOIN TB_MASTER_CODE B
+            ON TCM.MEMBER_AUTHORITY = B.MASTER_CODE
+        LEFT OUTER JOIN TB_MASTER_CODE C
+            ON TCM.MEMBER_WORK_STATUS = C.MASTER_CODE
+        WHERE TCM.MEMBER_CODE = #{MEMBER_CODE}
+    </select>
+
+    <!--
+        consultMemberMapper.systemConsultMemberDetail 메소드 : 시스템관리 메뉴의 계정/권한관리 페이지를 위한 쿼리
+            -> 심사팀관리자 MC0002300003 , 시스템관리자 MC0002300004 를 위한 쿼리
+    -->
+    <select id="systemConsultMemberDetail" parameterType="ConsultMemberVO" resultType="ConsultMemberVO">
+        SELECT TCM.MEMBER_CODE
+               , TCM.MEMBER_ID
+               , TCM.MEMBER_PW
+               , TCM.MEMBER_NAME
+               , TCM.MEMBER_PHONE
+               , TCM.MEMBER_EMAIL
+               , TCM.MEMBER_TYPE
+               , TCM.BRANCH_CODE
+               , TCM.MEMBER_AUTHORITY
+               , A.CODE_NAME AS MEMBER_AUTHORITY_NAME
+               , TCM.MEMBER_STATUS
+               , B.CODE_NAME AS MEMBER_STATUS_NAME
+               , TRIM(TCM.EXPLANATION) AS EXPLANATION
+               , TCM.JOIN_DTTM
+               , DATE_FORMAT(TCM.LAST_LOGIN_DTTM, '%Y-%m-%d') AS LAST_LOGIN_DTTM
+               , TCM.USE_YN
+               , TCM.DEL_YN
+               , TCM.IN_USER
+               , DATE_FORMAT(TCM.IN_DTTM, '%Y-%m-%d') AS IN_DTTM
+               , TCM.UP_USER
+               , DATE_FORMAT(TCM.UP_DTTM, '%Y-%m-%d') AS UP_DTTM
+        FROM TB_CONSULT_MEMBER TCM
+        LEFT OUTER JOIN TB_MASTER_CODE A
+            ON TCM.MEMBER_AUTHORITY = A.MASTER_CODE
+        LEFT OUTER JOIN TB_MASTER_CODE B
+            ON TCM.MEMBER_STATUS = B.MASTER_CODE
+        WHERE TCM.MEMBER_CODE = #{MEMBER_CODE}
+    </select>
+
+    <!-- consultMemberMapper.consultMemberInsert 메소드  -->
+    <insert id="consultMemberInsert" parameterType="ConsultMemberVO">
+        INSERT INTO TB_CONSULT_MEMBER (
+                MEMBER_CODE
+                , MEMBER_ID
+                , MEMBER_PW
+                , MEMBER_OTP
+                , MEMBER_NAME
+                , MEMBER_PHONE
+                , MEMBER_EMAIL
+                , MEMBER_TYPE
+                , BRANCH_CODE
+                , MEMBER_AUTHORITY
+                , MEMBER_STATUS
+                , EXPLANATION
+                , JOIN_DTTM
+                , LAST_LOGIN_DTTM
+                , MEMBER_WORK_STATUS
+                , USE_YN
+                , DEL_YN
+                , IN_USER
+                , IN_DTTM
+                , UP_USER
+                , UP_DTTM
+            )
+            VALUE (
+                #{MEMBER_CODE}
+                , TRIM(#{MEMBER_ID})
+                , TRIM(#{MEMBER_PW})
+                , #{MEMBER_OTP}
+                , TRIM(#{MEMBER_NAME})
+                , TRIM(#{MEMBER_PHONE})
+                , TRIM(#{MEMBER_EMAIL})
+                , #{MEMBER_TYPE}
+                , #{BRANCH_CODE}
+                , #{MEMBER_AUTHORITY}
+                , #{MEMBER_STATUS}
+                , TRIM(#{EXPLANATION})
+                , #{JOIN_DTTM}
+                , #{LAST_LOGIN_DTTM}
+                , #{MEMBER_WORK_STATUS}
+                , #{USE_YN}
+                , IFNULL(#{DEL_YN}, 'N')
+                , #{IN_USER}
+                , NOW()
+                , #{UP_USER}
+                , NOW()
+            )
+    </insert>
+
+
+    <!-- consultMemberMapper.systemConsultMemberInsert 메소드 : 시스템관리 메뉴의 계정/권한관리 페이지를 위한 쿼리
+                -> 심사팀관리자 MC0002300003 , 시스템관리자 MC0002300004 를 위한 쿼리
+    -->
+    <insert id="systemConsultMemberInsert" parameterType="ConsultMemberVO">
+                INSERT INTO TB_CONSULT_MEMBER (
+                        MEMBER_CODE
+                        , MEMBER_ID
+                        , MEMBER_PW
+                        , MEMBER_OTP
+                        , MEMBER_NAME
+                        , MEMBER_PHONE
+                        , MEMBER_EMAIL
+                        , MEMBER_TYPE
+                        , MEMBER_AUTHORITY
+                        , MEMBER_STATUS
+                        , EXPLANATION
+                        , JOIN_DTTM
+                        , MEMBER_WORK_STATUS
+                        , USE_YN
+                        , DEL_YN
+                        , IN_USER
+                        , IN_DTTM
+                        , UP_USER
+                        , UP_DTTM
+                    )
+                    VALUE (
+                        #{MEMBER_CODE}
+                        , TRIM(#{MEMBER_ID})
+                        , TRIM(#{MEMBER_PW})
+                        , #{MEMBER_OTP}
+                        , TRIM(#{MEMBER_NAME})
+                        , TRIM(#{MEMBER_PHONE})
+                        , TRIM(#{MEMBER_EMAIL})
+                        , #{MEMBER_TYPE}
+                        , #{MEMBER_AUTHORITY}
+                        , #{MEMBER_STATUS}
+                        , TRIM(#{EXPLANATION})
+                        , #{JOIN_DTTM}
+                        , #{MEMBER_WORK_STATUS}
+                        , #{USE_YN}
+                        , IFNULL(#{DEL_YN}, 'N')
+                        , #{IN_USER}
+                        , NOW()
+                        , #{UP_USER}
+                        , NOW()
+                    )
+    </insert>
+
+
+    <!-- consultMemberMapper.consultMemberUpdate 메소드  -->
+    <update id="consultMemberUpdate" parameterType="ConsultMemberVO">
+        UPDATE TB_CONSULT_MEMBER SET
+                UP_DTTM                  = NOW()
+            <if test="MEMBER_NAME != null and MEMBER_NAME != ''">
+                , MEMBER_NAME            = #{MEMBER_NAME}
+            </if>
+
+            <if test="MEMBER_PW != null and MEMBER_PW != ''">
+                , MEMBER_PW             = #{MEMBER_PW}
+            </if>
+
+            <if test="MEMBER_PHONE != null and MEMBER_PHONE != ''">
+                , MEMBER_PHONE          = #{MEMBER_PHONE}
+            </if>
+
+            <if test="MEMBER_EMAIL != null and MEMBER_EMAIL != ''">
+                , MEMBER_EMAIL          = #{MEMBER_EMAIL}
+            </if>
+
+            <if test="MEMBER_TYPE != null and MEMBER_TYPE != ''">
+                , MEMBER_TYPE           = #{MEMBER_TYPE}
+            </if>
+
+            <if test="BRANCH_CODE != null and BRANCH_CODE != '' and BRANCH_CODE != 'INIT'">
+                , BRANCH_CODE           = #{BRANCH_CODE}
+            </if>
+
+            <if test="BRANCH_CODE = 'INIT'">
+                , BRANCH_CODE           = NULL
+            </if>
+
+            <if test="MEMBER_AUTHORITY != null and MEMBER_AUTHORITY != ''">
+                , MEMBER_AUTHORITY      = #{MEMBER_AUTHORITY}
+            </if>
+
+            <if test="MEMBER_STATUS != null and MEMBER_STATUS != ''">
+                , MEMBER_STATUS         = #{MEMBER_STATUS}
+            </if>
+
+            <if test="EXPLANATION != null and EXPLANATION != ''">
+                , EXPLANATION           = #{EXPLANATION}
+            </if>
+
+            <if test="MEMBER_WORK_STATUS != null and MEMBER_WORK_STATUS != ''">
+                , MEMBER_WORK_STATUS    = #{MEMBER_WORK_STATUS}
+            </if>
+
+            <if test="UP_USER != null and UP_USER != ''">
+                , UP_USER               = #{UP_USER}
+            </if>
+
+            <if test="USE_YN != null and USE_YN != ''">
+                , USE_YN                = #{USE_YN}
+            </if>
+
+        WHERE MEMBER_CODE               = #{MEMBER_CODE}
+    </update>
+
+    <!-- consultMemberMapper.consultMemberDelete 메소드  -->
+    <update id="consultMemberDelete" parameterType="ConsultMemberVO">
+        UPDATE TB_CONSULT_MEMBER
+        SET DEL_YN  = #{DEL_YN}
+          , UP_USER = #{UP_USER}
+          , UP_DTTM = NOW()
+        WHERE MEMBER_CODE = #{MEMBER_CODE}
+    </update>
+
+    <!-- consultMemberMapper.memberLastLoginDttmUpdate 메소드  -->
+    <update id="memberLastLoginDttmUpdate" parameterType="ConsultMemberVO">
+        UPDATE TB_CONSULT_MEMBER
+        SET LAST_LOGIN_DTTM  = NOW()
+          , UP_USER = #{UP_USER}
+          , UP_DTTM = NOW()
+        WHERE MEMBER_CODE = #{MEMBER_CODE}
+    </update>
+
+    <!-- consultMemberMapper.memberLoginLog 메소드 로그인 로그기록 -->
+    <insert id="memberLoginLog" parameterType="ConsultMemberVO">
+		INSERT INTO TB_MEMBER_LOG 
+		(
+		 MEMBER_CODE
+		, MEMBER_ID
+		, MEMBER_NAME
+		, CONN_IP
+		, LOGIN_DTTM
+		)VALUES(
+		 #{MEMBER_CODE}
+		, #{MEMBER_ID}
+		, #{MEMBER_NAME}
+		, #{CONN_IP}
+		, now()
+		)
+	
+    </insert>
+
+    <!-- consultMemberMapper.memberDeactivate 메소드 : 장기미사용자 업데이트 -->
+    <update id="memberDeactivate">
+    /*장기미사용자 처리*/
+    <![CDATA[
+        UPDATE TB_CONSULT_MEMBER
+        SET MEMBER_WORK_STATUS = 'MC0001300005'
+		WHERE ADDDATE(LAST_LOGIN_DTTM, INTERVAL 31 DAY) < CURRENT_DATE()
+	  ]]> 
+    </update>
+
+    <!-- consultMemberMapper.consultMemberDetailById 메소드  -->
+    <select id="consultMemberDetailById" parameterType="ConsultMemberVO" resultType="ConsultMemberVO">
+        SELECT TCM.MEMBER_CODE
+               , TCM.MEMBER_ID
+               , TCM.MEMBER_PW
+               , TCM.MEMBER_OTP
+               , TCM.MEMBER_NAME
+               , TCM.MEMBER_PHONE
+               , TCM.MEMBER_EMAIL
+               , TCM.MEMBER_TYPE
+               , TCM.BRANCH_CODE
+               , TCM.MEMBER_AUTHORITY
+               , TCM.MEMBER_STATUS
+               , TCM.EXPLANATION
+               , TCM.JOIN_DTTM
+               , TCM.LAST_LOGIN_DTTM
+               , TCM.MEMBER_WORK_STATUS
+               , TCM.USE_YN
+               , TCM.DEL_YN
+               , TCM.IN_USER
+               , TCM.IN_DTTM
+               , TCM.UP_USER
+               , TCM.UP_DTTM
+        FROM TB_CONSULT_MEMBER TCM
+        WHERE TCM.MEMBER_ID = #{MEMBER_ID} LIMIT 1
+    </select>
+
+    <!--
+        consultMemberMapper.consultMemberLogin 메소드
+        AuthProvider.authenticate() 에서 로그인 시, 현재 로그인 한 유저의 정보가 DB의 유저와 동일한지 체크할 때 사용
+        MEMBER_STATUS가 승인인 경우만 로그인
+    -->
+    <select id="consultMemberLogin" parameterType="ConsultMemberVO" resultType="ConsultMemberVO">
+        SELECT TCM.MEMBER_CODE
+               , TCM.MEMBER_ID
+               , TCM.MEMBER_PW
+               , TCM.MEMBER_OTP
+               , TCM.MEMBER_NAME
+               , TCM.MEMBER_PHONE
+               , TCM.MEMBER_EMAIL
+               , TCM.MEMBER_TYPE
+               , TCM.BRANCH_CODE
+               , FN_GET_MASTER_CODE_NAME(TCM.BRANCH_CODE) as BRANCH_NAME
+               , TCM.MEMBER_AUTHORITY
+               , FN_GET_MASTER_CODE_NAME(TCM.MEMBER_AUTHORITY) as MEMBER_AUTHORITY_NAME
+               , TCM.MEMBER_STATUS
+               , TCM.EXPLANATION
+               , TCM.JOIN_DTTM
+               , TCM.LAST_LOGIN_DTTM
+               , TCM.MEMBER_WORK_STATUS
+               , FN_GET_MASTER_CODE_NAME(TCM.MEMBER_WORK_STATUS) as WORK_STATUS
+               , TCM.USE_YN
+               , TCM.DEL_YN
+               , TCM.IN_USER
+               , TCM.IN_DTTM
+               , TCM.UP_USER
+               , TCM.UP_DTTM
+        FROM TB_CONSULT_MEMBER TCM
+        WHERE TCM.DEL_YN = 'N'
+          AND TCM.MEMBER_ID = #{MEMBER_ID} LIMIT 1
+    </select>
+    <!-- 로그인 -->
+
+    <!-- consultMemberMapper.consultMemberDetailByAuthority 메소드 -->
+    <select id="consultMemberDetailByAuthority" parameterType="ConsultMemberVO" resultType="ConsultMemberVO">
+        SELECT
+            TCM.MEMBER_CODE, TCM.MEMBER_NAME
+        FROM TB_CONSULT_MEMBER TCM
+        WHERE TCM.DEL_YN = 'N'
+        AND TCM.USE_YN = 'Y'
+        
+        <if test="MEMBER_AUTHORITY != null and MEMBER_AUTHORITY != ''">
+        AND TCM.MEMBER_AUTHORITY = #{MEMBER_AUTHORITY}
+        </if>
+        
+        
+    </select>
+
+    <!-- consultMemberMapper.consultMemberUpdate 메소드  -->
+    <update id="memberOtpKeyUpdate" parameterType="ConsultMemberVO">
+        UPDATE TB_CONSULT_MEMBER SET
+        MEMBER_OTP = #{MEMBER_OTP}
+        , UP_USER = #{UP_USER}
+        , UP_DTTM = NOW()
+        WHERE MEMBER_CODE = #{MEMBER_CODE}
+    </update>
+
+
+    <!-- 심사팀관리자 , 시스템관리자 대시보드 - 현재 유저 권한별 수 -->
+    <select id="getUserCntByAuth" parameterType="ConsultMemberVO" resultType="ConsultMemberVO">
+        SELECT
+           (
+             SELECT COUNT(1)
+             FROM TB_CONSULT_MEMBER TCI
+           ) AS USER_TOTAL_CNT
+           , (
+             SELECT COUNT(1)
+             FROM TB_CONSULT_MEMBER TCI
+             WHERE TCI.MEMBER_AUTHORITY IN ('MC0002300001', 'MC0002300002')
+           ) AS USER_BRANCH_EVAL_CNT
+           , (
+             SELECT COUNT(1)
+             FROM TB_CONSULT_MEMBER TCI
+             WHERE TCI.MEMBER_AUTHORITY = 'MC0002300001'
+           ) AS USER_BRANCH_CNT
+           , (
+             SELECT FLOOR( USER_BRANCH_CNT / USER_TOTAL_CNT * 100 )
+           ) AS USER_BRANCH_PER
+           , (
+             SELECT COUNT(1)
+             FROM TB_CONSULT_MEMBER TCI
+             WHERE TCI.MEMBER_AUTHORITY = 'MC0002300002'
+           ) AS USER_EVAL_CNT
+           , (
+             SELECT FLOOR( USER_EVAL_CNT / USER_TOTAL_CNT * 100 )
+           ) AS USER_EVAL_PER
+           , (
+             SELECT COUNT(1)
+             FROM TB_CONSULT_MEMBER TCI
+             WHERE TCI.MEMBER_AUTHORITY = 'MC0002300003'
+           ) AS USER_EVAL_MG_CNT
+           , (
+             SELECT FLOOR( USER_EVAL_MG_CNT / USER_TOTAL_CNT * 100 )
+           ) AS USER_EVAL_MG_PER
+           , (
+             SELECT COUNT(1)
+             FROM TB_CONSULT_MEMBER TCI
+             WHERE TCI.MEMBER_AUTHORITY = 'MC0002300004'
+           ) AS USER_SYS_MG_CNT
+           , (
+             SELECT FLOOR( USER_SYS_MG_CNT / USER_TOTAL_CNT * 100 )
+           ) AS USER_SYS_MG_PER
+        FROM DUAL;
+    </select>
+
+</mapper>

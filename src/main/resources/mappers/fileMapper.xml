@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neo.mappers.FileMapper">
+
+    <insert id="fileInsert" parameterType="FileVO">
+        /* fileMapper.fileInsert 에 사용
+            DemoBoardVO 의 insert 에 필요함.
+            DemoBoardVO 는 FileVO 들이 엮어있음 (thumbnail 이미지, attachments 첨부파일들).
+        */
+        INSERT INTO TB_DEMO_FILE (BOARD_CODE,
+                                  UPLOAD_GROUP,
+                                  UPLOAD_PATH,
+                                  ORG_FILE_NAME,
+                                  SYS_FILE_NAME,
+                                  FILE_EXT,
+                                  FILE_SIZE,
+                                  IN_USER,
+                                  IN_DTTM)
+        VALUES (#{DEMO_CODE},
+                #{UPLOAD_GROUP},
+                #{UPLOAD_PATH},
+                #{ORG_FILE_NAME},
+                #{SYS_FILE_NAME},
+                #{FILE_EXT},
+                #{FILE_SIZE},
+                #{IN_USER},
+                NOW())
+
+    </insert>
+
+</mapper>

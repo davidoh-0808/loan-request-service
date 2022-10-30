@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neo.mappers.DashboardMapper">
+
+    <select id="getDashboard" resultType="DashboardVO" parameterType="DashboardVO">
+    
+            SELECT 
+				tmc.MASTER_CODE , tmc.CODE_NAME as BRANCH_NAME 
+			            	, IFNULL(COUNT(case when tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as TOTAL_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100001') as SUBMIT
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100001' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as SUBMIT_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100002') as PENDING
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100002' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as PENDING_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100003') as PROGRESS
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100003' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as PROGRESS_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100004') as ABSENCE
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100004' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as ABSENCE_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100005') as COMPLETE
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100005' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as COMPLETE_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100006') as CANCEL
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100006' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as CANCEL_CNT
+			            	, IFNULL(COUNT(case when tci.STATS_CODE IN ('MC0001100002', 'MC0001100003', 'MC0001100004') AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as SUM_PROGRESS_CNT         
+			FROM (SELECT tmc.CODE_NAME, tmc.MASTER_CODE
+					FROM TB_MASTER_CODE tmc 
+					WHERE tmc.PARENT_MASTER_CODE = 'MC0000000009'
+				) tmc
+			LEFT OUTER JOIN TB_CONSULT_INFO tci
+			ON tmc.MASTER_CODE = tci.BRANCH_CODE
+			 <if test="dateRange == 'daily'">
+             AND DATE_FORMAT(tci.IN_DTTM, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y-%m-%d')	/* 일 */
+             </if>
+             <if test="dateRange == 'monthly'">
+             AND DATE_FORMAT(tci.IN_DTTM, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')	/* 월 */
+			 </if>
+          	 <if test="dateRange == 'yearly'">
+             AND DATE_FORMAT(tci.IN_DTTM, '%Y') = DATE_FORMAT(CURDATE(), '%Y')
+			 </if>
+             <if test="BRANCH_MB_CODE != null and BRANCH_MB_CODE != ''">
+             AND tci.BRANCH_MB_CODE = #{BRANCH_MB_CODE}	/*지점(상담사)코드*/
+			 </if>
+             <if test="CONS_MB_CODE != null and CONS_MB_CODE != ''">
+             AND tci.CONS_MB_CODE = #{CONS_MB_CODE}			/*심사자코드*/
+			 </if>
+			 <if test="BRANCH_CODE != null and BRANCH_CODE != ''"> 
+             AND tci.BRANCH_CODE = #{BRANCH_CODE}
+             </if>
+    </select>
+    
+    
+    <select id="getDashboardChart" resultType="DashboardVO" parameterType="DashboardVO">
+            SELECT 
+				tmc.MASTER_CODE , tmc.CODE_NAME as BRANCH_NAME 
+			            	, IFNULL(COUNT(case when tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as TOTAL_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100001') as SUBMIT
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100001' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as SUBMIT_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100002') as PENDING
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100002' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as PENDING_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100003') as PROGRESS
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100003' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as PROGRESS_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100004') as ABSENCE
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100004' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as ABSENCE_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100005') as COMPLETE
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100005' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as COMPLETE_CNT
+			            	, FN_GET_MASTER_CODE_NAME('MC0001100006') as CANCEL
+			            	, IFNULL(COUNT(case when tci.STATS_CODE = 'MC0001100006' AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as CANCEL_CNT
+			            	, IFNULL(COUNT(case when tci.STATS_CODE IN ('MC0001100002', 'MC0001100003', 'MC0001100004') AND tmc.MASTER_CODE = tci.BRANCH_CODE then 1 end), 0) as SUM_PROGRESS_CNT         
+			FROM (SELECT tmc.CODE_NAME, tmc.MASTER_CODE
+					FROM TB_MASTER_CODE tmc 
+					WHERE tmc.PARENT_MASTER_CODE = 'MC0000000009'
+				) tmc
+			LEFT OUTER JOIN TB_CONSULT_INFO tci
+			ON tmc.MASTER_CODE = tci.BRANCH_CODE
+			 <if test="dateRange == 'daily'">
+             AND DATE_FORMAT(tci.IN_DTTM, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y-%m-%d')	/* 일 */
+             </if>
+             <if test="dateRange == 'monthly'">
+             AND DATE_FORMAT(tci.IN_DTTM, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')	/* 월 */
+			 </if>
+          	 <if test="dateRange == 'yearly'">
+             AND DATE_FORMAT(tci.IN_DTTM, '%Y') = DATE_FORMAT(CURDATE(), '%Y')
+			 </if>
+             GROUP BY tmc.MASTER_CODE
+    </select>
+
+    <select id="getUserCnt" resultType="DashboardVO" parameterType="DashboardVO">
+    SELECT 
+		 COUNT(CASE WHEN tcm.MEMBER_AUTHORITY IN ('MC0002300001','MC0002300002') THEN 1 END) AS TOTAL_USER_CNT
+		,COUNT(CASE WHEN tcm.MEMBER_AUTHORITY = 'MC0002300001' THEN 1 END) AS BRANCH_USER_CNT
+		,COUNT(CASE WHEN tcm.MEMBER_AUTHORITY = 'MC0002300002' THEN 1 END) AS EVAL_USER_CNT
+	FROM TB_CONSULT_MEMBER tcm 
+    </select>
+    
+    <select id="getUserTotalCnt" resultType="DashboardVO" parameterType="DashboardVO">
+    SELECT 
+		 COUNT(CASE WHEN tcm.MEMBER_AUTHORITY IN ('MC0002300001','MC0002300002','MC0002300003','MC0002300004') THEN 1 END) AS TOTAL_USER_CNT
+		,COUNT(CASE WHEN tcm.MEMBER_AUTHORITY = 'MC0002300001' THEN 1 END) AS BRANCH_USER_CNT
+		,COUNT(CASE WHEN tcm.MEMBER_AUTHORITY = 'MC0002300002' THEN 1 END) AS EVAL_USER_CNT
+		,COUNT(CASE WHEN tcm.MEMBER_AUTHORITY = 'MC0002300003' THEN 1 END) AS EVAL_MG_USER_CNT
+		,COUNT(CASE WHEN tcm.MEMBER_AUTHORITY = 'MC0002300004' THEN 1 END) AS SYS_MG_USER_CNT
+	FROM TB_CONSULT_MEMBER tcm 
+    </select>
+    
+
+</mapper>

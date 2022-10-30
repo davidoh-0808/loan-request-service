@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="description" />
+	<meta name="keywords" content="keywords" />
+	<meta name="author" content="author" />
+	<title>현대차미소금융재단</title>
+	<link type="text/css" rel="stylesheet" href="../common/css/jquery-ui.min.css" />
+	<link type="text/css" rel="stylesheet" href="../common/css/admin.css" />
+	<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+</head>
+
+<body>
+	<!--wrap -->
+	<div class="admin_wrap">
+		<!-- 관리자 상단 -->
+		<div class="admin_top">
+			<div class="top_area">
+				<!-- 로고 -->
+				<div class="logo">
+					<h1><span><img src="../img/h_logo.gif" alt="서민금융진흥원 사업수행기관 현대차미소금융재단"></span></h1>
+				</div>
+				<!-- // 로고 -->
+				<!-- 사용자 -->
+				<div class="user user_wrap">
+					<div class="user_login">
+						<div class="user_id">
+							<p>홍길동(abcd1234)</p>
+						</div>
+						<div class="user_info">
+							<p>지점(상담원)</p>
+							<p>숙소 출장소</p>
+						</div>
+					</div>
+					<button type="button" class="r_box">Log-Out</button>
+				</div>
+				<!-- //사용자 -->
+			</div>
+		</div>
+		<!-- // 관리자 상단 -->
+		<!-- 관리자 히단 -->
+		<div class="admin_bottom">
+			<!-- lnb_지점/심사팀 -->
+			<div class="lnb_wrap">
+				<div class="lnb">
+					<ul class="dep1">
+						<li>
+							<p><a href="#none" class="tit">상담신청내역</a></p>
+							<ul class="dep2">
+								<li class="on"><a href="#none">- 신청내역조회 / 수정</a></li>
+							</ul>
+						</li>
+						<li>
+							<p><a href="#none" class="tit">마이페이지</a></p>
+							<ul class="dep2">
+								<li><a href="#none">- 프로필 설정</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- // lnb -->
+			<!--content-->
+			<div class="content">
+				<h2 class="con_tit">신청내역 등록</h2>
+
+				<h3 class="s_tit">상담 정보</h3>
+				<div class="tb_style tb_htype sp10">
+					<table>
+						<caption>신청고객 정보 테이블</caption>
+						<colgroup>
+							<col style="width: 138px;">
+							<col style="width: auto;">
+							<col style="width: 138px;">
+							<col style="width: auto;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">상품명</th>
+								<td>
+									<select class="selbox w_100">
+										<option value>선택</option>
+										<option value>운영자금</option>
+										<option value>긴급생계자금</option>
+										<option value>운영(프리랜서)</option>
+										<option value>취약계층자립자금</option>
+										<option value>기타</option>
+									</select>
+								</td>
+								<th scope="row">접수일</th>
+								<td>2022-08-15</td>
+							</tr>
+							<tr>
+								<th scope="row">지점</th>
+								<td>인천지점</td>
+								<th scope="row">담당자</th>
+								<td>김미소</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<h3 class="s_tit sp40">신청고객 정보</h3>
+				<div class="tb_style tb_htype sp10">
+					<table>
+						<caption>신청고객 정보 테이블</caption>
+						<colgroup>
+							<col style="width: 138px;">
+							<col style="width: auto;">
+							<col style="width: 138px;">
+							<col style="width: auto;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">고객명</th>
+								<td>
+									<input type="text" class="input_text w_100" >
+								</td>
+								<th scope="row">주민등록번호</th>
+								<td>
+									<input type="text" class="input_text form_xsm" maxlength="6">
+									<span class="hyphen">-</span>
+									<input type="text" class="input_text form_xsm" maxlength="1">
+									<!-- <input type="text" class="input_text form_sm" maxlength="6">
+									<span class="hyphen">-</span>
+									<input type="text" class="input_text form_one" maxlength="1">
+									<span class="starkey">******</span> -->
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">연락처</th>
+								<td>
+									<input type="text" class="input_text w_100">
+								</td>
+								<th scope="row">유입경로</th>
+								<td>
+									<select class="selbox w_100">
+										<option value>선택</option>
+										<option value>TOP-UP/재대출</option>
+										<option value>전단지</option>
+										<option value>개별화물협회</option>
+										<option value>소속협회</option>
+										<option value>지인소개</option>
+										<option value>홈페이지</option>
+										<option value>인터넷검색</option>
+										<option value>기타</option>
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<h3 class="s_tit sp40">사업자 등록여부</h3>
+				<div class="tb_style tb_htype sp10 registration_table">
+					<table>
+						<caption>사업자 등록여부 테이블</caption>
+						<colgroup>
+							<col style="width: 138px;">
+							<col style="width: auto;">
+							<col style="width: 138px;">
+							<col style="width: auto;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row">사업자 등록</th>
+								<td>
+									<select class="selbox w_100" id="jobs">
+										<option value="j1">선택</option>
+										<option value="j2">개인사업자</option>
+										<option value="j3">무등록사업자</option>
+										<option value="j4">직장인</option>
+									</select>
+								</td>
+								<th scope="row" class="optionBox">취약계층 여부</th>
+								<td class="optionBox">
+									<select class="selbox w_100 ">
+										<option value="">선택</option>
+										<option value="">해당없음</option>
+										<option value="">한부모가정</option>
+										<option value="">장애인</option>
+										<option value="">다문화가정</option>
+										<option value="">북한이탈주민</option>
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- 사업자정보 -->
+				<div class="business_info">
+					<div class="info sp40 cellbox">
+						<div class="left cell auto">
+							<h3 class="s_tit">사업자 정보</h3>
+						</div>
+						<div class="right cell">
+							<button type="button" class="btn btn_white btn_m">사업자번호 조회</button>
+						</div>
+					</div>
+					<div class="tb_style tb_htype sp10">
+						<table>
+							<caption>사업자 정보 테이블</caption>
+							<colgroup>
+								<col style="width: 138px;">
+								<col style="width: auto;">
+								<col style="width: 138px;">
+								<col style="width: auto;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th scope="row">사업자번호</th>
+									<td colspan="3">
+										<input type="number" class="input_text form_md">
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">사업자 등록일</th>
+									<td colspan="3">
+										<input type="text" class="input_text form_md datepicker" readonly>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">업종</th>
+									<td colspan="3">
+										<div class="selbox_form">
+											<select class="selbox" id="type">
+												<option value="t1">선택</option>
+												<option value="t2">운수업</option>
+												<option value="t3">운수업(지입)</option>
+												<option value="t4">건설업(건설기계대여)</option>
+												<option value="t5">서비스업</option>
+												<option value="t6">도소매업</option>
+												<option value="t7">음식업</option>
+												<option value="t8">기타</option>
+											</select>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th><span class="address">사업자 주소</span></th>
+									<td colspan="3">
+										<input type="text" class="addressInput input_text" readonly onclick="modalHandler()">
+										<button type="button" class="btn btn_white btn_sm ml5" onclick="modalHandler()">검색</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<!-- 직장정보 -->
+				<div class="company_info">
+					<div class="info sp40 cellbox">
+						<div class="left cell auto">
+							<h3 class="s_tit">직장 정보</h3>
+						</div>
+					</div>
+					<div class="tb_style tb_htype sp10">
+						<table>
+							<caption>직장 정보 테이블</caption>
+							<colgroup>
+								<col style="width: 138px;">
+								<col style="width: auto;">
+								<col style="width: 138px;">
+								<col style="width: auto;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th scope="row">직장명</th>
+									<td colspan="3">
+										<input type="text" class="input_text form_md">
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">입사일</th>
+									<td colspan="3">
+										<input type="text" class="input_text form_md datepicker">
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">직업</th>
+									<td colspan="3">
+										<div class="selbox_form">
+											<select class="selbox">
+												<option value="">선택</option>
+												<option value="">무등록사업자</option>
+												<option value="">프리랜서</option>
+												<option value="">공무원</option>
+												<option value="">회사원</option>
+												<option value="">일용직</option>
+												<option value="">기타</option>
+											</select>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th class="address">자택주소</th>
+									<td colspan="3">
+										<input type="text" class="addressInput input_text">
+										<button type="button" class="btn btn_white btn_sm ml5" onclick="modalHandler()">검색</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<!-- 기타(비고란)-->
+				<div class="memo">
+					<h3 class="s_tit sp40">기타</h3>
+					<div class="tb_style tb_htype sp10">
+						<table>
+							<caption>비고 작성</caption>
+							<colgroup>
+								<col style="width: 138px;">
+								<col style="width: auto;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<th scope="row">비고</th>
+									 <td>
+										 <div class="memo_area ht w_100">
+											  <textarea name="NOTE" id="NOTE" style="resize: none;">${result.NOTE}</textarea>
+										 </div>
+									</td>
+								 </tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="btn_area sp50">
+					<div class="right_a">
+						<button type="button" class="btn btn_outline btn_l">취소</button>
+						<button type="button" class="btn btn_blue btn_l">등록</button>
+					</div>
+				</div>
+			</div>
+			<!--//content-->
+
+		</div>
+		<!-- //관리자 하단 -->
+
+	</div>
+	<!-- //Wrap-->
+
+	<!-- 우편번호 팝업 -->
+	<div id="pop_zipcode" class="pop_wrap">
+        <div class="pop_contents">
+			<!-- 주소검색 -->
+			<div class="search_wrap">
+				<div class="wrap">
+					<input type="text" class="popSearchInput">
+					<button type="button" class="searchBt ir">검색</button>
+				</div>
+				<a class="pop_close ir">close</a>
+			</div>
+			<!--// 주소검색 -->
+			<!-- 검색결과 -->
+			<!-- <div class="result">
+				<p class="guide">도로명 주소 검색 결과 <strong>(16205건)</strong></p>
+				<table class="data_table">
+					<caption>검색 결과</caption>
+					<colgroup>
+						<col style="width:10%;">
+						<col style="width:auto;">
+						<col style="width:15%;">
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">No</th>
+							<th scope="col">도로명주소</th>
+							<th scope="col">우편번호</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td class="subj txt_l">
+								<a href="#none">
+									<div  class="roadAdd">
+										<b>서울특별시 서초구 서초대로 12-1(방배동)</b>
+									</div>
+									<span>[지번]</span>
+									<span class="jibunAdd">서울특별시 서초구 방배동 952-2 디엠 그레이스 서초</span>
+								</a>
+							</td>
+							<td>
+								<span class="zipNo">06675</span>
+							</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td class="subj txt_l">
+								<a href="#none">
+									<div  class="roadAdd">
+										<b>서울특별시 서초구 서초대로 12-1(방배동)</b>
+									</div>
+									<span>[지번]</span>
+									<span class="jibunAdd">서울특별시 서초구 방배동 952-2 디엠 그레이스 서초</span>
+								</a>
+							</td>
+							<td>
+								<span class="zipNo">06675</span>
+							</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td class="subj txt_l">
+								<a href="#none">
+									<div  class="roadAdd">
+										<b>서울특별시 서초구 서초대로 12-1(방배동)</b>
+									</div>
+									<span>[지번]</span>
+									<span class="jibunAdd">서울특별시 서초구 방배동 952-2 디엠 그레이스 서초</span>
+								</a>
+							</td>
+							<td>
+								<span class="zipNo">06675</span>
+							</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td class="subj txt_l">
+								<a href="#none">
+									<div  class="roadAdd">
+										<b>서울특별시 서초구 서초대로 12-1(방배동)</b>
+									</div>
+									<span>[지번]</span>
+									<span class="jibunAdd">서울특별시 서초구 방배동 952-2 디엠 그레이스 서초</span>
+								</a>
+							</td>
+							<td>
+								<span class="zipNo">06675</span>
+							</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td class="subj txt_l">
+								<a href="#none">
+									<div  class="roadAdd">
+										<b>서울특별시 서초구 서초대로 12-1(방배동)</b>
+									</div>
+									<span>[지번]</span>
+									<span class="jibunAdd">서울특별시 서초구 방배동 952-2 디엠 그레이스 서초</span>
+								</a>
+							</td>
+							<td>
+								<span class="zipNo">06675</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="paging">
+				<div class="page-num">
+					<span>
+						<a href="javascript:void(0);"><img src="../img/zipcode_page_first.png" alt="처음"></a>
+						<a href="javascript:void(0);" class="select">1</a>
+						<a href="javascript:void(0);">2</a>
+						<a href="javascript:void(0);">3</a>
+						<a href="javascript:void(0);">4</a>
+						<a href="javascript:void(0);">5</a>
+						<a href="javascript:void(0);">6</a>
+						<a href="javascript:void(0);">7</a>
+						<a href="javascript:void(0);">8</a>
+						<a href="javascript:void(0);">9</a>
+						<a href="javascript:void(0);">10</a>
+						<a href="javascript:void(0);"><img src="../img/zipcode_page_last.png" alt="마지막"></a>
+					</span>
+				</div>
+			</div> -->
+			<!-- //검색결과 -->
+			<!-- 상세주소 -->
+			<div class="detail">
+				<p>상세주소 입력</p>
+				<table class="detail_table">
+					<caption>주소 입력</caption>
+					<colgroup>
+						<col style="width:21%">
+						<col>
+					</colgroup>
+					<tbody>
+						<tr>
+							<th scope="row">도로명주소</th>
+							<td>서울특별시 서초구 강남대로 351</td>
+						</tr>
+						<tr>
+							<th scop="row">상세주소입력</th>
+							<td>
+								<input type="text" class="addDetail w_100">
+								<p class="addDetail2">(방배동)</p>
+								<p class="addDetail3">※ 해당 주소지는 상세주소가 등록되어 있지 않습니다.</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="btn_area txt_c">
+					<button type="button" class="btn btn_blue btn_juso">주소입력</button>
+				</div>
+			</div>
+			<!--// 상세주소 -->
+        </div>
+		<div class="logo">
+			<span class="ir">현대차미소금융재단 로고</span>
+		</div>
+    </div>
+	<!--//우편번호 팝업  -->
+	
+	<script>
+		$(function(){
+			$('.business_info').hide();
+			$('.company_info').hide();
+			$('.optionBox').hide();
+
+			
+
+			$('#jobs').change(function() {
+				var result = $('#jobs option:selected').val();
+				if (result == 'j3' || result == 'j4') {
+					$('.business_info').hide();
+					$('.company_info').show();
+					$('.optionBox').show();
+
+				} else if(result == 'j2' ) {
+					$('.business_info').show();
+					$('.company_info').hide();
+					$('.optionBox').hide();
+					businessInfo();
+				}else if( result == 'j1'){
+					$('.business_info').hide();
+					$('.company_info').hide();
+					$('.optionBox').hide();
+				}
+			}); 
+
+			// $('.addressInput').on('click', function(){
+			// 	$('#pop_zipcode').dialog({
+			// 		dialogClass: 'zip_code',
+			// 		width: 537,
+			// 	});
+
+			// 	$('.pop_close').on('click', function(){
+			// 		$('#pop_zipcode').dialog("close");
+			// 	})	
+			// })
+
+			// $('.addressInput').focus(function(){
+			// 	$('#pop_zipcode').dialog({
+			// 	dialogClass: 'zip_code',
+			// 	width: 537,
+			// 	});
+
+			// 	$('.pop_close').on('click', function(){
+			// 		$('#pop_zipcode').dialog("close");
+			// 	})	
+			// });
+
+
+			// $('.addressInput').focus(function(){
+			// 	$('#pop_zipcode').dialog({
+			// 	dialogClass: 'zip_code',
+			// 	width: 537,
+			// 	});
+
+			// 	$('.pop_close').on('click', function(){
+			// 		$('#pop_zipcode').dialog("close");
+			// 	})	
+			// });
+
+		})
+
+		function businessInfo(){
+			$('#type').change(function(){
+					var result_type = $('#type option:selected').val();
+					if(result_type == 't2' || result_type == 't3' || result_type == 't4'){
+						$('.business_info .address').text('자택주소');
+						$('.business_info .addressInput').attr('placeholder', '※ 운수업, 운수업(지입), 건설(건설기계 대여)인 경우 자택 주소 기재');
+					}else{
+						$('.business_info .addressInput').attr('placeholder', '');
+						$('.business_info .address').text('사업자 주소');
+					}
+				})
+		}
+
+		function modalHandler(){
+			$('#pop_zipcode').dialog({
+				dialogClass: 'zip_code',
+				width: 537,
+			});
+
+			$('.pop_close').on('click', function(){
+				$('#pop_zipcode').dialog("close");
+			})	
+		}
+		
+
+		
+		
+	</script>
+</body>
+
+</html>

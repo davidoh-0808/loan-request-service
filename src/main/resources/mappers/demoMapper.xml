@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace= "com.neo.mappers.DemoMapper">
+	
+	<select id="demoListCount" resultType="Integer" parameterType="DemoVO" >
+		/* demoMapper.demoListCount 데모리스트 카운트 */
+		SELECT COUNT(1) totCnt 
+		FROM(
+			<include refid="listQeury" />
+		) TOT
+	</select>
+	
+	<select id="demoList" parameterType="DemoVO" resultType="DemoVO">
+		/* demoMapper.demoList 데모리스트*/
+		SELECT 
+			A.*
+		FROM ( <include refid="listQeury" /> ) A
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<sql id="listQeury">
+		/* listQeury 데모리스트 쿼리 */
+		SELECT 
+			TD.DEMO_CODE
+			, TD.DEMO_TITLE
+			, TD.DEMO_CONTENTS
+			, TD.DEL_YN
+			, TD.IN_USER
+			, TD.IN_DTTM
+			, TD.UP_USER
+			, TD.UP_DTTM
+			
+			, FN_GET_MEMBER_NAME(TD.IN_USER) IN_USER_NAME
+			, FN_GET_MEMBER_NAME(TD.UP_USER) UP_USER_NAME
+
+			, FORMAT(@ROWNUM := @ROWNUM + 1, 0) AS ROW_NUM
+		FROM TB_DEMO TD
+		, (SELECT @ROWNUM := 0) R
+		<where>
+			AND DEL_YN = 'N'
+			<if test="searchValue != null and searchValue != ''">
+				AND (
+					TD.DEMO_TITLE LIKE CONCAT('%', #{searchValue}, '%')
+					OR TD.DEMO_CONTENTS LIKE CONCAT('%', #{searchValue}, '%')
+				)
+			</if>
+		</where>
+		ORDER BY TD.IN_DTTM DESC
+	</sql>
+	
+	<select id="demoDetail" parameterType="DemoVO" resultType="DemoVO">
+		/* demoMapper.demoDetail 데모상세 */
+		SELECT 
+			TD.DEMO_CODE
+			, TD.DEMO_TITLE
+			, TD.DEMO_CONTENTS
+			, TD.DEL_YN
+			, TD.IN_USER
+			, TD.IN_DTTM
+			, TD.UP_USER
+			, TD.UP_DTTM
+		FROM TB_DEMO TD
+		WHERE TD.DEMO_CODE = #{DEMO_CODE}
+		LIMIT 1
+	</select>
+	
+	<insert id="demoInsert" parameterType="DemoVO">
+		/* demoMapper.demoInsert 데모등록 */
+		INSERT INTO TB_DEMO (
+			DEMO_CODE
+			, DEMO_TITLE
+			, DEMO_CONTENTS
+			, DEL_YN
+			, IN_USER
+			, IN_DTTM
+			, UP_USER
+			, UP_DTTM
+		) VALUES (
+			#{DEMO_CODE}
+			, TRIM(#{DEMO_TITLE})
+			, TRIM(#{DEMO_CONTENTS})
+			, IFNULL(#{DEL_YN}, 'N')
+			, #{IN_USER}
+			, NOW()
+			, #{UP_USER}
+			, NOW()
+		)
+	</insert>
+	
+	<update id="demoUpdate" parameterType="DemoVO">
+		/* demoMapper.demoUpdate 데모수정 */
+		UPDATE TB_DEMO SET
+			DEMO_TITLE			= #{DEMO_TITLE}
+			, DEMO_CONTENTS		= #{DEMO_CONTENTS}
+			, UP_USER			= #{UP_USER}
+			, UP_DTTM			= NOW()
+		WHERE DEMO_CODE = #{DEMO_CODE}
+	</update>
+	
+	<update id="demoDelete" parameterType="DemoVO">
+		/* demoMapper.demoDelete 데모삭제 */
+		UPDATE TB_DEMO SET
+			DEL_YN = #{DEL_YN}
+			, UP_USER = #{UP_USER}
+			, UP_DTTM = NOW()
+		WHERE DEMO_CODE = #{DEMO_CODE}
+	</update>
+	
+	<select id="demoFileList" resultType="DemoFileVO" parameterType="DemoFileVO">
+		/* demoMapper.demoFileList 데모파일 목록 */
+		SELECT
+			TDF.FILE_SEQ
+			, TDF.DEMO_CODE
+			, TDF.UPLOAD_GROUP
+			, TDF.UPLOAD_PATH
+			, TDF.ORG_FILE_NAME
+			, TDF.SYS_FILE_NAME
+			, TDF.FILE_EXT
+			, TDF.FILE_SIZE
+			, TDF.IN_USER
+			, TDF.IN_DTTM
+		FROM TB_DEMO_FILE TDF
+		WHERE TDF.DEMO_CODE = #{DEMO_CODE}
+	</select>
+	
+	<select id="demoFileDetail" resultType="DemoFileVO" parameterType="DemoFileVO">
+		/* demoMapper.demoFileDetail 데모파일 상세 */
+		SELECT
+			TDF.FILE_SEQ
+			, TDF.DEMO_CODE
+			, TDF.UPLOAD_GROUP
+			, TDF.UPLOAD_PATH
+			, TDF.ORG_FILE_NAME
+			, TDF.SYS_FILE_NAME
+			, TDF.FILE_EXT
+			, TDF.FILE_SIZE
+			, TDF.IN_USER
+			, TDF.IN_DTTM
+		FROM TB_DEMO_FILE TDF
+		WHERE TDF.FILE_SEQ = #{FILE_SEQ}
+	</select>
+	
+	<insert id="demoFileInsert" parameterType="DemoFileVO">
+		/* demoMapper.demoFileInsert 데모파일 등록 */
+		INSERT INTO TB_DEMO_FILE (
+			DEMO_CODE
+			, UPLOAD_GROUP
+			, UPLOAD_PATH
+			, ORG_FILE_NAME
+			, SYS_FILE_NAME
+			, FILE_EXT
+			, FILE_SIZE
+			, IN_USER
+			, IN_DTTM
+		) VALUES (
+			 #{DEMO_CODE}
+			, #{UPLOAD_GROUP}
+			, #{UPLOAD_PATH}
+			, #{ORG_FILE_NAME}
+			, #{SYS_FILE_NAME}
+			, #{FILE_EXT}
+			, #{FILE_SIZE}
+			, #{IN_USER}
+			, NOW()
+		)
+	</insert>
+	
+	<update id="demoFileDelete" parameterType="DemoFileVO">
+		/* demoMapper.demoFileDelete 데모파일 삭제 */
+		DELETE FROM TB_DEMO_FILE
+		WHERE DEMO_CODE = #{DEMO_CODE}
+	</update>	
+</mapper>

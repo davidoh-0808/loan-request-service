@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="description" />
+	<meta name="keywords" content="keywords" />
+	<meta name="author" content="author" />
+	<title>현대차미소금융재단</title>
+	<link type="text/css" rel="stylesheet" href="../common/css/jquery-ui.min.css" />
+	<link type="text/css" rel="stylesheet" href="../common/css/admin.css" />
+	<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script type="text/javascript" src="../js/chart.min.js"></script>
+	<script type="text/javascript" src="../js/chartjs-plugin-labels.js"></script>
+</head>
+
+<body>
+	<!--wrap -->
+	<div class="admin_wrap">
+		<!-- 관리자 상단 -->
+		<div class="admin_top">
+			<div class="top_area">
+				<!-- 로고 -->
+				<div class="logo">
+					<h1><span><img src="../img/h_logo.gif" alt="서민금융진흥원 사업수행기관 현대차미소금융재단"></span></h1>
+				</div>
+				<!-- // 로고 -->
+				<!-- 사용자 -->
+				<div class="user user_wrap">
+					<div class="user_login">
+						<div class="user_id">
+							<p>홍길동(abcd1234)</p>
+						</div>
+						<div class="user_info">
+							<p>심사팀관리자</p>
+						</div>
+					</div>
+					<button type="button" class="r_box">Log-Out</button>
+				</div>
+				<!-- //사용자 -->
+			</div>
+		</div>
+		<!-- // 관리자 상단 -->
+		<!-- 관리자 히단 -->
+		<div class="admin_bottom">
+			<!-- lnb_심사팀관리자 -->
+			<div class="lnb_wrap">
+				<div class="lnb">
+					<ul class="dep1">
+						<li>
+							<p><a href="#none" class="tit">대출상담관리</a></p>
+							<ul class="dep2">
+								<li><a href="#none">- 상담리스트</a></li>
+								<li><a href="#none">- 상담원</a></li>
+								<li><a href="#none">- 접속현황</a></li>
+							</ul>
+						</li>
+						<li>
+							<p><a href="#none" class="tit">마이페이지</a></p>
+							<ul class="dep2">
+								<li><a href="#none">- 프로필 설정</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- // lnb -->
+			<!--content-->
+			<div class="content">
+				<h2 class="con_tit">대시보드</h2>
+				<section class="dash_area first">
+					<h3 class="s_tit">사용자 현황</h3>
+					<div class="board_wrap">
+						<ul>
+							<li>
+								<div class="count">
+									<em>심사팀</em>
+									<p class="c_blue">20<span>명</span></p>
+								</div>
+								<div class="line_chart">
+									<p>지점상담원+심사팀</p>
+									<div id="progressbar" class="data01"></div>
+								</div>
+							</li>
+							<li>
+								<div class="count">
+									<em>지점(상담원)</em>
+									<p>20<span>명</span></p>
+								</div>
+								<div class="line_chart">
+									<p class="per">25<span>%</span></p>
+									<div id="progressbar" class="data02"></div>
+								</div>
+							</li>
+							<li>
+								<div class="count">
+									<em>심사팀</em>
+									<p>20<span>명</span></p>
+								</div>
+								<div class="line_chart">
+									<p class="per">75<span>%</span></p>
+									<div id="progressbar" class="data03"></div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<div class="second">
+					<div class="top">
+						<h3 class="s_tit">상담내역 현황</h3>
+						<div class="event">
+							<span class="date">2022. 08. 31</span>
+							<ul>
+								<li class="on">일별</li>
+								<li>월별</li>
+								<li>연별</li>
+							</ul>
+						</div>
+					</div>
+					<div class="df board">
+						<section class="dash_area">
+							<h4>지점별 상담내역 현황</h4>
+							<table class="spot_list">
+								<caption>지점별 상담내역 현황</caption>
+								<colgroup>
+									<col style="width: 90px;">
+									<col style="width: 90px;">
+									<col style="width: 90px;">
+									<col style="width: 90px;">
+									<col style="width: 90px;">
+									<col style="width: 90px;">
+									<col style="width: 90px;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th scope="col">지점</th>
+										<th scope="col">접수</th>
+										<th scope="col">진행 중(대기)</th>
+										<th scope="col">진행 중</th>
+										<th scope="col">부재/보류</th>
+										<th scope="col">완료</th>
+										<th scope="col">취소</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>강북</td>
+										<td>10</td>
+										<td>3</td>
+										<td>1</td>
+										<td>1</td>
+										<td>5</td>
+										<td>1</td>
+									</tr>
+									<tr>
+										<td>노원</td>
+										<td>10</td>
+										<td>3</td>
+										<td>1</td>
+										<td>1</td>
+										<td>5</td>
+										<td>1</td>
+									</tr>
+									<tr>
+										<td>서초</td>
+										<td>10</td>
+										<td>3</td>
+										<td>1</td>
+										<td>1</td>
+										<td>5</td>
+										<td>1</td>
+									</tr>
+									<tr>
+										<td>의왕</td>
+										<td>10</td>
+										<td>3</td>
+										<td>1</td>
+										<td>1</td>
+										<td>5</td>
+										<td>1</td>
+									</tr>
+									<tr>
+										<td>관악</td>
+										<td>10</td>
+										<td>3</td>
+										<td>1</td>
+										<td>1</td>
+										<td>5</td>
+										<td>1</td>
+									</tr>
+									<tr>
+										<td>인천</td>
+										<td>10</td>
+										<td>3</td>
+										<td>1</td>
+										<td>1</td>
+										<td>5</td>
+										<td>1</td>
+									</tr>
+									<tr>
+										<td>대구</td>
+										<td>10</td>
+										<td>3</td>
+										<td>1</td>
+										<td>1</td>
+										<td>5</td>
+										<td>1</td>
+									</tr>
+									<tr>
+										<td>대전</td>
+										<td>10</td>
+										<td>3</td>
+										<td>1</td>
+										<td>1</td>
+										<td>5</td>
+										<td>1</td>
+									</tr>
+									<tr>
+										<td>광주</td>
+										<td>10</td>
+										<td>3</td>
+										<td>1</td>
+										<td>1</td>
+										<td>5</td>
+										<td>1</td>
+									</tr>
+									<tr>
+										<td>부산</td>
+										<td>10</td>
+										<td>3</td>
+										<td>1</td>
+										<td>1</td>
+										<td>5</td>
+										<td>1</td>
+									</tr>
+									<tr>
+										<td>속초</td>
+										<td>10</td>
+										<td>3</td>
+										<td>1</td>
+										<td>1</td>
+										<td>5</td>
+										<td>1</td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td>심사</td>
+										<td>10</td>
+										<td>3</td>
+										<td>1</td>
+										<td>1</td>
+										<td>5</td>
+										<td>1</td>
+									</tr>
+									<tr>
+										<td>합계</td>
+										<td>10</td>
+										<td>3</td>
+										<td>1</td>
+										<td>1</td>
+										<td>5</td>
+										<td>1</td>
+									</tr>
+								</tfoot>
+							</table>
+						</section>
+						<section class="dash_area">
+							<div class="chart_wrap">
+								<h4>전체 상담 현황</h4>
+								<div class="labels">
+									<p>접수</p>
+									<p>진행 중(대기)</p>
+									<p>진행 중</p>
+									<p>부재/보류</p>
+									<p>완료</p>
+									<p>취소</p>
+								</div>
+								<canvas id="userStatus"  class="dash_chart"  height="163px" width="163px"></canvas>
+							</div>
+							<div class="chart_grid">
+								<table class="chart_table">
+									<caption>전체 상담 현황</caption>
+									<colgroup>
+										<col style="width: 110px;">
+										<col style="width: 105px;">
+										<col style="width: 105px;">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th scope="row">접수</th>
+											<td><p>120<span>건</span></p></td>
+											<td><p>50<span>%</span></p></td>
+										</tr>
+										<tr>
+											<th scope="row">진행 중(대기)</th>
+											<td><p>120<span>건</span></p></td>
+											<td><p>50<span>%</span></p></td>
+										</tr>
+										<tr>
+											<th scope="row">진행 중</th>
+											<td><p>120<span>건</span></p></td>
+											<td><p>50<span>%</span></p></td>
+										</tr>
+										<tr>
+											<th scope="row">부재/보류</th>
+											<td><p>120<span>건</span></p></td>
+											<td><p>50<span>%</span></p></td>
+										</tr>
+										<tr>
+											<th scope="row">완료</th>
+											<td><p>120<span>건</span></p></td>
+											<td><p>50<span>%</span></p></td>
+										</tr>
+										<tr>
+											<th scope="row">취소</th>
+											<td><p>120<span>건</span></p></td>
+											<td><p>50<span>%</span></p></td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<th scope="row">전체</th>
+											<td><p>240<span>건</span></p></td>
+											<td><p>100<span>%</span></p></td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+			<!--//content-->
+
+		</div>
+		<!-- //관리자 하단 -->
+
+	</div>
+	<!-- //Wrap-->
+
+	<script type="text/javascript">
+		
+		$(function(){
+
+		/* =======================================================
+		 	사용자 현황
+		========================================================= */
+
+			$('.data01').progressbar({
+				value:0
+			})
+
+			$('.data02').progressbar({
+				value:0,
+			})
+
+			$('.data03').progressbar({
+				value:0,
+			})
+
+			setTimeout( () => {
+				$('.data01').progressbar({
+					value:100
+				})
+
+				$('.data02').progressbar({
+					value:25,
+				})
+
+				$('.data03').progressbar({
+					value:75,
+				})
+			}, 500)
+
+		/* =======================================================
+		 	상담내역 현황 일별/월별/연별 버튼
+		========================================================= */
+
+
+			$('.event ul li').on('click', function(e){
+				e.preventDefault();
+
+				let isOn = $(this).hasClass('on');
+				if(isOn) return;
+
+				$('.event ul li').removeClass('on');
+				$(this).addClass('on');
+				
+			})
+
+		/* ==========================================================================
+			전체 상담 현황
+		========================================================================== */
+
+			const userCtx = document.querySelector('#userStatus').getContext('2d');
+
+			let userData = {
+				labels: ['접수', '진행 중', '완료', '대기', '부재', '취소'],
+				datasets: [{
+					label: '전체 상담 현황',
+					data: [200, 150, 50, 200, 50, 50],
+					backgroundColor: [
+						'#64DECF', //접수
+						'#1A528F', //진행 중(대기)
+						'#D9CBE2', //진행 중
+						'#50B9F3', //부재/보류
+						'#EE4B6B', // 완료
+						'#FDECB2', //취소
+					],
+					borderWidth: 1,
+					hoverOffset: 4,
+				}]
+			}
+
+			let userOption = {
+				responsive: false,
+				legend: {
+					display: false,
+        		},
+				interaction: {
+					intersect: false,
+					mode: 'index',
+       			 },
+				tooltips: {
+					callbacks: {
+						title: function (tooltipItem, data) {
+							return data['labels'][tooltipItem[0]['index']];
+						},
+						label: function (tooltipItem, data) {
+							return data['datasets'][0]['data'][tooltipItem['index']] + '%';
+						},
+					},
+					backgroundColor: '#000',
+					titleFontSize: 12,
+					titleFontColor: '#9B9FB5',
+					bodyFontColor: '#fff',
+					bodyFontSize: 14,
+					displayColors: false,
+				},
+				plugins: {
+					datalabels: {
+						font: {
+							size: 0,
+						}
+					},
+				}
+			
+			}
+
+			var userChart = new Chart(userCtx, {
+				type: 'doughnut',
+				data: userData,
+				options: userOption
+			});
+
+		})
+
+	/* ==========================================================================
+        Chart PluginService ( Chart Style )
+    ========================================================================== */
+    Chart.pluginService.register({
+        beforeDraw: function (chart) {
+            let count = chart.chart.data.datasets[0].data
+            let width = chart.chart.width,
+                height = chart.chart.height,
+				ctx = chart.chart.ctx;
+            ctx.restore();
+
+            if (chart.canvas.id === 'userStatus') {
+                const _fill = ctx.fill;
+                chart.data.datasets.forEach(set => {
+                    ctx.fill = function () {
+                        ctx.save();
+                        ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
+                        ctx.shadowBlur = 16;
+                        ctx.shadowOffsetX = 0;
+                        ctx.shadowOffsetY = 2;
+                        _fill.apply(this);
+                        ctx.restore();
+                    };
+                })
+            } 
+        },
+    });
+		
+		
+
+		 
+
+	</script>
+</body>
+
+</html>

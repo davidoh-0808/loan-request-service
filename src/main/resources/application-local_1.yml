@@ -1,0 +1,98 @@
+spring:
+  # DB접속(192.168.5.183:3306)
+  datasource:
+      # url: jdbc:log4jdbc:mariadb://localhost:3606/HDSMILE?characterEncoding=UTF-8&serverTimezone=UTC
+      url: jdbc:log4jdbc:mariadb://192.168.5.183:3306/HYUNDAISMILE?characterEncoding=UTF-8&serverTimezone=UTC
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      username: neo
+      password: neo
+
+# 로깅
+logging:
+  pattern:
+    console: "%d{yy-MM-dd HH:mm:ss} %-5level [%logger{0}:%line] - %msg%n"
+  level:
+    org:
+      springframework: DEBUG
+      web: DEBUG
+      security: DEBUG
+    java:
+      sql: error
+    jdbc:
+      sqlonly: DEBUG
+      sqltiming: off
+      audit: off
+      resultset: off
+      resultsettable: DEBUG
+      connection: off
+
+# 서버정보
+#server:
+#  address: 127.0.0.1
+#  port: 8080
+#  domain:
+#    pc: http://localhost:8080 # pc 도매인정보
+#    mobile: http://localhost:8080 # mobile 도매인정보
+#  error:
+#    path: /error  #서버에러시 리턴받을 경로(스프링부트에서 저거로 내려줌)
+   
+  # 서버정보 SSL 
+server:
+  port: 8443 #SSL 사용할 포트 지정 
+  porthttp: 8080
+  domain:
+    pc: http://localhost:8080 # pc 도매인정보
+    mobile: http://localhost:8080 # mobile 도매인정보
+  error:
+    path: /error  #서버에러시 리턴받을 경로(스프링부트에서 저거로 내려줌)
+  ssl:
+    enabled: true
+    key-store: classpath:www.hyundaismile.or.kr.pfx #"sslcert.co.kr.jks" 또는 "sslcert.co.kr.pfx" 지정 
+    key-store-type: PKCS12 #인증서 파일 포맷별 "JKS" 또는 "PKCS12" 지정 
+    key-store-password: tummyp20!  # jks 또는 pfx 암호
+       # key-alias: xxxxx.com # (필요시) Alias 명 지정. CSR 자동 생성시에는 CN 명
+       # trust-store: # (필요시) "sslcert.co.kr.jks" 또는 "sslcert.co.kr.pfx" 지정. CSR 직접 생성시에는, 루트/체인 스토어 파일 지정
+       # trust-store-password: xxxxxxxx  # (필요시) jks 또는 pfx 암호
+        
+# 파일경로관련
+file:
+  path:
+    upload: C:/neo/upload # 서버에 업로드될 경로
+    external: C:/neo/external # 외부파일업로드경로
+  viewPath:
+    external: /external # 외부파일 심볼릭경로
+  ext:
+#    board: .PDF, .PPT, .PPTX, .XLS, .XLSX, .DOC, .DOCX, .HWP, .HWPX # 게시판 업로드 파일제한
+    board: .JPG, .PNG, .GIF # 게시판 업로드 파일제한
+    editor: png,gif,jpeg,jpg  # 에디터 업로드 파일제한
+  store:  # 업로드경로(group과 쌍으로 감)
+    demo: /demo # 데모
+    editor: /editor # 에디터
+    sample: /sample # 양식샘플
+    board: /board # 게시판
+  group: # 파일그룹(store 와 쌍으로 감)
+    demo: DEMO
+    editor: EDITOR
+    sample: SAMPLE
+    board: BOARD
+  prefix: # 시스템파일명생성시 접두어
+    editor: editor_
+
+crypt:
+  privatekey:
+    sha256: neoforth  #해시 sha256 보안키
+    aes: abcdefghijklmnop #암복호화 aes 보안키
+
+# 디아모 암복호화 모듈 ini파일 위치
+damo:
+  inifilepath: C:/BA-SCP/Config/scpdb_agent.ini # ini 파일 경로    
+
+#주소API KEY
+zipcode:
+  confmKey: devU01TX0FVVEgyMDIyMTAyNjExMDkzODExMzE0NDk=
+  #confmKey: devU01TX0FVVEgyMDIyMDkxNTExNDg1MDExMjk3Mzc=
+  
+# nice 모듈 정보
+nice:
+  sitecode: BY830 # 사이트코드    
+  password: ij08nTuONClk # 사이트**    

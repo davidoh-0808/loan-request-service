@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<meta name="description" content="description"/>
+	<meta name="keywords" content="keywords"/>
+	<meta name="author" content="author"/>
+	<title>현대차미소금융재단</title>
+	<link type="text/css" rel="stylesheet" href="../common/css/jquery-ui.min.css"/>
+	<link type="text/css" rel="stylesheet" href="../common/css/admin.css"/>
+	<script type="text/javascript" src="../js/jquery-3.4.1.min.js" ></script>
+	<script type="text/javascript" src="../js/jquery-ui.min.js" ></script>
+	<script type="text/javascript" src="../js/common.js" ></script>
+</head>
+
+<script type="text/javascript">
+jQuery(function(){
+//팝업
+// $(".pop_btn").click(function(){
+// 	$(".popup_wrap").css("display","block");
+// 	});
+// 	$(".close_btn").click(function(){
+// 		var pop_close= $(this).parents(".popup_wrap");
+// 		pop_close.hide()
+// 	});
+
+	$( ".btn_login" ).on( "click", function() {
+			
+		$('.alert_msg').dialog({
+			dialogClass: 'pop_alert',
+			showAlertMessage: 'ID 또는 패스워드가 일치하지 않습니다\n계정정보 확인은 관리자에게 문의하세요',
+			buttons: [
+				{
+					text: "확인",
+					class: "btn btn_m btn_blue",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				},
+			]
+		});
+
+	});
+});
+</script>
+
+
+<body>
+<!--wrap -->
+<div class="admin_main">
+	<!-- 로그인 -->
+	<div class="login_wrap">
+		<div class="main_login">
+			<h1><img src="../img/h_main_logo.gif" alt="서민금융진흥원 사업수행기관 현대차미소금융재단"></h1>
+			<dl class="id">
+				<dt>ID</dt>
+				<dd> <input type="text" placeholder="아이디를 입력해주세요"></dd>
+			</dl>
+			<dl class="pw">
+				<dt>PASSWORD</dt>
+				<dd> <input type="password" placeholder="비밀번호를 입력해주세요"> </dd>
+			</dl>
+			<button type="button" class="btn pop_btn btn_login">로그인</button>
+		</div>
+	</div>
+	<!-- //로그인 -->
+
+	<!-- <div class="popup_wrap" style="display: block;">
+		<div class="popup">
+			<div class="pop_body">
+				ID 또는 패스워드가 일치하지 않습니다<br/>
+				계정정보 확인은 관리자에게 문의하세요
+			</div>
+			<div class="btn_area">
+				<div class="center_a">
+					<a href="#" class="btn btn_blue btn_m"><span>확인</span></a>
+				</div>
+			</div>
+			<a href="javascript:void(0);" class="pop_close close_btn"><img src="../img/btn_closse.gif" alt="팝업 닫기 버튼"></a>
+		</div>
+	</div> -->
+	
+
+</div>
+
+
+
+<!-- //Wrap-->
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+<title>HYUNDAI Smile - Publishing Guide</title>
+<link rel="stylesheet" type="text/css" href="./common/css/common.css">
+<script src="./common/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".g-gnb li").click(function(){
+			$(".g-gnb li").addClass("active").not(this).removeClass("active");
+		});
+	});
+</script>
+</head>
+<body>
+<div id="g-wrap">
+	<!-- header -->
+	<div id="g-header">
+		<!-- 로고/홈으로 -->
+		<a href="#none" class="logo"></a>
+
+		<!-- GNB -->
+		<div class="g-gnb">
+			<ul>
+				<li class="active"><a href="./filepath_pc.html" target="uiContentFrame">IA_PC</a></li>
+				<li><a href="./styleguide/web_layout.html" target="uiContentFrame">마크업가이드</a></li>
+				<li><a href="./styleguide/index.html" target="uiContentFrame">코딩규칙</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- //header -->
+
+	<!-- 본문영역 -->
+	<div id="g-container">
+		<div class="g-content">
+			<iframe src="./filepath_pc.html" title="컨텐츠프레임" name="uiContentFrame"></iframe>
+		</div>
+	</div>
+	<!-- //본문영역 -->
+</div>
+</body>
+</html>

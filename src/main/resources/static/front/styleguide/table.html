@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>마크업가이드 - LIST</title>
+<!-- 가이드 css -->
+<link rel="stylesheet" href="../common/css/common.css">
+<link rel="stylesheet" href="../common/css/shCoreDefault.css">
+<link rel="stylesheet" href="../css/common.css">
+
+<link rel="stylesheet" href="../css/vendor/jquery-ui.min.css">
+<script src="../js/vendor/jquery-3.4.1.min.js"></script>
+<script src="../js/vendor/jquery-ui.min.js"></script>
+<script src="../js/common.js"></script>
+
+<script type="text/javascript" src=" ../common/js/shCore.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushXml.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushCss.js"></script>
+<script type="text/javascript" src=" ../common/js/shBrushJScript.js"></script>
+<script type="text/javascript" src=" ../common/js/guide.js"></script>
+<script type="text/javascript">
+	SyntaxHighlighter.all();
+	$(document).ready(function(){
+		$('.g-nav-snb').append(webSnb);
+		$('.g-nav-snb ul li').eq(4).addClass("active");
+	});
+</script>
+</head>
+<body>
+<div id="g-wrap" class="open-aside">
+	<!-- aside -->
+	<div id="g-aside">
+		<!-- # 좌측컨텐츠 # -->
+		<div class="wrap-aside">
+			<!-- 사용자정보영역 -->
+			<div class="box-info">
+			</div>
+			<!-- 네비게이션 : SNB -->
+			<div class="g-nav-snb guide"></div>
+		</div>
+		<!-- # 컨트롤 # -->
+		<div class="g-area-control">
+			<a href="#none">좌측영역 펼침/닫기</a>
+		</div>
+	</div>
+	<!-- //aside -->
+
+	<div class="g-content">
+		<div class="g-box-basic">
+			<h2 class="g-tit-basic">Table</h2>
+
+			<!-- 탭그룹 -->
+			<div class="row">
+				<!-- <h3 class="g-tit-basic">List</h3> -->
+				<div class="tab-wrap g-tab-sample ui-tab">
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<!-- view -->
+							<h3 class="g-tit-basic">table list</h3>
+							<!-- 정보안내 가로형  테이블 -->
+							<div class="table_list">
+								<table>
+									<caption class="sr_only">리스트</caption>
+									<colgroup>
+										<col width="68">
+										<col width="126">
+										<col width="*">
+										<col width="134">
+										<col width="186">
+									</colgroup>
+									<thead>
+									<tr>
+										<th colspan="3">용도</th>
+										<th>대출한도(최대)</th>
+										<th>이자율(연)</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr>
+										<th rowspan="3">운영</th>
+										<td rowspan="2">운영자금</td>
+										<td>개인사업자(요식, 학원, 개인택시, 개인화물 등) 의
+											운영자금 지원</td>
+										<td class="ar">2,000만원</td>
+										<td rowspan="9" class="ac bb0">
+											<strong>4.5%</strong><br />(성실상환 고객 * 3.5%)
+										</td>
+									</tr>
+									<tr>
+										<td>무등록사업자의 운영자금 지원</td>
+										<td class="ar">500만원</td>
+									</tr>
+									<tr>
+										<td>프리랜서</td>
+										<td>인적용역 사업소득자의 운영자금 지원</td>
+										<td class="ar">1,000만원</td>
+									</tr>
+									<tr>
+										<th rowspan="5">창업</th>
+										<td rowspan="2">임차보증금</td>
+										<td>개인사업자의 사업장 임차보증금 지원</td>
+										<td class="ar">7,000만원</td>
+									</tr>
+									<tr>
+										<td>무등록사업자의 사업장 임차보증금 지원</td>
+										<td class="ar">500만원</td>
+									</tr>
+									<tr>
+										<td rowspan="2">생계형차량</td>
+										<td>개인사업자의 1톤 이하 상용차 구입자금</td>
+										<td class="ar">2,000만원</td>
+									</tr>
+									<tr>
+										<td>무등록사업자의 1톤 이하 상용차 구입자금</td>
+										<td class="ar">1,000만원</td>
+									</tr>
+									<tr>
+										<td>초기운영자금</td>
+										<td>개인사업자의 창업 초기운영자금</td>
+										<td class="ar">2,000만원</td>
+									</tr>
+									<tr>
+										<td colspan="2">긴급생계자금 대출</td>
+										<td>기존 대출고객의 긴급 필요자금</td>
+										<td class="ar">1,000만원</td>
+									</tr>
+									<tr>
+										<td colspan="2">교육비지원 대출</td>
+										<td>저소득층의 초, 중, 고 재학(입학)중인 자녀 교육비</td>
+										<td class="ar">500만원</td>
+										<td rowspan="2" class="ac">중도상환수수료 및<br />보증보험료 없음</td>
+									</tr>
+									<tr>
+										<td colspan="2">취약계층자립 대출</td>
+										<td>취약계층 필요자금 </td>
+										<td class="ar">1,200만원</td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<!-- <div class="board_paging">
+								<ul>
+									<li><a href="javascript:void(0);" class="paging_first">paging_first</a></li>
+									<li><a href="javascript:void(0);" class="paging_prev">paging_prev</a></li>
+									<li><a href="javascript:void(0);" class="active">1</a></li>
+									<li><a href="javascript:void(0);">2</a></li>
+									<li><a href="javascript:void(0);">3</a></li>
+									<li><a href="javascript:void(0);">4</a></li>
+									<li><a href="javascript:void(0);">5</a></li>
+									<li><a href="javascript:void(0);">6</a></li>
+									<li><a href="javascript:void(0);">7</a></li>
+									<li><a href="javascript:void(0);">8</a></li>
+									<li><a href="javascript:void(0);">9</a></li>
+									<li><a href="javascript:void(0);">10</a></li>
+									<li><a href="javascript:void(0);" class="paging_next">paging_next</a></li>
+									<li><a href="javascript:void(0);" class="paging_last">paging_last</a></li>
+								</ul>
+							</div>  board_paging -->
+
+                            <h3 class="g-tit-basic mt20">table write</h3>
+							<!-- input 세로형 테이블 -->
+							<div class="table_list align_left">
+								<table>
+									<caption class="sr_only">등록</caption>
+									<colgroup>
+										<col width="138">
+										<col width="*">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th><span class="required">성명</span></th>
+											<td><input type="text" class="form_control md" maxlength="" placeholder=""></td>
+										</tr>
+										<tr>
+											<th><span class="required">연락처</span></th>
+											<td><input type="text" class="form_control md" maxlength="" placeholder=""></td>
+										</tr>
+                                        <tr>
+											<th><span class="required">이메일</span></th>
+											<td>
+                                                <div class="form_email">
+                                                    <input type="text" class="form_control sm" maxlength="" placeholder="">
+                                                    <span class="dash">@</span>
+                                                    <input type="text" class="form_control sm" maxlength="" placeholder="">
+                                                    <select class="form_control">
+                                                        <option value="">직접입력</option>
+                                                        <option value="">naver.com</option>
+                                                        <option value="">hanmail.com</option>
+                                                        <option value="">gmail.com</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+										</tr>
+										<tr> 
+											<th>문의유형</th>
+											<td>
+												<select class="form_control">
+													<option value="">문의유형 선택</option>
+													<option value="">칭찬합니다</option>
+													<option value="">불편해요</option>
+												</select>
+											</td>
+										</tr>
+                                        <tr>
+											<th><span class="required">제목</span></th>
+											<td><input type="text" class="form_control md" maxlength="" placeholder=""></td>
+										</tr>
+										<tr>
+											<th><span class="required">상담내용</span></th>
+											<td><textarea name="" id="" class="form_control"></textarea></td>
+										</tr>
+										<tr>
+											<th rowspan="3">첨부파일</th>
+											<td>
+												<div class="wrap_file">
+                                                    <input id="input_copy" class="upload_name form_control" value="" disabled="disabled">
+                                                    <input type="file" id="input_upload_copy" class="upload_hidden">
+                                                    <label for="input_upload_copy" class="btn btn_sm btn_lightgray btn_radius">파일찾기</label>
+												</div>
+											</td>
+										</tr>
+                                        <tr>
+											<td>
+												<div class="wrap_file">
+                                                    <input id="input_copy2" class="upload_name form_control" value="" disabled="disabled">
+                                                    <input type="file" id="input_upload_copy2" class="upload_hidden">
+                                                    <label for="input_upload_copy2" class="btn btn_sm btn_lightgray btn_radius">파일찾기</label>
+												</div>
+											</td>
+										</tr>
+                                        <tr>
+											<td>
+												<div class="wrap_file">
+                                                    <input id="input_copy3" class="upload_name form_control" value="" disabled="disabled">
+                                                    <input type="file" id="input_upload_copy3" class="upload_hidden">
+                                                    <label for="input_upload_copy3" class="btn btn_sm btn_lightgray btn_radius">파일찾기</label>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<!-- //view -->
+						</div>
+					</div>
+					<div class="tab-content">
+						<div class="g-tab-inner">
+							<p class="on">HTML</p>
+							<pre class="syntax brush:html">
+                                <!-- 리스트  테이블 -->
+                                <div class="table_list">
+                                    <table>
+                                        <caption class="sr_only">리스트</caption>
+                                        <colgroup>
+                                            <col width="68">
+                                            <col width="126">
+                                            <col width="*">
+                                            <col width="134">
+                                            <col width="186">
+                                        </colgroup>
+                                        <thead>
+                                        <tr>
+                                            <th colspan="3">용도</th>
+                                            <th>대출한도(최대)</th>
+                                            <th>이자율(연)</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th rowspan="3">운영</th>
+                                            <td rowspan="2">운영자금</td>
+                                            <td>개인사업자(요식, 학원, 개인택시, 개인화물 등) 의
+                                                운영자금 지원</td>
+                                            <td class="ar">2,000만원</td>
+                                            <td rowspan="9" class="ac bb0">
+                                                <strong>4.5%</strong><br />(성실상환 고객 * 3.5%)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>무등록사업자의 운영자금 지원</td>
+                                            <td class="ar">500만원</td>
+                                        </tr>
+                                        <tr>
+                                            <td>프리랜서</td>
+                                            <td>인적용역 사업소득자의 운영자금 지원</td>
+                                            <td class="ar">1,000만원</td>
+                                        </tr>
+                                        <tr>
+                                            <th rowspan="5">창업</th>
+                                            <td rowspan="2">임차보증금</td>
+                                            <td>개인사업자의 사업장 임차보증금 지원</td>
+                                            <td class="ar">7,000만원</td>
+                                        </tr>
+                                        <tr>
+                                            <td>무등록사업자의 사업장 임차보증금 지원</td>
+                                            <td class="ar">500만원</td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="2">생계형차량</td>
+                                            <td>개인사업자의 1톤 이하 상용차 구입자금</td>
+                                            <td class="ar">2,000만원</td>
+                                        </tr>
+                                        <tr>
+                                            <td>무등록사업자의 1톤 이하 상용차 구입자금</td>
+                                            <td class="ar">1,000만원</td>
+                                        </tr>
+                                        <tr>
+                                            <td>초기운영자금</td>
+                                            <td>개인사업자의 창업 초기운영자금</td>
+                                            <td class="ar">2,000만원</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">긴급생계자금 대출</td>
+                                            <td>기존 대출고객의 긴급 필요자금</td>
+                                            <td class="ar">1,000만원</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">교육비지원 대출</td>
+                                            <td>저소득층의 초, 중, 고 재학(입학)중인 자녀 교육비</td>
+                                            <td class="ar">500만원</td>
+                                            <td rowspan="2" class="ac">중도상환수수료 및<br />보증보험료 없음</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">취약계층자립 대출</td>
+                                            <td>취약계층 필요자금 </td>
+                                            <td class="ar">1,200만원</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- 등록 테이블 -->
+                                <div class="table_list align_left">
+                                    <table>
+                                        <caption class="sr_only">등록</caption>
+                                        <colgroup>
+                                            <col width="138">
+                                            <col width="*">
+                                        </colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <th><span class="required">성명</span></th>
+                                                <td><input type="text" class="form_control md" maxlength="" placeholder=""></td>
+                                            </tr>
+                                            <tr>
+                                                <th><span class="required">연락처</span></th>
+                                                <td><input type="text" class="form_control md" maxlength="" placeholder=""></td>
+                                            </tr>
+                                            <tr>
+                                                <th><span class="required">이메일</span></th>
+                                                <td>
+                                                    <div class="form_email">
+                                                        <input type="text" class="form_control sm" maxlength="" placeholder="">
+                                                        <span class="dash">@</span>
+                                                        <input type="text" class="form_control sm" maxlength="" placeholder="">
+                                                        <select class="form_control">
+                                                            <option value="">직접입력</option>
+                                                            <option value="">naver.com</option>
+                                                            <option value="">hanmail.com</option>
+                                                            <option value="">gmail.com</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr> 
+                                                <th>문의유형</th>
+                                                <td>
+                                                    <select class="form_control">
+                                                        <option value="">문의유형 선택</option>
+                                                        <option value="">칭찬합니다</option>
+                                                        <option value="">불편해요</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th><span class="required">제목</span></th>
+                                                <td><input type="text" class="form_control md" maxlength="" placeholder=""></td>
+                                            </tr>
+                                            <tr>
+                                                <th><span class="required">상담내용</span></th>
+                                                <td><textarea name="" id="" class="form_control"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <th rowspan="3">첨부파일</th>
+                                                <td>
+                                                    <div class="wrap_file">
+                                                        <input id="input_copy" class="upload_name form_control" value="" disabled="disabled">
+                                                        <input type="file" id="input_upload_copy" class="upload_hidden">
+                                                        <label for="input_upload_copy" class="btn btn_sm btn_lightgray btn_radius">파일찾기</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="wrap_file">
+                                                        <input id="input_copy2" class="upload_name form_control" value="" disabled="disabled">
+                                                        <input type="file" id="input_upload_copy2" class="upload_hidden">
+                                                        <label for="input_upload_copy2" class="btn btn_sm btn_lightgray btn_radius">파일찾기</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="wrap_file">
+                                                        <input id="input_copy3" class="upload_name form_control" value="" disabled="disabled">
+                                                        <input type="file" id="input_upload_copy3" class="upload_hidden">
+                                                        <label for="input_upload_copy3" class="btn btn_sm btn_lightgray btn_radius">파일찾기</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+							</pre>
+							<p>CSS</p>
+							<pre class="syntax brush:css">
+
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //탭그룹 -->
+
+		</div>
+	</div>
+</div>
+</body>
+</html>
